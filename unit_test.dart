@@ -105,32 +105,32 @@ test('getProducedBread()', () {
 
 test('getBalance without operation. expect 0', () {​​​​​
   expect(getBalance(), 0.0);
-}​​​​​);
+});
 
 test('getBalance with some operations. expect 70', () {​​​​​
   var products =  Map('bread': 2,"breadPrice":10 ,'cookie': 5, "cookiePrice":10);
   sellProduct(products);
   expect(getBalance(), 70.0);
-}​​​​​);
+});
 
 test('getTotalOnAccountPrice without operation. expect 0', () {​​​​​
   expect(getTotalOnAccountPrice(), 0.0);
-}​​​​​);
+});
 
 test('getTotalOnAccountPrice with some operations. expect 55', () {​​​​​
   setOnAccountBread(Map("name:":"Yusuf", "price":5, "amount":11));
   expect(getTotalOnAccountPrice(), 55.0);
-}​​​​​);
+});
 
 test('we expect getRemainingBread to return the remaining amount of bread without operations. expect 0', () {​​​​​
   expect(getRemainingBread(), 0.0);
-}​​​​​);
+});
 
 test('we expect getRemainingBread to return the remaining amount of bread with operations. expect 5', () {​​​​​
   addBread(15);
   sellBread(10);
   expect(getRemainingBread(), 5.0);
-}​​​​​);
+});
 
 test('we expect getRemainingBread to return the remaining amount of bread with operations. expect 0', () {​​​​​
   addBread(15);
