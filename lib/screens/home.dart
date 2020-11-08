@@ -5,31 +5,27 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Administrator"),
+        title: Text("Administrator",style: TextStyle(fontFamily: "Poppins"),),
         centerTitle: true,
         backgroundColor: Colors.blueGrey,
       ),
       body: SafeArea(
-        child: Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Column(
+        child: Column(
+          children: [
+            SizedBox(height: 10),
+            myBox2(),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                myBox2(),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    myBox(),
-                    SizedBox(width: 10),
-                    myBox(),
-                    SizedBox(width: 10),
-                    myBox(),
-                  ],
-                ),
+                myBox(),
+                SizedBox(width: 10),
+                myBox(),
+                SizedBox(width: 10),
+                myBox(),
               ],
             ),
-          ),
+          ],
         ),
       ),
     );
@@ -51,7 +47,7 @@ Widget myBox(){
             color: Colors.black,
             size: 50,
           ),
-          Text("Deneme")
+          Text("Deneme",style: TextStyle(fontFamily: "Poppins"),)
         ],
       ),
     ),
