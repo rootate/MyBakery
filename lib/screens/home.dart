@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int seciliSayfa = 0;
+  void sayfaDegistir(int index){
+    setState(() {
+      seciliSayfa = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +40,7 @@ class Home extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: myBottomNavigationBar(seciliSayfa, sayfaDegistir),
     );
   }
 }
@@ -59,7 +72,7 @@ Widget myBox2(){
     alignment: Alignment.topRight,
     decoration: BoxDecoration(color: Colors.lightBlue,borderRadius: BorderRadius.all(Radius.circular(30.0))),
     width: 380,
-    height: 70,
+    height: 85,
     child: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -73,5 +86,29 @@ Widget myBox2(){
         ],
       ),
     ),
+  );
+}
+
+Widget myBottomNavigationBar(int index,void Function(int) function){
+  return BottomNavigationBar(
+    currentIndex: index,
+    onTap: function,
+    type: BottomNavigationBarType.fixed,
+    iconSize: 35,
+    fixedColor: Colors.blue,
+    items: <BottomNavigationBarItem>[
+      BottomNavigationBarItem(
+        icon: Icon(Icons.store_mall_directory_sharp),
+        title: Text("İşletme Adı",style: TextStyle(fontFamily: "Poppins"),),
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.account_balance),
+        title: Text("İşletmelerim",style: TextStyle(fontFamily: "Poppins"),),
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.add_box),
+        title: Text("Yeni İşletme Ekle",style: TextStyle(fontFamily: "Poppins"),),
+      ),
+    ],
   );
 }
