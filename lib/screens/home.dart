@@ -16,62 +16,63 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Administrator",style: TextStyle(fontFamily: "Poppins"),),
-        centerTitle: true,
-        backgroundColor: Colors.blueGrey,
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(height: 10),
-            myBox2(),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+        appBar: AppBar(
+          title: Text("Administrator",style: TextStyle(fontFamily: "Poppins"),),
+          centerTitle: true,
+          backgroundColor: Colors.blueGrey,
+        ),
+        body: SafeArea(
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(image: AssetImage("assets/images/background2.jpg"),fit: BoxFit.cover),
+            ),
+            child: Column(
               children: [
-                myBox(),
-                SizedBox(width: 10),
-                myBox(),
-                SizedBox(width: 10),
-                myBox(),
+                SizedBox(height: 10),
+                myBox2(context),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    myBox(context,Icon(Icons.local_shipping,size: 65,),"Şoför"),
+                    SizedBox(width: 10),
+                    myBox(context,Icon(Icons.bubble_chart,size: 65,),"Tezgahtar"),
+                    SizedBox(width: 10),
+                    myBox(context,Icon(Icons.fastfood,size: 65,),"Ürünler"),
+                  ],
+                ),
               ],
             ),
-          ],
+          ),
         ),
-      ),
-      bottomNavigationBar: myBottomNavigationBar(seciliSayfa, sayfaDegistir),
+        bottomNavigationBar: myBottomNavigationBar(seciliSayfa, sayfaDegistir),
     );
   }
 }
 
-Widget myBox(){
+Widget myBox(BuildContext context, Icon icon, String string){
   return Container(
     alignment: Alignment.topRight,
-    decoration: BoxDecoration(color: Colors.lightBlue,borderRadius: BorderRadius.all(Radius.circular(15.0))),
-    width: 120,
-    height: 120,
+    decoration: BoxDecoration(color: Color(0xFFF5F5F5),borderRadius: BorderRadius.all(Radius.circular(15.0))),
+    width: MediaQuery.of(context).size.width / 3 - 10,
+    height: MediaQuery.of(context).size.width / 3 - 10,
     child: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.cached_sharp,
-            color: Colors.black,
-            size: 50,
-          ),
-          Text("Deneme",style: TextStyle(fontFamily: "Poppins"),)
+          icon,
+          Text(string,style: TextStyle(fontFamily: "Poppins",fontWeight: FontWeight.w700,fontSize: 17),)
         ],
       ),
     ),
   );
 }
 
-Widget myBox2(){
+Widget myBox2(BuildContext context){
   return Container(
     alignment: Alignment.topRight,
-    decoration: BoxDecoration(color: Colors.lightBlue,borderRadius: BorderRadius.all(Radius.circular(30.0))),
-    width: 380,
+    decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.all(Radius.circular(30.0))),
+    width: MediaQuery.of(context).size.width - 10,
     height: 85,
     child: Center(
       child: Column(
