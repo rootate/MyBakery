@@ -62,23 +62,18 @@ class _HomeState extends State<Home> {
 }
 
 Widget myBox(BuildContext context, Icon icon, String string){
-  return InkWell(
-    onTap: (){
-      print("Go to the other page");
-    },
-    child: Container(
-      alignment: Alignment.topRight,
-      decoration: BoxDecoration(color: Color(0xFFF5F5F5),borderRadius: BorderRadius.all(Radius.circular(15.0))),
-      width: MediaQuery.of(context).size.width / 3 - 10,
-      height: MediaQuery.of(context).size.width / 3 - 10,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            icon,
-            Text(string,style: TextStyle(fontFamily: "Poppins",fontWeight: FontWeight.w700,fontSize: 17),)
-          ],
-        ),
+  return Container(
+    alignment: Alignment.topRight,
+    decoration: BoxDecoration(color: Color(0xFFF5F5F5),borderRadius: BorderRadius.all(Radius.circular(15.0))),
+    width: MediaQuery.of(context).size.width / 3 - 10,
+    height: MediaQuery.of(context).size.width / 3 - 10,
+    child: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          icon,
+          Text(string,style: TextStyle(fontFamily: "Poppins",fontWeight: FontWeight.w700,fontSize: 17),)
+        ],
       ),
     ),
   );
