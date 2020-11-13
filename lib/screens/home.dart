@@ -41,6 +41,17 @@ class _HomeState extends State<Home> {
                     myBox(context,Icon(Icons.fastfood,size: 65,),"Ürünler"),
                   ],
                 ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    myBox(context,Icon(Icons.file_copy,size: 65,),"Raporlar"),
+                    SizedBox(width: 10),
+                    myBox(context,Icon(Icons.people,size: 65,),"Çalışanlar"),
+                    SizedBox(width: 10),
+                    myBox(context,Icon(Icons.all_out,size: 65,),"Veresiyeler"),
+                  ],
+                ),
               ],
             ),
           ),
