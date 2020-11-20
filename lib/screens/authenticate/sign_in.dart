@@ -29,15 +29,6 @@ class _SignInState extends State<SignIn> {
         elevation: 0.0,
         title: Text("Sign In",style: TextStyle(fontFamily: "Poppins"),),
         centerTitle: true,
-        actions: <Widget>[
-          /*FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text("Register"),
-            onPressed: () {
-              widget.toggleView();
-            },
-          )*/
-        ],
       ),
       body: Container(
         height: 700,

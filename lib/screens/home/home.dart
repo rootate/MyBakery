@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_my_bakery/shared/loading.dart';
+import 'package:flutter_my_bakery/services/auth.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -6,6 +8,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final AuthService _auth = AuthService();
+  bool loading = false;
+
   int seciliSayfa = 0;
   void sayfaDegistir(int index){
     setState(() {
@@ -15,11 +20,26 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
         appBar: AppBar(
           title: Text("Administrator",style: TextStyle(fontFamily: "Poppins"),),
           centerTitle: true,
           backgroundColor: Colors.blueGrey,
+          actions: <Widget>[
+            FlatButton.icon(
+              icon: Icon(Icons.exit_to_app,color: Colors.blueGrey[100],),
+              label: Text("Exit",style: TextStyle(color: Colors.blueGrey[100],fontFamily: "Poppins"),),
+              onPressed: () async{
+                setState(() => loading = true);
+                dynamic result = await _auth.signOut();
+                if(result == null){
+                  setState(() {
+                    loading = false;
+                  });
+                }
+              },
+            )
+          ],
         ),
         body: SafeArea(
           child: Container(
