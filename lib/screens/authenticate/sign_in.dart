@@ -48,15 +48,15 @@ class _SignInState extends State<SignIn> {
         ),
         child: Center(
           child: Container(
-            height: 440,
+            height: 500,
             width: 360,
             padding: EdgeInsets.symmetric(vertical: 20.0,horizontal: 50.0),
             child: Form(
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  Icon(Icons.all_out,size: 80,),
-                  SizedBox(height: 50.0),
+                  Image(image: AssetImage("assets/images/mybakery.png"),width: 150,),
+                  SizedBox(height: 30.0),
                   TextFormField(
                     style: textStyle1,
                     decoration: textInputDecoration.copyWith(
