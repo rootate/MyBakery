@@ -3,6 +3,7 @@ import 'package:flutter_my_bakery/shared/loading.dart';
 import 'package:flutter_my_bakery/services/auth.dart';
 import 'package:flutter_my_bakery/screens/products.dart';
 import 'package:flutter_my_bakery/screens/employees.dart';
+import 'package:flutter_my_bakery/screens/reports.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -67,7 +68,7 @@ class _HomeState extends State<Home> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    myBox(context,Icon(Icons.file_copy,size: 65,),"Raporlar",Products()),
+                    myBox(context,Icon(Icons.file_copy,size: 65,),"Raporlar",Reports()),
                     SizedBox(width: 10),
                     myBox(context,Icon(Icons.people,size: 65,),"Çalışanlar",Employees()),
                     SizedBox(width: 10),
