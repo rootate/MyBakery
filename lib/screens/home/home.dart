@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/shared/loading.dart';
 import 'package:flutter_my_bakery/services/auth.dart';
 import 'package:flutter_my_bakery/screens/products.dart';
+import 'package:flutter_my_bakery/screens/employees.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -55,22 +56,22 @@ class _HomeState extends State<Home> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    myBox(context,Icon(Icons.local_shipping,size: 65,),"Şoför"),
+                    myBox(context,Icon(Icons.local_shipping,size: 65,),"Şoför",Products()),
                     SizedBox(width: 10),
-                    myBox(context,Icon(Icons.bubble_chart,size: 65,),"Tezgahtar"),
+                    myBox(context,Icon(Icons.bubble_chart,size: 65,),"Tezgahtar",Products()),
                     SizedBox(width: 10),
-                    myBox(context,Icon(Icons.fastfood,size: 65,),"Ürünler"),
+                    myBox(context,Icon(Icons.fastfood,size: 65,),"Ürünler",Products()),
                   ],
                 ),
                 SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    myBox(context,Icon(Icons.file_copy,size: 65,),"Raporlar"),
+                    myBox(context,Icon(Icons.file_copy,size: 65,),"Raporlar",Products()),
                     SizedBox(width: 10),
-                    myBox(context,Icon(Icons.people,size: 65,),"Çalışanlar"),
+                    myBox(context,Icon(Icons.people,size: 65,),"Çalışanlar",Employees()),
                     SizedBox(width: 10),
-                    myBox(context,Icon(Icons.all_out,size: 65,),"Veresiyeler"),
+                    myBox(context,Icon(Icons.all_out,size: 65,),"Veresiyeler",Products()),
                   ],
                 ),
               ],
@@ -82,12 +83,12 @@ class _HomeState extends State<Home> {
   }
 }
 
-Widget myBox(BuildContext context, Icon icon, String string){
+Widget myBox(BuildContext context, Icon icon, String string,Widget function){
   return InkWell(
     onTap: (){
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Products()),
+        MaterialPageRoute(builder: (context) => function),
       );
     },
     child: Container(

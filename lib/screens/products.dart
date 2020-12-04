@@ -20,6 +20,9 @@ class Products extends StatelessWidget {
         itemCount: categories.length,
         itemBuilder: (context, index) {
           return ListTile(
+            onTap: () {
+
+            },
             leading: Icon(icons[index]),
             title: Text(categories[index],style: TextStyle(fontFamily: "Poppins"),),
           );
