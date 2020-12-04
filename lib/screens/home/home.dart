@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/shared/loading.dart';
 import 'package:flutter_my_bakery/services/auth.dart';
+import 'package:flutter_my_bakery/screens/products.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -84,7 +85,10 @@ class _HomeState extends State<Home> {
 Widget myBox(BuildContext context, Icon icon, String string){
   return InkWell(
     onTap: (){
-      print("Go to the other page");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Products()),
+      );
     },
     child: Container(
       alignment: Alignment.topRight,
