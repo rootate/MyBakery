@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
 import 'package:flutter_my_bakery/shared/bottom_bar.dart';
 
@@ -40,12 +41,32 @@ class _ReportsState extends State<Reports> {
                     Center(
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width - 20,
-                        height: MediaQuery.of(context).size.height / 3 - 20,
+                        height: MediaQuery.of(context).size.height / 3 + 10,
                         child: Container(
                           decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.all(Radius.circular(30.0))),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              RaisedButton(
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text("4 March 2020",style: TextStyle(fontFamily: "Poppins",color: Colors.white),),
+                                    Icon(Icons.keyboard_arrow_right ,color: Colors.white,),
+                                  ],
+                                ),
+                                color: Colors.indigo,
+                                onPressed: () {
+                                  DatePicker.showDatePicker(context,
+                                  showTitleActions: true,
+                                  minTime: DateTime(2018, 12, 5),
+                                  maxTime: DateTime(2020, 12, 14), onChanged: (date) {
+                                    print('change $date');
+                                  }, onConfirm: (date) {
+                                    print('confirm $date');
+                                  }, currentTime: DateTime.now(), locale: LocaleType.tr);
+                                },
+                              ),
                               Column(
                                 children: [
                                   Text("Vitrinden toplam satış tutarı",style: textStyle(Colors.green),),
