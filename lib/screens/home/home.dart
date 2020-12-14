@@ -24,7 +24,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    double imageSize = MediaQuery.of(context).size.width / 6;
+    double iconSize = MediaQuery.of(context).size.width / 6 - 5;
+    double size1 = MediaQuery.of(context).size.height / 80;
 
     return loading ? Loading() : Scaffold(
         appBar: AppBar(
@@ -57,28 +58,28 @@ class _HomeState extends State<Home> {
                 ),
                 child: Column(
                   children: [
-                    SizedBox(height: 10),
+                    SizedBox(height: size1),
                     myBox2(context),
-                    SizedBox(height: 10),
+                    SizedBox(height: size1),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        myBox(context,Icon(Icons.local_shipping,size: imageSize,),"Şoför",Products()),
-                        SizedBox(width: 10),
-                        myBox(context,Icon(Icons.bubble_chart,size: imageSize,),"Tezgahtar",Products()),
-                        SizedBox(width: 10),
-                        myBox(context,Icon(Icons.fastfood,size: imageSize,),"Ürünler",Products()),
+                        myBox(context,Icon(Icons.local_shipping,size: iconSize,),"Şoför",Products()),
+                        SizedBox(width: size1),
+                        myBox(context,Icon(Icons.bubble_chart,size: iconSize,),"Tezgahtar",Products()),
+                        SizedBox(width: size1),
+                        myBox(context,Icon(Icons.fastfood,size: iconSize,),"Ürünler",Products()),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: size1),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        myBox(context,Icon(Icons.file_copy,size: imageSize,),"Raporlar",Reports()),
-                        SizedBox(width: 10),
-                        myBox(context,Icon(Icons.people,size: imageSize,),"Çalışanlar",Employees()),
-                        SizedBox(width: 10),
-                        myBox(context,Icon(Icons.all_out,size: imageSize,),"Veresiyeler",Products()),
+                        myBox(context,Icon(Icons.file_copy,size: iconSize,),"Raporlar",Reports()),
+                        SizedBox(width: size1),
+                        myBox(context,Icon(Icons.people,size: iconSize,),"Çalışanlar",Employees()),
+                        SizedBox(width: size1),
+                        myBox(context,Icon(Icons.all_out,size: iconSize,),"Veresiyeler",Products()),
                       ],
                     ),
                   ],
@@ -119,11 +120,13 @@ Widget myBox(BuildContext context, Icon icon, String string,Widget function){
 }
 
 Widget myBox2(BuildContext context){
+  double size1 = MediaQuery.of(context).size.height / 30;
+
   return Container(
     alignment: Alignment.topRight,
     decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.all(Radius.circular(30.0))),
     width: MediaQuery.of(context).size.width - 10,
-    height: 85,
+    height: MediaQuery.of(context).size.width / 4 - 10,
     child: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -131,7 +134,7 @@ Widget myBox2(BuildContext context){
           Icon(
             Icons.cached_sharp,
             color: Colors.black,
-            size: 30,
+            size: size1,
           ),
           Text("Deneme")
         ],

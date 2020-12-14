@@ -137,6 +137,3 @@ class _ReportsState extends State<Reports> {
   }
 }
 
-TextStyle textStyle(Color color){
-  return TextStyle(fontFamily: "Poppins",fontSize: 18,color: color);
-}

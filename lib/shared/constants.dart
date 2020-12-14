@@ -28,3 +28,7 @@ const textStyle3 = TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 17
 );
+
+TextStyle textStyle(Color color){
+    return TextStyle(fontFamily: "Poppins",fontSize: 18,color: color);
+}

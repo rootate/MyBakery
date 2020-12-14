@@ -1,6 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_my_bakery/shared/bottom_bar.dart';
 
-class Employees extends StatelessWidget {
+class Employees extends StatefulWidget {
+  @override
+  _EmployeesState createState() => _EmployeesState();
+}
+
+class _EmployeesState extends State<Employees> {
+  int seciliSayfa = 0;
+  void sayfaDegistir(int index){
+    setState(() {
+      seciliSayfa = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final employees = ['Harun Albayrak', 'Ümit Altıntaş', 'Yusuf Akgül', 'Bilal Bayrakdar',
@@ -30,7 +43,9 @@ class Employees extends StatelessWidget {
               trailing: Text(subtitles[index],style: TextStyle(fontFamily: "Poppins"),),
             );
           },
-        )
+        ),
+        bottomNavigationBar: myBottomNavigationBar(seciliSayfa, sayfaDegistir),
     );
   }
 }
+
