@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\int.bilal.bayrakdar\\Documents\\GitHub\\MyBakery\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-mk\\values-mk.xml",
+            "outputFile": "C:\\Users\\int.bilal.bayrakdar\\Documents\\GitHub\\MyBakeryFork\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-mk\\values-mk.xml",
             "map": [
                 {
                     "source": "C:\\Users\\int.bilal.bayrakdar\\.gradle\\caches\\transforms-2\\files-2.1\\c39c73c380a1995141b04f6b8754dd42\\jetified-play-services-base-17.1.0\\res\\values-mk\\values.xml",
