@@ -217,7 +217,7 @@ class ViewExpensePage extends StatefulWidget {
     this.currentExpense = currentExpense;
   }
   @override
-  _ViewNotePageState createState() => _ViewNotePageState();
+  _ViewExpensePageState createState() => _ViewExpensePageState();
 }
 
 class _ViewExpensePageState extends State<ViewExpensePage> {
@@ -362,8 +362,8 @@ class _ViewExpensePageState extends State<ViewExpensePage> {
           return AlertDialog(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            title: Text('Notu Sil'),
-            content: Text('Bu not kalıcı olarak silinecektir.'),
+            title: Text('Gideri Sil'),
+            content: Text('Bu gider kalıcı olarak silinecektir.'),
             actions: <Widget>[
               FlatButton(
                 child: Text('Sil',

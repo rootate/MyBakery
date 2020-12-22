@@ -215,31 +215,6 @@ class _ExpenseState extends State<Expense> {
     );
   }
 
-  // Widget testListItem(Color color) {  // Random fonksiyonu çağırılmış
-  //   return new NoteeCardComponent(   // muhtemelen kullanılmayacak
-  //     noteData: NotesModel.random(),
-  //   );
-  // }
-
-  // Widget buildImportantIndicatorText() {
-  //   return AnimatedCrossFade(
-  //     duration: Duration(milliseconds: 200),
-  //     firstChild: Padding(
-  //       padding: const EdgeInsets.only(top: 8),
-  //       child: Text(
-  //         '\t\t\t\t\tYalnızca işaretlenmiş notlar listeleniyor.',
-  //         style: TextStyle(
-  //             fontSize: 12, color: Colors.blue, fontWeight: FontWeight.w500),
-  //       ),
-  //     ),
-  //     secondChild: Container(
-  //       height: 2,
-  //     ),
-  //     crossFadeState:
-  //         isFlagOn ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-  //   );
-  // }
-
   List<Widget> buildExpenseComponentsList() {
     List<Widget> expenseComponentsList = [];
     expensesList.sort((a, b) {

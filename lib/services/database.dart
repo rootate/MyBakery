@@ -20,13 +20,17 @@ class NotesDatabaseService {
 
   init() async {
     String path = await getDatabasesPath();
-    path = join(path, 'notes.db');
+    path = join(path, 'main.db');
     print("Entered path $path");
 
     return await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       await db.execute(
           'CREATE TABLE Notes (_id INTEGER PRIMARY KEY, title TEXT, content TEXT, date TEXT, isImportant INTEGER);');
+      print('New table created at $path');
+
+      await db.execute(
+          'CREATE TABLE Expenses (_id INTEGER PRIMARY KEY, title TEXT, content TEXT, date TEXT);');
       print('New table created at $path');
     });
   }
@@ -36,6 +40,7 @@ class NotesDatabaseService {
     List<NotesModel> notesList = [];
     List<Map> maps = await db.query('Notes',
         columns: ['_id', 'title', 'content', 'date', 'isImportant']);
+    print(maps.length);
     if (maps.length > 0) {
       maps.forEach((map) {
         notesList.add(NotesModel.fromMap(map));
@@ -49,6 +54,7 @@ class NotesDatabaseService {
     List<ExpensesModel> expensesList = [];
     List<Map> maps = await db
         .query('Expenses', columns: ['_id', 'title', 'content', 'date']);
+    print("expense data: " + maps.toString());
     if (maps.length > 0) {
       maps.forEach((map) {
         expensesList.add(ExpensesModel.fromMap(map));
@@ -99,10 +105,16 @@ class NotesDatabaseService {
   Future<ExpensesModel> addExpenseInDB(ExpensesModel newExpense) async {
     final db = await database;
     if (newExpense.title.trim().isEmpty) newExpense.title = 'Untitled Expense';
+
     int id = await db.transaction((transaction) {
       transaction.rawInsert(
-          'INSERT into Expenses(title, content, date VALUES ("${newExpense.title + "₺"}", "${newExpense.content}", "${newExpense.date.toIso8601String()}");');
+          'INSERT into Expenses(title, content, date) VALUES ("${newExpense.title + " ₺"}", "${newExpense.content}", "${newExpense.date.toIso8601String()}");');
     });
+
+    List<Map> maps = await db
+        .query('Expenses', columns: ['_id', 'title', 'content', 'date']);
+    print("after insert: " + maps.toString());
+
     newExpense.id = id;
     print('Expense added: ${newExpense.title} ${newExpense.content}');
     return newExpense;
