@@ -164,3 +164,136 @@ class AddNoteCardComponent extends StatelessWidget {
         ));
   }
 }
+
+class ExpenseCardComponent extends StatelessWidget {
+  const ExpenseCardComponent({
+    this.expenseData,
+    this.onTapAction,
+    Key key,
+  }) : super(key: key);
+
+  final ExpensesModel expenseData;
+  final Function(ExpensesModel expenseData) onTapAction;
+
+  @override
+  Widget build(BuildContext context) {
+    initializeDateFormatting('tr'); //bu satırı ekliyoruz
+    String neatDate = DateFormat.yMMMd('tr').add_Hm().format(expenseData.date);
+    Color color =
+        colorList.elementAt(expenseData.title.length % colorList.length);
+    return Container(
+        margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
+        height: 110,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          // boxShadow: [buildBoxShadow(color, context)],
+        ),
+        child: Material(
+          borderRadius: BorderRadius.circular(16),
+          clipBehavior: Clip.antiAlias,
+          color: Theme.of(context).dialogBackgroundColor,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(16),
+            onTap: () {
+              onTapAction(expenseData);
+            },
+            splashColor: color.withAlpha(20),
+            highlightColor: color.withAlpha(10),
+            child: Container(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    '${expenseData.title.trim().length <= 20 ? expenseData.title + '₺' : expenseData.title.trim().substring(0, 20) + '...'}+',
+                    style: TextStyle(
+                        fontFamily: 'ZillaSlab',
+                        fontSize: 20,
+                        fontWeight: FontWeight.normal),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 8),
+                    child: Text(
+                      '${expenseData.content.trim().split('\n').first.length <= 30 ? expenseData.content.trim().split('\n').first : expenseData.content.trim().split('\n').first.substring(0, 30) + '...'}',
+                      style:
+                          TextStyle(fontSize: 14, color: Colors.grey.shade400),
+                    ),
+                  ),
+                  // Container(
+                  //   margin: EdgeInsets.only(top: 14),
+                  //   alignment: Alignment.centerRight,
+                  //   child: Row(
+                  //     children: <Widget>[
+                  //       Icon(Icons.flag,
+                  //           size: 16,
+                  //           color: expenseData.isImportant
+                  //               ? color
+                  //               : Colors.transparent),
+                  //       Spacer(),
+                  //       Text(
+                  //         '$neatDate',
+                  //         textAlign: TextAlign.right,
+                  //         style: TextStyle(
+                  //             fontSize: 12,
+                  //             color: Colors.grey.shade300,
+                  //             fontWeight: FontWeight.w500),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // )
+                ],
+              ),
+            ),
+          ),
+        ));
+  }
+}
+
+class AddExpenseCardComponent extends StatelessWidget {
+  const AddExpenseCardComponent({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
+        height: 110,
+        decoration: BoxDecoration(
+          border: Border.all(color: Theme.of(context).primaryColor, width: 2),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Material(
+          borderRadius: BorderRadius.circular(16),
+          clipBehavior: Clip.antiAlias,
+          child: Container(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.add,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Yeni gider ekle',
+                            style: TextStyle(
+                                fontFamily: 'ZillaSlab',
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 20),
+                          ))
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ));
+  }
+}

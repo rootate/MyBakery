@@ -107,7 +107,7 @@ class _NoteState extends State<Note> {
               Container(height: 32),
               ...buildNoteComponentsList(),
               GestureDetector(
-                  onTap: gotoEditNote, child: AddNoteCardComponent()),
+                  onTap: gotoEditNote, child: AddExpenseCardComponent()),
               Container(height: 100)
             ],
           ),

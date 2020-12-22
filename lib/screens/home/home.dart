@@ -4,6 +4,7 @@ import 'package:flutter_my_bakery/services/auth.dart';
 import 'package:flutter_my_bakery/screens/products.dart';
 import 'package:flutter_my_bakery/screens/employees.dart';
 import 'package:flutter_my_bakery/screens/note.dart';
+import 'package:flutter_my_bakery/screens/expenses.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -76,7 +77,7 @@ class _HomeState extends State<Home> {
                               size: 65,
                             ),
                             "Gider Gir",
-                            Products()),
+                            Expense()),
                         SizedBox(width: 10),
                         myBox(
                             context,

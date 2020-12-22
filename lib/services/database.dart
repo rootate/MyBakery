@@ -44,6 +44,19 @@ class NotesDatabaseService {
     return notesList;
   }
 
+  Future<List<ExpensesModel>> getExpensesFromDB() async {
+    final db = await database;
+    List<ExpensesModel> expensesList = [];
+    List<Map> maps = await db
+        .query('Expenses', columns: ['_id', 'title', 'content', 'date']);
+    if (maps.length > 0) {
+      maps.forEach((map) {
+        expensesList.add(ExpensesModel.fromMap(map));
+      });
+    }
+    return expensesList;
+  }
+
   updateNoteInDB(NotesModel updatedNote) async {
     final db = await database;
     await db.update('Notes', updatedNote.toMap(),
@@ -51,10 +64,24 @@ class NotesDatabaseService {
     print('Note updated: ${updatedNote.title} ${updatedNote.content}');
   }
 
+  updateExpenseInDB(ExpensesModel updatedExpense) async {
+    final db = await database;
+    await db.update('Notes', updatedExpense.toMap(),
+        where: '_id = ?', whereArgs: [updatedExpense.id]);
+    print('Note updated: ${updatedExpense.title} ${updatedExpense.content}');
+  }
+
   deleteNoteInDB(NotesModel noteToDelete) async {
     final db = await database;
     await db.delete('Notes', where: '_id = ?', whereArgs: [noteToDelete.id]);
     print('Note deleted');
+  }
+
+  deleteExpenseInDB(ExpensesModel expenseToDelete) async {
+    final db = await database;
+    await db
+        .delete('Expenses', where: '_id = ?', whereArgs: [expenseToDelete.id]);
+    print('Expense deleted');
   }
 
   Future<NotesModel> addNoteInDB(NotesModel newNote) async {
@@ -67,5 +94,17 @@ class NotesDatabaseService {
     newNote.id = id;
     print('Note added: ${newNote.title} ${newNote.content}');
     return newNote;
+  }
+
+  Future<ExpensesModel> addExpenseInDB(ExpensesModel newExpense) async {
+    final db = await database;
+    if (newExpense.title.trim().isEmpty) newExpense.title = 'Untitled Expense';
+    int id = await db.transaction((transaction) {
+      transaction.rawInsert(
+          'INSERT into Expenses(title, content, date VALUES ("${newExpense.title + "₺"}", "${newExpense.content}", "${newExpense.date.toIso8601String()}");');
+    });
+    newExpense.id = id;
+    print('Expense added: ${newExpense.title} ${newExpense.content}');
+    return newExpense;
   }
 }
