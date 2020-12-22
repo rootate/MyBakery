@@ -315,7 +315,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
                 focusNode: titleFocus,
                 autofocus: true,
                 controller: titleController,
-                keyboardType: TextInputType.multiline,
+                keyboardType: TextInputType.number,
                 maxLines: null,
                 onSubmitted: (text) {
                   titleFocus.unfocus();
