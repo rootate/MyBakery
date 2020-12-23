@@ -4,22 +4,23 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // sign in with email&password
-  Future signInWithEmailAndPassword(String email, String password) async{
-    try{
+  Future signInWithEmailAndPassword(String email, String password) async {
+    try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       return "Signed in";
-    } catch(e){
+    } catch (e) {
       print(e.toString());
       return null;
     }
   }
 
   // register with email&password
-  Future registerWithEmailAndPassword(String email, String password) async{
-    try{
-      await _auth.createUserWithEmailAndPassword(email: email, password: password);
+  Future registerWithEmailAndPassword(String email, String password) async {
+    try {
+      await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
       return "Signed up";
-    } catch(e){
+    } catch (e) {
       print(e.toString());
       return null;
     }
@@ -29,7 +30,7 @@ class AuthService {
   Future signOut() async {
     try {
       return await _auth.signOut();
-    } catch(e){
+    } catch (e) {
       print(e.toString());
       return null;
     }
