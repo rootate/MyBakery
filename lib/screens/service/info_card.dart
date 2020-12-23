@@ -15,7 +15,7 @@ class InfoCard extends StatelessWidget {
     this.info,
     this.radius = 12,
     this.fontSize = 24,
-    this.color = Colors.teal,
+    this.color = Colors.white,
     this.margin = 8,
     this.shadow = false,
     this.icon,
@@ -86,7 +86,7 @@ class _Card extends StatelessWidget {
             ? [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.3),
-                  spreadRadius: 5,
+                  spreadRadius: 1,
                   blurRadius: 7,
                   offset: Offset(0, 3),
                 ),
@@ -105,11 +105,13 @@ class _Card extends StatelessWidget {
                   : Container(
                       alignment: Alignment.center,
                       margin: EdgeInsets.all(margin),
-                      child: Text(
-                        label,
-                        style: TextStyle(
-                          fontSize: fontSize,
-                          fontWeight: FontWeight.bold,
+                      child: FittedBox(
+                        child: Text(
+                          label,
+                          style: TextStyle(
+                            fontSize: fontSize,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -118,11 +120,14 @@ class _Card extends StatelessWidget {
                   : Container(
                       alignment: Alignment.center,
                       margin: EdgeInsets.all(margin),
-                      child: Text(
-                        info,
-                        style: TextStyle(
-                          fontSize: fontSize,
-                          fontWeight: FontWeight.bold,
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text(
+                          info,
+                          style: TextStyle(
+                            fontSize: fontSize,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
