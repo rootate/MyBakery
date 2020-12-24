@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/shared/loading.dart';
-import 'package:flutter_my_bakery/services/auth.dart';
 import 'package:flutter_my_bakery/screens/products.dart';
 import 'package:flutter_my_bakery/screens/employees.dart';
 import 'package:flutter_my_bakery/screens/reports.dart';
-import 'package:flutter_my_bakery/shared/bottom_bar.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -12,43 +10,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final AuthService _auth = AuthService();
-  bool loading = false;
-
-  int seciliSayfa = 0;
-  void sayfaDegistir(int index){
-    setState(() {
-      seciliSayfa = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     double iconSize = MediaQuery.of(context).size.width / 6 - 5;
     double size1 = MediaQuery.of(context).size.height / 80;
 
-    return loading ? Loading() : Scaffold(
-        appBar: AppBar(
-          title: Text("Administrator",style: TextStyle(fontFamily: "Poppins"),),
-          centerTitle: true,
-          backgroundColor: Colors.blueGrey,
-          actions: <Widget>[
-            FlatButton.icon(
-              icon: Icon(Icons.exit_to_app,color: Colors.blueGrey[100],),
-              label: Text("Exit",style: TextStyle(color: Colors.blueGrey[100],fontFamily: "Poppins"),),
-              onPressed: () async{
-                setState(() => loading = true);
-                dynamic result = await _auth.signOut();
-                if(result == null){
-                  setState(() {
-                    loading = false;
-                  });
-                }
-              },
-            )
-          ],
-        ),
-        body: LayoutBuilder(builder: (context,constraints){
+    return LayoutBuilder(builder: (context,constraints){
           return SingleChildScrollView(
             child: ConstrainedBox(
               constraints: BoxConstraints(minWidth: constraints.maxWidth, minHeight: constraints.maxHeight),
@@ -87,8 +54,7 @@ class _HomeState extends State<Home> {
               ),
             ),
           );
-        },),
-        bottomNavigationBar: myBottomNavigationBar(seciliSayfa, sayfaDegistir),
+        },
     );
   }
 }
