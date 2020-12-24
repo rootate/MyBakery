@@ -44,6 +44,12 @@ class _EmployeesState extends State<Employees> {
             );
           },
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){
+            print("hello");
+          },
+          child: Icon(Icons.add),
+        ),
         bottomNavigationBar: myBottomNavigationBar(seciliSayfa, sayfaDegistir),
     );
   }
