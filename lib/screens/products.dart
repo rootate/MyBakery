@@ -25,10 +25,11 @@ class _ProductsState extends State<Products> {
     final sizeW = contextW / 20;
     final sizeH = contextH / 20;
 
+    final image = Image(image: AssetImage('assets/images/icons/bread.png'));
+
     final categories = ['Ekmekler', 'Kahvaltılıklar', 'Pastalar', 'İçecekler',
       'Tatlılar', 'Kurabiyeler', 'Hazır Gıdalar', 'Diğer'];
 
-    final image = Image(image: AssetImage('assets/images/icons/bread.png'));
 
     TextEditingController controller = TextEditingController();
 
@@ -77,7 +78,6 @@ class _ProductsState extends State<Products> {
     var alertStyle = AlertStyle(
       animationType: AnimationType.grow,
       overlayColor: Colors.black87,
-      isCloseButton: false,
       isOverlayTapDismiss: true,
       titleStyle: TextStyle(fontFamily: "Poppins",fontWeight: FontWeight.bold, fontSize: sizeW),
       animationDuration: Duration(milliseconds: 400),
@@ -108,6 +108,16 @@ class _ProductsState extends State<Products> {
           ],
         ),
         buttons: [
+          val == 1 ? DialogButton(
+            child: Text(
+              "Sil",
+              style: TextStyle(color: Colors.white, fontSize: sizeW),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.red,
+          ) :
           DialogButton(
             child: Text(
               "İptal",
