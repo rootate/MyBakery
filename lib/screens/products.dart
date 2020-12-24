@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/shared/bottom_bar.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
+import 'package:flutter_my_bakery/shared/states.dart' as states;
 
 class Products extends StatefulWidget {
   @override
@@ -9,14 +10,6 @@ class Products extends StatefulWidget {
 }
 
 class _ProductsState extends State<Products> {
-
-  int seciliSayfa = 0;
-  void sayfaDegistir(int index){
-    setState(() {
-      seciliSayfa = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final contextW = MediaQuery.of(context).size.width;
@@ -67,7 +60,6 @@ class _ProductsState extends State<Products> {
           },
           child: Icon(Icons.add),
         ),
-        bottomNavigationBar: myBottomNavigationBar(seciliSayfa, sayfaDegistir),
     );
   }
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/shared/loading.dart';
 import 'package:flutter_my_bakery/screens/products.dart';
 import 'package:flutter_my_bakery/screens/employees.dart';
 import 'package:flutter_my_bakery/screens/reports.dart';

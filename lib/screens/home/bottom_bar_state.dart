@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/screens/home/home.dart';
-import 'package:flutter_my_bakery/screens/home/my_businesses.dart';
 import 'package:flutter_my_bakery/shared/bottom_bar.dart';
 import 'package:flutter_my_bakery/shared/loading.dart';
 import 'package:flutter_my_bakery/services/auth.dart';
+import 'package:flutter_my_bakery/shared/states.dart' as states;
 
 
 class BottomBarState extends StatefulWidget {
@@ -16,10 +15,7 @@ class _BottomBarStateState extends State<BottomBarState> {
   bool loading = false;
 
   int _currentIndex = 0;
-  final List<Widget> _children = [
-    Home(),
-    MyBusinesses(),
-  ];
+  List<Widget> _children = states.children;
 
   void onTappedBar(int index){
     setState(() {

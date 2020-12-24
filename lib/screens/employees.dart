@@ -9,13 +9,6 @@ class Employees extends StatefulWidget {
 }
 
 class _EmployeesState extends State<Employees> {
-  int seciliSayfa = 0;
-  void sayfaDegistir(int index){
-    setState(() {
-      seciliSayfa = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final contextW = MediaQuery.of(context).size.width;
@@ -65,7 +58,6 @@ class _EmployeesState extends State<Employees> {
           },
           child: Icon(Icons.add),
         ),
-        bottomNavigationBar: myBottomNavigationBar(seciliSayfa, sayfaDegistir),
     );
   }
 
