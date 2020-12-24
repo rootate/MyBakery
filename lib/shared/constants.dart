@@ -15,3 +15,20 @@ const textStyle1 = TextStyle(
     fontFamily: "Poppins",
     decoration: TextDecoration.none,
 );
+
+const textStyle2 = TextStyle(
+    fontFamily: "Poppins",
+    color: Colors.white,
+    fontSize: 15,
+);
+
+const textStyle3 = TextStyle(
+    fontFamily: "Poppins",
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+    fontSize: 17
+);
+
+TextStyle textStyle(Color color){
+    return TextStyle(fontFamily: "Poppins",fontSize: 18,color: color);
+}
