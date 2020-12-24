@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/shared/bottom_bar.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
-import 'package:flutter_my_bakery/shared/states.dart' as states;
 
 class Products extends StatefulWidget {
   @override
@@ -18,11 +16,10 @@ class _ProductsState extends State<Products> {
     final sizeW = contextW / 20;
     final sizeH = contextH / 20;
 
-    final image = Image(image: AssetImage('assets/images/icons/bread.png'));
+    final image = Image(image: AssetImage('assets/images/icons/bread2.png'));
 
     final categories = ['Ekmekler', 'Kahvaltılıklar', 'Pastalar', 'İçecekler',
       'Tatlılar', 'Kurabiyeler', 'Hazır Gıdalar', 'Diğer'];
-
 
     TextEditingController controller = TextEditingController();
 
@@ -36,6 +33,10 @@ class _ProductsState extends State<Products> {
           itemCount: categories.length,
           itemBuilder: (context, index) {
             return ListTile(
+              onLongPress: (){
+                controller.text = categories[index];
+                confirmationPopup(context,image,1,controller);
+              },
               onTap: () {
                 controller.text = categories[index];
                 confirmationPopup(context,image,1,controller);

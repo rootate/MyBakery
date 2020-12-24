@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/shared/bottom_bar.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -17,7 +16,7 @@ class _EmployeesState extends State<Employees> {
     final sizeW = contextW / 20;
     final sizeH = contextH / 20;
 
-    final image = Image(image: AssetImage('assets/images/icons/bread.png'));
+    final image = Image(image: AssetImage('assets/images/icons/user.png'));
 
     TextEditingController controller = TextEditingController();
     TextEditingController controller2 = TextEditingController();
@@ -26,10 +25,6 @@ class _EmployeesState extends State<Employees> {
       'Ömer Faruk Sayar'];
 
     final subtitles = ['Şoför', 'Tezgahtar', 'None', 'None', 'None'];
-
-    final icons = [Icons.directions_bike, Icons.directions_boat,
-      Icons.directions_bus, Icons.directions_car, Icons.directions_railway,
-      Icons.directions_run, Icons.directions_subway, Icons.directions_transit];
 
     return Scaffold(
         appBar: AppBar(
@@ -41,12 +36,25 @@ class _EmployeesState extends State<Employees> {
           itemCount: employees.length,
           itemBuilder: (context, index) {
             return ListTile(
+              onLongPress: (){
+                controller.text = employees[index];
+                controller2.text = subtitles[index];
+                confirmationPopup(context,image,1,controller,controller2);
+              },
               onTap: () {
                 controller.text = employees[index];
                 controller2.text = subtitles[index];
                 confirmationPopup(context,image,1,controller,controller2);
               },
-              leading: Icon(icons[index]),
+              leading: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minWidth: sizeW,
+                  minHeight: sizeH,
+                  maxWidth: sizeW + 20,
+                  maxHeight: sizeH + 20,
+                ),
+                child: image,
+              ),
               title: Text(employees[index],style: TextStyle(fontFamily: "Poppins"),),
               trailing: Text(subtitles[index],style: TextStyle(fontFamily: "Poppins"),),
             );
