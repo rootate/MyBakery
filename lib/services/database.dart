@@ -157,7 +157,7 @@ class NotesDatabaseService {
 
     int id = await db.transaction((transaction) {
       transaction.rawInsert(
-          'INSERT into Ekmek(amount, time) VALUES ("${newEkmek.amount + " ₺"}", "${newEkmek.time}");');
+          'INSERT into Ekmek(amount, time) VALUES ("${newEkmek.amount + " Ekmek"}", "${newEkmek.time}");');
     });
 
     List<Map> maps =

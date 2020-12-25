@@ -162,25 +162,27 @@ class _EkmekState extends State<Ekmek> {
   }
 
   _showDialog(EkmekModel ekmek) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return new AlertDialog(
-              title: new Text(' "${ekmek}" kaydı silinecek?'),
-              actions: <Widget>[
-                new FlatButton(
-                    child: new Text('Vazgeç'),
-                    // The alert is actually part of the navigation stack, so to close it, we
-                    // need to pop it.
-                    onPressed: () => Navigator.of(context).pop()),
-                new FlatButton(
-                    child: new Text('Sil'),
-                    onPressed: () {
-                      NotesDatabaseService.db.deleteEkmekInDB(ekmek);
-                      Navigator.of(context).pop();
-                    })
-              ]);
-        });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return new AlertDialog(
+                // title: new Text(' "${ekmek}" kaydı silinecek?'),
+                actions: <Widget>[
+                  new FlatButton(
+                      child: new Text('Vazgeç'),
+                      onPressed: () => Navigator.of(context).pop()),
+                  new FlatButton(
+                      child: new Text('Sil'),
+                      onPressed: () {
+                        NotesDatabaseService.db.deleteEkmekInDB(ekmek);
+                        Navigator.of(context).pop();
+                        setEkmekFromDB();
+                      })
+                ]);
+          });
+      print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+    });
   }
 
   List<Widget> buildEkmekComponentsList() {
@@ -193,24 +195,9 @@ class _EkmekState extends State<Ekmek> {
     ekmekList.forEach((note) {
       ekmekComponentsList.add(EkmekCardComponent(
         ekmekData: note,
-        // onTapAction: _showDialog(note),
+        onTapAction: (_) =>_showDialog(note),
       ));
     });
     return ekmekComponentsList;
   }
-
-  // List<Widget> buildEkmekComponentsList() {
-  //   List<Widget> ekmekComponentsList = [];
-  //   ekmekList.sort((a, b) {
-  //     return b.time.compareTo(a.time);
-  //   });
-
-  //   ekmekList.forEach((note) {
-  //     ekmekComponentsList.add(EkmekCardComponent(
-  //       ekmekData: note,
-  //       onTapAction: promptRemoveTodoItem(note),
-  //     ));
-  //   });
-  //   return ekmekComponentsList;
-  // }
 }

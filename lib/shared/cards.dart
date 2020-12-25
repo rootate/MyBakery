@@ -330,28 +330,7 @@ class EkmekCardComponent extends StatelessWidget {
           color: Theme.of(context).dialogBackgroundColor,
           child: InkWell(
             borderRadius: BorderRadius.circular(16),
-            onTap: () {
-      // showDialog(
-      //   context: context,
-      //   builder: (BuildContext context) {
-      //     return new AlertDialog(
-      //         title: new Text(' "${ekmekData}" kaydı silinecek?'),
-      //         actions: <Widget>[
-      //           new FlatButton(
-      //               child: new Text('Vazgeç'),
-      //               // The alert is actually part of the navigation stack, so to close it, we
-      //               // need to pop it.
-      //               onPressed: () => Navigator.of(context).pop()),
-      //           new FlatButton(
-      //               child: new Text('Sil'),
-      //               onPressed: () {
-      //                 NotesDatabaseService.db
-      //                   .deleteEkmekInDB(ekmekData);
-      //                 Navigator.of(context).pop();
-      //               })
-      //         ]);
-      //   });
-  },
+            onTap: () => onTapAction(ekmekData),
             splashColor: color.withAlpha(20),
             highlightColor: color.withAlpha(10),
             child: Container(
