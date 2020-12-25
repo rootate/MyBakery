@@ -459,13 +459,6 @@ class _EditExpensePageState extends State<EditExpensePage> {
     });
   }
 
-  // void markImportantAsDirty() {
-  //   setState(() {
-  //     currentExpense.isImportant = !currentNote.isImportant;
-  //   });
-  //   handleSave();
-  // }
-
   void handleDelete() async {
     if (isExpenseNew) {
       Navigator.pop(context);
@@ -513,3 +506,4 @@ class _EditExpensePageState extends State<EditExpensePage> {
     Navigator.pop(context);
   }
 }
+

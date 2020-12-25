@@ -75,32 +75,32 @@ class _ExpenseState extends State<Expense> {
           child: ListView(
             physics: BouncingScrollPhysics(),
             children: <Widget>[
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.end,
-              //   children: <Widget>[
-              //     GestureDetector(
-              //       behavior: HitTestBehavior.opaque,
-              //       onTap: () {
-              //         Navigator.push(
-              //             context,
-              //             CupertinoPageRoute(
-              //                 builder: (context) => SettingsPage(
-              //                     changeTheme: widget.changeTheme)));
-              //       },
-              //       child: AnimatedContainer(
-              //         duration: Duration(milliseconds: 200),
-              //         padding: EdgeInsets.all(16),
-              //         alignment: Alignment.centerRight,
-              //         child: Icon(
-              //           OMIcons.settings,
-              //           color: Theme.of(context).brightness == Brightness.light
-              //               ? Colors.grey.shade600
-              //               : Colors.grey.shade300,
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
+              /*Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => SettingsPage(
+                                  changeTheme: widget.changeTheme)));
+                    },
+                    child: AnimatedContainer(
+                      duration: Duration(milliseconds: 200),
+                      padding: EdgeInsets.all(16),
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        OMIcons.settings,
+                        color: Theme.of(context).brightness == Brightness.light
+                            ? Colors.grey.shade600
+                            : Colors.grey.shade300,
+                      ),
+                    ),
+                  ),
+                ],
+              ),*/
               buildHeaderWidget(context),
               // buildButtonRow(),
               // buildImportantIndicatorText(),

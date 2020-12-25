@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_my_bakery/models/models.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter_my_bakery/services/database.dart';
 
 List<Color> colorList = [
   Colors.blue,
@@ -219,28 +220,29 @@ class ExpenseCardComponent extends StatelessWidget {
                           TextStyle(fontSize: 20, color: Colors.grey.shade600),
                     ),
                   ),
-                  // Container(
-                  //   margin: EdgeInsets.only(top: 14),
-                  //   alignment: Alignment.centerRight,
-                  //   child: Row(
-                  //     children: <Widget>[
-                  //       Icon(Icons.flag,
-                  //           size: 16,
-                  //           color: expenseData.isImportant
-                  //               ? color
-                  //               : Colors.transparent),
-                  //       Spacer(),
-                  //       Text(
-                  //         '$neatDate',
-                  //         textAlign: TextAlign.right,
-                  //         style: TextStyle(
-                  //             fontSize: 12,
-                  //             color: Colors.grey.shade300,
-                  //             fontWeight: FontWeight.w500),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // )
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    alignment: Alignment.centerRight,
+                    child: Row(
+                      children: <Widget>[
+                        // Icon(Icons.flag,
+                        //     size: 16,
+                        //     color: expenseData.isImportant
+                        //         ? color
+                        //         : Colors.transparent
+                        //         ),
+                        Spacer(),
+                        Text(
+                          '$neatDate',
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey.shade300,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
@@ -292,6 +294,111 @@ class AddExpenseCardComponent extends StatelessWidget {
                   ),
                 )
               ],
+            ),
+          ),
+        ));
+  }
+}
+
+class EkmekCardComponent extends StatelessWidget {
+  const EkmekCardComponent({
+    this.ekmekData,
+    this.onTapAction,
+    // this.onTapAction,
+    Key key,
+  }) : super(key: key);
+
+  final EkmekModel ekmekData;
+  final Function(EkmekModel ekmekData) onTapAction;
+
+  @override
+  Widget build(BuildContext context) {
+    initializeDateFormatting('tr'); //bu satırı ekliyoruz
+    String neatDate = DateFormat.yMMMd('tr').add_Hm().format(DateTime.now());
+    Color color =
+        colorList.elementAt(ekmekData.amount.length % colorList.length);
+    return Container(
+        margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
+        height: 110,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          // boxShadow: [buildBoxShadow(color, context)],
+        ),
+        child: Material(
+          borderRadius: BorderRadius.circular(16),
+          clipBehavior: Clip.antiAlias,
+          color: Theme.of(context).dialogBackgroundColor,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(16),
+            onTap: () {
+      // showDialog(
+      //   context: context,
+      //   builder: (BuildContext context) {
+      //     return new AlertDialog(
+      //         title: new Text(' "${ekmekData}" kaydı silinecek?'),
+      //         actions: <Widget>[
+      //           new FlatButton(
+      //               child: new Text('Vazgeç'),
+      //               // The alert is actually part of the navigation stack, so to close it, we
+      //               // need to pop it.
+      //               onPressed: () => Navigator.of(context).pop()),
+      //           new FlatButton(
+      //               child: new Text('Sil'),
+      //               onPressed: () {
+      //                 NotesDatabaseService.db
+      //                   .deleteEkmekInDB(ekmekData);
+      //                 Navigator.of(context).pop();
+      //               })
+      //         ]);
+      //   });
+  },
+            splashColor: color.withAlpha(20),
+            highlightColor: color.withAlpha(10),
+            child: Container(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    '${ekmekData.amount.trim().length <= 20 ? ekmekData.amount : ekmekData.amount.trim().substring(0, 20) + '...'}',
+                    style: TextStyle(
+                        fontFamily: 'ZillaSlab',
+                        fontSize: 20,
+                        fontWeight: FontWeight.normal),
+                  ),
+                  // Container(
+                  //   margin: EdgeInsets.only(top: 8),
+                  //   child: Text(
+                  //     '${ekmekData.time.trim().split('\n').first.length <= 30 ? ekmekData.time.trim().split('\n').first : ekmekData.time.trim().split('\n').first.substring(0, 30) + '...'}',
+                  //     style:
+                  //         TextStyle(fontSize: 20, color: Colors.grey.shade600),
+                  //   ),
+                  // ),
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    alignment: Alignment.centerRight,
+                    child: Row(
+                      children: <Widget>[
+                        // Icon(Icons.flag,
+                        //     size: 16,
+                        //     color: expenseData.isImportant
+                        //         ? color
+                        //         : Colors.transparent
+                        //         ),
+                        Spacer(),
+                        Text(
+                          '$neatDate',
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey.shade300,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ));

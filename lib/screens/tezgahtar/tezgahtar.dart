@@ -5,7 +5,7 @@ import 'package:flutter_my_bakery/screens/products.dart';
 import 'package:flutter_my_bakery/screens/employees.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/note.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/expense.dart';
-
+import 'package:flutter_my_bakery/screens/tezgahtar/ekmek.dart';
 class Tezgahtar extends StatefulWidget {
   @override
   _TezgahtarState createState() => _TezgahtarState();
@@ -119,7 +119,7 @@ class _TezgahtarState extends State<Tezgahtar> {
                               size: 65,
                             ),
                             "Ekmek Gir",
-                            Employees()),
+                            Ekmek()),
                         SizedBox(width: 10),
                       ],
                     ),

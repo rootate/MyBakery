@@ -32,6 +32,10 @@ class NotesDatabaseService {
       await db.execute(
           'CREATE TABLE Expenses (_id INTEGER PRIMARY KEY, title TEXT, content TEXT, date TEXT);');
       print('New table created at $path');
+
+      await db.execute(
+          'CREATE TABLE Ekmek (_id INTEGER PRIMARY KEY, amount TEXT, time TEXT);');
+      print('New table created at $path');
     });
   }
 
@@ -63,6 +67,20 @@ class NotesDatabaseService {
     return expensesList;
   }
 
+  Future<List<EkmekModel>> getEkmekFromDB() async {
+    final db = await database;
+    List<EkmekModel> ekmekList = [];
+    List<Map> maps =
+        await db.query('Ekmek', columns: ['_id', 'amount', 'time']);
+    print("ekmek data: " + maps.toString());
+    if (maps.length > 0) {
+      maps.forEach((map) {
+        ekmekList.add(EkmekModel.fromMap(map));
+      });
+    }
+    return ekmekList;
+  }
+
   updateNoteInDB(NotesModel updatedNote) async {
     final db = await database;
     await db.update('Notes', updatedNote.toMap(),
@@ -72,9 +90,16 @@ class NotesDatabaseService {
 
   updateExpenseInDB(ExpensesModel updatedExpense) async {
     final db = await database;
-    await db.update('Notes', updatedExpense.toMap(),
+    await db.update('Expenses', updatedExpense.toMap(),
         where: '_id = ?', whereArgs: [updatedExpense.id]);
     print('Note updated: ${updatedExpense.title} ${updatedExpense.content}');
+  }
+
+  updateEkmekInDB(EkmekModel updatedEkmek) async {
+    final db = await database;
+    await db.update('Ekmek', updatedEkmek.toMap(),
+        where: '_id = ?', whereArgs: [updatedEkmek.id]);
+    print('Note updated: ${updatedEkmek.amount} ${updatedEkmek.time}');
   }
 
   deleteNoteInDB(NotesModel noteToDelete) async {
@@ -88,6 +113,12 @@ class NotesDatabaseService {
     await db
         .delete('Expenses', where: '_id = ?', whereArgs: [expenseToDelete.id]);
     print('Expense deleted');
+  }
+
+  deleteEkmekInDB(EkmekModel ekmekToDelete) async {
+    final db = await database;
+    await db.delete('Ekmek', where: '_id = ?', whereArgs: [ekmekToDelete.id]);
+    print('Ekmek deleted');
   }
 
   Future<NotesModel> addNoteInDB(NotesModel newNote) async {
@@ -118,5 +149,23 @@ class NotesDatabaseService {
     newExpense.id = id;
     print('Expense added: ${newExpense.title} ${newExpense.content}');
     return newExpense;
+  }
+
+  Future<EkmekModel> addEkmekInDB(EkmekModel newEkmek) async {
+    final db = await database;
+    if (newEkmek.amount.trim().isEmpty) newEkmek.time = 'Untitled Expense';
+
+    int id = await db.transaction((transaction) {
+      transaction.rawInsert(
+          'INSERT into Ekmek(amount, time) VALUES ("${newEkmek.amount + " ₺"}", "${newEkmek.time}");');
+    });
+
+    List<Map> maps =
+        await db.query('Ekmek', columns: ['_id', 'amount', 'time']);
+    print("after insert: " + maps.toString());
+
+    newEkmek.id = id;
+    print('Ekmek added: ${newEkmek.amount} ${newEkmek.time}');
+    return newEkmek;
   }
 }

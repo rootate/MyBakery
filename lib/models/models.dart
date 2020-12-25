@@ -68,3 +68,34 @@ class ExpensesModel {
     this.date = DateTime.now().add(Duration(hours: Random().nextInt(100)));
   }
 }
+
+class EkmekModel {
+  int id;
+  String amount;
+  String time;
+  // bool isImportant;
+  // DateTime date;
+
+  EkmekModel({this.id, this.amount, this.time});
+
+  EkmekModel.fromMap(Map<String, dynamic> map) {
+    this.id = map['_id'];
+    this.amount = map['amount'];
+    this.time = map['time'];
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      '_id': this.id,
+      'title': this.amount,
+      'content': this.time,
+    };
+  }
+
+  // EkmekModel.random() {
+  //   this.id = Random(10).nextInt(1000) + 1;
+  //   this.title = 'Lorem Ipsum ' * (Random().nextInt(4) + 1);
+  //   this.content = 'Lorem Ipsum ' * (Random().nextInt(4) + 1);
+  //   this.date = DateTime.now().add(Duration(hours: Random().nextInt(100)));
+//   }
+}
