@@ -118,6 +118,8 @@ class _EkmekState extends State<Ekmek> {
                                               amount: _textFieldController.text,
                                               time: DateTime.now()
                                                   .toIso8601String()));
+                                      _textFieldController.clear();
+                                      setEkmekFromDB();
                                       Navigator.pop(
                                           context); // Close the add todo screen
                                     }
@@ -159,7 +161,7 @@ class _EkmekState extends State<Ekmek> {
     );
   }
 
-  _showDialog(EkmekModel ekmek) async {
+  _showDialog(EkmekModel ekmek) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
