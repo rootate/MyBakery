@@ -11,13 +11,6 @@ class Reports extends StatefulWidget {
 }
 
 class _ReportsState extends State<Reports> {
-  int seciliSayfa = 0;
-  void sayfaDegistir(int index){
-    setState(() {
-      seciliSayfa = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     double size1 = MediaQuery.of(context).size.height / 50;
@@ -190,7 +183,6 @@ class _ReportsState extends State<Reports> {
           ),
         );
       },),
-      bottomNavigationBar: myBottomNavigationBar(seciliSayfa, sayfaDegistir),
     );
   }
 }
