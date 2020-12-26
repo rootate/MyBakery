@@ -73,7 +73,7 @@ class _TezgahtarState extends State<Tezgahtar> {
                         myBox(
                             context,
                             Icon(
-                              Icons.local_shipping,
+                              Icons.attach_money_outlined,
                               size: 65,
                             ),
                             "Gider Gir",
@@ -91,7 +91,7 @@ class _TezgahtarState extends State<Tezgahtar> {
                         myBox(
                             context,
                             Icon(
-                              Icons.fastfood,
+                              Icons.fastfood_outlined,
                               size: 65,
                             ),
                             "Ürün sat",
@@ -106,7 +106,7 @@ class _TezgahtarState extends State<Tezgahtar> {
                         myBox(
                             context,
                             Icon(
-                              Icons.file_copy,
+                              Icons.note_add,
                               size: 65,
                             ),
                             "Not Al",
@@ -115,7 +115,7 @@ class _TezgahtarState extends State<Tezgahtar> {
                         myBox(
                             context,
                             Icon(
-                              Icons.people,
+                              Icons.breakfast_dining,
                               size: 65,
                             ),
                             "Ekmek Gir",
