@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
-import 'package:flutter_my_bakery/screens/products_in.dart';
 
-class Products extends StatefulWidget {
+class ProductsIn extends StatefulWidget {
   @override
-  _ProductsState createState() => _ProductsState();
+  _ProductsInState createState() => _ProductsInState();
 }
 
-class _ProductsState extends State<Products> {
+class _ProductsInState extends State<ProductsIn> {
   @override
   Widget build(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
     final contextW = MediaQuery.of(context).size.width;
     final contextH = MediaQuery.of(context).size.height;
 
@@ -19,51 +19,29 @@ class _ProductsState extends State<Products> {
 
     final image = Image(image: AssetImage('assets/images/icons/bread2.png'));
 
-    final categories = ['Ekmekler', 'Kahvaltılıklar', 'Pastalar', 'İçecekler',
-      'Tatlılar', 'Kurabiyeler', 'Hazır Gıdalar', 'Diğer'];
+    final categories = ['Product A', 'Product B', 'Product C', 'Product D',
+      'Product E', 'Product F', 'Product G'];
 
     TextEditingController controller = TextEditingController();
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Products",style: TextStyle(fontFamily: "Poppins"),),
-          centerTitle: true,
-          backgroundColor: Colors.blueGrey,
-        ),
-        body: ListView.builder(
-          itemCount: categories.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              onLongPress: (){
-                controller.text = categories[index];
-                confirmationPopup(context,image,1,controller);
-              },
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProductsIn()),
-                );
-              },
-              leading: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minWidth: sizeW,
-                  minHeight: sizeH,
-                  maxWidth: sizeW + 20,
-                  maxHeight: sizeH + 20,
-                ),
-                child: image,
-              ),
-              title: Text(categories[index],style: TextStyle(fontFamily: "Poppins"),),
-            );
-          },
-
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: (){
-            confirmationPopup(context,image,0,controller);
-          },
-          child: Icon(Icons.add),
-        ),
+      appBar: AppBar(
+        title: Text("Products",style: TextStyle(fontFamily: "Poppins"),),
+        centerTitle: true,
+        backgroundColor: Colors.blueGrey,
+      ),
+      body: GridView.builder(
+        itemCount: categories.length,
+        itemBuilder: (context, index) => FlutterLogo(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: (orientation == Orientation.portrait) ? 3 : 5),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          confirmationPopup(context,image,0,controller);
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 
