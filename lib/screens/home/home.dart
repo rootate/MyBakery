@@ -7,6 +7,7 @@ import 'package:flutter_my_bakery/screens/products.dart';
 import 'package:flutter_my_bakery/screens/employees.dart';
 import 'package:flutter_my_bakery/screens/reports.dart';
 import 'package:flutter_my_bakery/shared/bottom_bar.dart';
+import 'package:flutter_my_bakery/screens/tezgahtar/tezgahtar.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -99,7 +100,7 @@ class _HomeState extends State<Home> {
                                     size: iconSize,
                                   ),
                                   "Tezgahtar",
-                                  Products()),
+                                  Tezgahtar()),
                               SizedBox(width: size1),
                               myBox(
                                   context,
