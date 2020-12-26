@@ -383,3 +383,142 @@ class EkmekCardComponent extends StatelessWidget {
         ));
   }
 }
+
+class VeresiyeCardComponent extends StatelessWidget {
+  const VeresiyeCardComponent({
+    this.veresiyeData,
+    this.onTapAction,
+    Key key,
+  }) : super(key: key);
+
+  final VeresiyeModel veresiyeData;
+  final Function(VeresiyeModel noteData) onTapAction;
+
+  @override
+  Widget build(BuildContext context) {
+    initializeDateFormatting('tr'); //bu satırı ekliyoruz
+    String neatDate = DateFormat.yMMMd('tr').add_Hm().format(veresiyeData.date);
+    Color color = colorList.elementAt(veresiyeData.title.length % colorList.length);
+    return Container(
+        margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
+        height: 110,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [buildBoxShadow(color, context)],
+        ),
+        child: Material(
+          borderRadius: BorderRadius.circular(16),
+          clipBehavior: Clip.antiAlias,
+          color: Theme.of(context).dialogBackgroundColor,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(16),
+            onTap: () {
+              onTapAction(veresiyeData);
+            },
+            splashColor: color.withAlpha(20),
+            highlightColor: color.withAlpha(10),
+            child: Container(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    '${veresiyeData.title.trim().length <= 20 ? veresiyeData.title.trim() : veresiyeData.title.trim().substring(0, 20) + '...'}',
+                    style: TextStyle(
+                        fontFamily: 'ZillaSlab',
+                        fontSize: 20,
+                        fontWeight: FontWeight.normal),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 8),
+                    child: Text(
+                      '${veresiyeData.content.trim().split('\n').first.length <= 30 ? veresiyeData.content.trim().split('\n').first : veresiyeData.content.trim().split('\n').first.substring(0, 30) + '...'}',
+                      style:
+                          TextStyle(fontSize: 14, color: Colors.grey.shade400),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 14),
+                    alignment: Alignment.centerRight,
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          '$neatDate',
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey.shade300,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ));
+  }
+
+  BoxShadow buildBoxShadow(Color color, BuildContext context) {
+    if (Theme.of(context).brightness == Brightness.dark) {
+      return BoxShadow(
+          color: Colors.black.withAlpha(10),
+          blurRadius: 8,
+          offset: Offset(0, 8));
+    }
+    return BoxShadow(
+        color: color.withAlpha(25),
+        blurRadius: 8,
+        offset: Offset(0, 8));
+  }
+}
+
+class AddVeresiyeCardComponent extends StatelessWidget {
+  const AddVeresiyeCardComponent({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
+        height: 110,
+        decoration: BoxDecoration(
+          border: Border.all(color: Theme.of(context).primaryColor, width: 2),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Material(
+          borderRadius: BorderRadius.circular(16),
+          clipBehavior: Clip.antiAlias,
+          child: Container(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.add,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Veresiye ekle',
+                            style: TextStyle(
+                                fontFamily: 'ZillaSlab',
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 20),
+                          ))
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ));
+  }
+}
