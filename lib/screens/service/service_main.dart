@@ -2,13 +2,26 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 
 import 'info_card.dart';
-import 'package:horizontal_calendar/horizontal_calendar.dart';
 
-class Service extends StatelessWidget {
+class Service extends StatefulWidget {
+  @override
+  _ServiceState createState() => _ServiceState();
+}
+
+class _ServiceState extends State<Service> {
   @override
   Widget build(BuildContext context) {
+    DateFormat dateFormat = DateFormat("dd.MM.yyyy");
+
+    String currentTime = dateFormat.format(DateTime.now());
+
+    DateTime minTime = DateTime(2018, 12, 5);
+
+    DateTime maxTime = DateTime.now();
     return Scaffold(
       backgroundColor: Colors.deepPurpleAccent[10],
       appBar: AppBar(
@@ -29,16 +42,40 @@ class Service extends StatelessWidget {
           filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
           child: Column(
             children: [
-              Container(
-                width: double.infinity,
-                child: HorizontalCalendar(
-                    date: DateTime.now(),
-                    textColor: Colors.black45,
-                    backgroundColor: Colors.blueGrey[50],
-                    selectedColor: Colors.blueGrey,
-                    onDateSelected: (date) => print(
-                          date.toString(),
-                        )),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 2 - 20,
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                  child: RaisedButton(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          currentTime,
+                          style: TextStyle(
+                              fontFamily: "Poppins", color: Colors.white),
+                        ),
+                        Icon(
+                          Icons.keyboard_arrow_right,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                    color: Colors.indigo,
+                    onPressed: () {
+                      DatePicker.showDatePicker(context,
+                          showTitleActions: true,
+                          minTime: minTime,
+                          maxTime: maxTime, onChanged: (date) {
+                        print('change $date');
+                      }, onConfirm: (date) {
+                        print('confirm $date');
+                      }, currentTime: DateTime.now(), locale: LocaleType.tr);
+                    },
+                  ),
+                ),
               ),
               Expanded(
                 child: ListView(

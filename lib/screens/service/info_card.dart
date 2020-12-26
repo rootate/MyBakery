@@ -102,31 +102,38 @@ class _Card extends StatelessWidget {
             children: [
               label == null
                   ? SizedBox.shrink()
-                  : Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.all(margin),
-                      child: FittedBox(
-                        child: Text(
-                          label,
-                          style: TextStyle(
-                            fontSize: fontSize,
-                            fontWeight: FontWeight.bold,
+                  : Expanded(
+                      child: Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.all(margin),
+                        child: FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Text(
+                            label,
+                            style: TextStyle(
+                              fontSize: fontSize,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
                     ),
               info == null
                   ? SizedBox.shrink()
-                  : Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.all(margin),
-                      child: FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Text(
-                          info,
-                          style: TextStyle(
-                            fontSize: fontSize,
-                            fontWeight: FontWeight.bold,
+                  : Expanded(
+                      child: Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.all(margin),
+                        child: FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: FittedBox(
+                            child: Text(
+                              info,
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
                       ),
