@@ -1,9 +1,18 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/shared/constants.dart';
+import 'package:flutter_my_bakery/SetupScreen/screens/categories.dart';
 
 class FirstPage extends StatelessWidget {
+  void nextPage(BuildContext cx) {
+    Navigator.of(cx).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return Categories();
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +58,7 @@ class FirstPage extends StatelessWidget {
                 Container(
                   alignment: Alignment(0.6, 0),
                   child: RaisedButton(
-                    onPressed: () {},
+                    onPressed: () => nextPage(context),
                     child: Text("BAŞLAYALIM"),
                     color: Colors.orange[700],
                   ),

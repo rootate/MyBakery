@@ -39,3 +39,6 @@ app.*.symbols
 
 # Obfuscation related
 app.*.map.json
+pubspec.lock
+pubspec.lock
+pubspec.lock
