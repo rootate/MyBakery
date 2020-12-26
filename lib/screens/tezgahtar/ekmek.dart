@@ -3,12 +3,8 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:flutter_my_bakery/shared/faderoute.dart';
 import 'package:flutter_my_bakery/models/models.dart';
-import 'package:flutter_my_bakery/screens/tezgahtar/edit.dart';
-import 'package:flutter_my_bakery/screens/tezgahtar/view.dart';
 import 'package:flutter_my_bakery/services/database.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:flutter_my_bakery/shared/cards.dart';
 
 class Ekmek extends StatefulWidget {
@@ -50,7 +46,11 @@ class _EkmekState extends State<Ekmek> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(title: new Text('Ekmek Gir')),
+        appBar: new AppBar(
+          title: new Text('Ekmek Gir', style: TextStyle(fontFamily: "Poppins"),),
+          backgroundColor: Colors.blueGrey,
+          centerTitle: true,
+        ),
         body: GestureDetector(
           onTap: () {
             FocusScope.of(context).requestFocus(new FocusNode());
