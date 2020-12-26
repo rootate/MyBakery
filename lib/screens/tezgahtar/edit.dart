@@ -1,15 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/painting.dart' as prefix0;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_my_bakery/models/models.dart';
 import 'package:flutter_my_bakery/services/database.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
 
 class EditNotePage extends StatefulWidget {
   Function() triggerRefetch;

@@ -82,10 +82,10 @@ class _TezgahtarState extends State<Tezgahtar> {
                         myBox(
                             context,
                             Icon(
-                              Icons.bubble_chart,
+                              Icons.all_out,
                               size: 65,
                             ),
-                            "Veresiye",
+                            "Veresiyeler",
                             Products()),
                         SizedBox(width: 10),
                         myBox(
