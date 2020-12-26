@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/screens/products.dart';
-import 'package:flutter_my_bakery/screens/employees.dart';
-import 'package:flutter_my_bakery/screens/reports.dart';
+import 'package:flutter_my_bakery/screens/administrator/products.dart';
+import 'package:flutter_my_bakery/screens/administrator/employees.dart';
+import 'package:flutter_my_bakery/screens/administrator/reports.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/tezgahtar.dart';
 
 class Home extends StatefulWidget {
@@ -97,7 +97,6 @@ Widget myBox(BuildContext context, Icon icon, String string, Widget function) {
 
 Widget myBox2(BuildContext context) {
   double size1 = MediaQuery.of(context).size.height / 30;
-
   return Container(
     alignment: Alignment.topRight,
     decoration: BoxDecoration(

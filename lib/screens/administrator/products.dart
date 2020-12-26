@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
-import 'package:flutter_my_bakery/screens/products_in.dart';
+import 'package:flutter_my_bakery/screens/administrator/products_in.dart';
 
 class Products extends StatefulWidget {
   @override
