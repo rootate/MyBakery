@@ -4,6 +4,7 @@ import 'package:flutter_my_bakery/screens/administrator/products.dart';
 import 'package:flutter_my_bakery/screens/administrator/employees.dart';
 import 'package:flutter_my_bakery/screens/administrator/reports.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/tezgahtar.dart';
+import 'package:flutter_my_bakery/shared/constants.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -98,24 +99,40 @@ Widget myBox(BuildContext context, Icon icon, String string, Widget function) {
 Widget myBox2(BuildContext context) {
   double size1 = MediaQuery.of(context).size.height / 30;
   return Container(
-    alignment: Alignment.topRight,
     decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(30.0))),
     width: MediaQuery.of(context).size.width - 10,
     height: MediaQuery.of(context).size.width / 4 - 10,
-    child: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.cached_sharp,
-            color: Colors.black,
-            size: size1,
-          ),
-          Text("Deneme")
-        ],
-      ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 12,),
+            Text("\₺ 370,345",style: textStyle4,),
+            Text("Çarşamba",style: textStyle4,),
+          ],
+        ),
+        Column(
+          children: [
+            SizedBox(height: 20,),
+            RaisedButton(
+              onPressed: (){},
+              shape: RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(18.0),
+                side: BorderSide(color: Colors.black),
+              ),
+              colorBrightness: Brightness.light,
+              color: Colors.purple[200],
+              splashColor: Colors.purple[600],
+              child: Text("Bugünün Raporu",style: TextStyle(fontFamily: "Poppins",color: Colors.black,fontWeight: FontWeight.w700),),
+            )
+          ],
+        ),
+      ],
     ),
   );
 }

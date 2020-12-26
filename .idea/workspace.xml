@@ -24,13 +24,8 @@
   <component name="ChangeListManager">
     <list default="true" id="54e5b7ed-05fe-4efe-ba11-29500f4ddba4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/employees.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/administrator/employees.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/screens/home/home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/home/home.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/products.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/administrator/products.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/products_in.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/administrator/products_in.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/reports.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/administrator/reports.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/tezgahtar/edit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/tezgahtar/edit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/screens/tezgahtar/tezgahtar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/screens/tezgahtar/tezgahtar.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/shared/constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/shared/constants.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
