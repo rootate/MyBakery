@@ -150,15 +150,17 @@ class _EmployeesState extends State<Employees> {
               style: TextStyle(color: Colors.white, fontSize: sizeW),
             ),
             onPressed: () {
-              setState(() {
-                if(val == 0) {
-                  employees.add(controller.value.text);
-                  subtitles.add(controller2.value.text);
-                } else {
-                  employees[index] = controller.value.text;
-                  subtitles[index] = controller2.value.text;
-                }
-              });
+              if(controller.value.text != "" && controller2.value.text != ""){
+                setState(() {
+                  if(val == 0) {
+                    employees.add(controller.value.text);
+                    subtitles.add(controller2.value.text);
+                  } else {
+                    employees[index] = controller.value.text;
+                    subtitles[index] = controller2.value.text;
+                  }
+                });
+              }
               Navigator.pop(context);
             },
             color: Colors.blue,
