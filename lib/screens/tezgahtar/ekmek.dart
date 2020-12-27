@@ -72,8 +72,11 @@ class _EkmekState extends State<Ekmek> {
             padding: EdgeInsets.only(left: 15, right: 15),
           ),
         ),
-        floatingActionButton: new RaisedButton(
-          onPressed: () {
+        floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Theme.of(context).primaryColor,
+        label: Text('Ekmek Ekle'.toUpperCase()),
+        icon: Icon(Icons.add),
+                  onPressed: () {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -134,8 +137,76 @@ class _EkmekState extends State<Ekmek> {
                   );
                 });
           },
-          child: Text("Ekmek Ekle"),
-        ));
+        
+
+
+      ),
+
+
+        // floatingActionButton: new RaisedButton(
+        //   onPressed: () {
+        //     showDialog(
+        //         context: context,
+        //         builder: (BuildContext context) {
+        //           return AlertDialog(
+        //             content: Stack(
+        //               overflow: Overflow.visible,
+        //               children: <Widget>[
+        //                 Positioned(
+        //                   right: -40.0,
+        //                   top: -40.0,
+        //                   child: InkResponse(
+        //                     onTap: () {
+        //                       Navigator.of(context).pop();
+        //                     },
+        //                     child: CircleAvatar(
+        //                       child: Icon(Icons.close),
+        //                       backgroundColor: Colors.red,
+        //                     ),
+        //                   ),
+        //                 ),
+        //                 Form(
+        //                   key: _formKey,
+        //                   child: Column(
+        //                     mainAxisSize: MainAxisSize.min,
+        //                     children: <Widget>[
+        //                       Padding(
+        //                         padding: EdgeInsets.all(8.0),
+        //                         child: TextField(
+        //                           controller: _textFieldController,
+        //                           keyboardType: TextInputType.number,
+        //                         ),
+        //                       ),
+        //                       Padding(
+        //                         padding: const EdgeInsets.all(8.0),
+        //                         child: RaisedButton(
+        //                           child: Text("Kaydet"),
+        //                           onPressed: () {
+        //                             if (_formKey.currentState.validate()) {
+        //                               _formKey.currentState.save();
+        //                               NotesDatabaseService.db.addEkmekInDB(
+        //                                   EkmekModel(
+        //                                       amount: _textFieldController.text,
+        //                                       time: DateTime.now()
+        //                                           .toIso8601String()));
+        //                               _textFieldController.clear();
+        //                               setEkmekFromDB();
+        //                               Navigator.pop(
+        //                                   context); // Close the add todo screen
+        //                             }
+        //                           },
+        //                         ),
+        //                       )
+        //                     ],
+        //                   ),
+        //                 ),
+        //               ],
+        //             ),
+        //           );
+        //         });
+        //   },
+        //   child: Text("Ekmek Ekle"),
+        );
   }
 
   Widget buildHeaderWidget(BuildContext context) {
@@ -147,7 +218,7 @@ class _EkmekState extends State<Ekmek> {
           margin: EdgeInsets.only(top: 8, bottom: 32, left: 10),
           width: headerShouldHide ? 0 : 200,
           child: Text(
-            'Ekmek Gir',
+            'Ekmekler',
             style: TextStyle(
                 fontFamily: 'ZillaSlab',
                 fontWeight: FontWeight.w700,

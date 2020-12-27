@@ -36,6 +36,10 @@ class NotesDatabaseService {
       await db.execute(
           'CREATE TABLE Ekmek (_id INTEGER PRIMARY KEY, amount TEXT, time TEXT);');
       print('New table created at $path');
+
+      await db.execute(
+          'CREATE TABLE Veresiye (_id INTEGER PRIMARY KEY, title TEXT, content TEXT, date TEXT);');
+      print('New table created at $path');
     });
   }
 
@@ -81,6 +85,21 @@ class NotesDatabaseService {
     return ekmekList;
   }
 
+  Future<List<VeresiyeModel>> getVeresiyeFromDB() async {
+    final db = await database;
+    List<VeresiyeModel> veresiyeList = [];
+    List<Map> maps = await db.query('Veresiye',
+        columns: ['_id', 'title', 'content', 'date']);
+    print(maps.length);
+    if (maps.length > 0) {
+      maps.forEach((map) {
+        veresiyeList.add(VeresiyeModel.fromMap(map));
+      });
+    }
+    return veresiyeList;
+  }
+
+
   updateNoteInDB(NotesModel updatedNote) async {
     final db = await database;
     await db.update('Notes', updatedNote.toMap(),
@@ -102,6 +121,14 @@ class NotesDatabaseService {
     print('Note updated: ${updatedEkmek.amount} ${updatedEkmek.time}');
   }
 
+  updateVeresiyeInDB(VeresiyeModel updatedVeresiye) async {
+    final db = await database;
+    await db.update('Veresiye', updatedVeresiye.toMap(),
+        where: '_id = ?', whereArgs: [updatedVeresiye.id]);
+    print('Veresiye updated: ${updatedVeresiye.title} ${updatedVeresiye.content}');
+  }
+
+
   deleteNoteInDB(NotesModel noteToDelete) async {
     final db = await database;
     await db.delete('Notes', where: '_id = ?', whereArgs: [noteToDelete.id]);
@@ -120,6 +147,14 @@ class NotesDatabaseService {
     await db.delete('Ekmek', where: '_id = ?', whereArgs: [ekmekToDelete.id]);
     print('Ekmek deleted');
   }
+
+  deleteVeresiyeInDB(VeresiyeModel veresiyeToDelete) async {
+    final db = await database;
+    await db.delete('Veresiye', where: '_id = ?', whereArgs: [veresiyeToDelete.id]);
+    print('Veresiye deleted');
+  }
+
+
 
   Future<NotesModel> addNoteInDB(NotesModel newNote) async {
     final db = await database;
@@ -168,4 +203,18 @@ class NotesDatabaseService {
     print('Ekmek added: ${newEkmek.amount} ${newEkmek.time}');
     return newEkmek;
   }
+
+  Future<VeresiyeModel> addVeresiyeInDB(VeresiyeModel newVeresiye) async {
+    final db = await database;
+    if (newVeresiye.title.trim().isEmpty) newVeresiye.title = 'Anonim';
+    int id = await db.transaction((transaction) {
+      transaction.rawInsert(
+          'INSERT into Veresiye(title, content, date) VALUES ("${newVeresiye.title}", "${newVeresiye.content}", "${newVeresiye.date.toIso8601String()}");');
+    });
+    newVeresiye.id = id;
+    print('Veresiye added: ${newVeresiye.title} ${newVeresiye.content}');
+    return newVeresiye;
+  }
+
+
 }

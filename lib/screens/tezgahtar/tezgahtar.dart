@@ -5,6 +5,7 @@ import 'package:flutter_my_bakery/screens/administrator/products.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/note.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/expense.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/ekmek.dart';
+import 'package:flutter_my_bakery/screens/tezgahtar/veresiye.dart';
 
 class Tezgahtar extends StatefulWidget {
   @override
@@ -34,28 +35,28 @@ class _TezgahtarState extends State<Tezgahtar> {
               ),
               centerTitle: true,
               backgroundColor: Colors.blueGrey,
-              actions: <Widget>[
-                FlatButton.icon(
-                  icon: Icon(
-                    Icons.exit_to_app,
-                    color: Colors.blueGrey[100],
-                  ),
-                  label: Text(
-                    "Exit",
-                    style: TextStyle(
-                        color: Colors.blueGrey[100], fontFamily: "Poppins"),
-                  ),
-                  onPressed: () async {
-                    setState(() => loading = true);
-                    dynamic result = await _auth.signOut();
-                    if (result == null) {
-                      setState(() {
-                        loading = false;
-                      });
-                    }
-                  },
-                )
-              ],
+              // actions: <Widget>[
+              //   FlatButton.icon(
+              //     icon: Icon(
+              //       Icons.exit_to_app,
+              //       color: Colors.blueGrey[100],
+              //     ),
+              //     label: Text(
+              //       "Exit",
+              //       style: TextStyle(
+              //           color: Colors.blueGrey[100], fontFamily: "Poppins"),
+              //     ),
+              //     onPressed: () async {
+              //       setState(() => loading = true);
+              //       dynamic result = await _auth.signOut();
+              //       if (result == null) {
+              //         setState(() {
+              //           loading = false;
+              //         });
+              //       }
+              //     },
+              //   )
+              // ],
             ),
             body: SafeArea(
               child: Container(
@@ -85,8 +86,8 @@ class _TezgahtarState extends State<Tezgahtar> {
                               Icons.all_out,
                               size: 65,
                             ),
-                            "Veresiyeler",
-                            Products()),
+                            "Veresiye",
+                            Veresiye()),
                         SizedBox(width: 10),
                         myBox(
                             context,
