@@ -209,7 +209,7 @@ class NotesDatabaseService {
     if (newVeresiye.title.trim().isEmpty) newVeresiye.title = 'Anonim';
     int id = await db.transaction((transaction) {
       transaction.rawInsert(
-          'INSERT into Veresiye(title, content, date) VALUES ("${newVeresiye.title}", "${newVeresiye.content}", "${newVeresiye.date.toIso8601String()}");');
+          'INSERT into Veresiye(title, content, date) VALUES ("${newVeresiye.title}", "${newVeresiye.content} ₺", "${newVeresiye.date.toIso8601String()}");');
     });
     newVeresiye.id = id;
     print('Veresiye added: ${newVeresiye.title} ${newVeresiye.content}');

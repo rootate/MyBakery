@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -8,15 +7,10 @@ import 'package:flutter_my_bakery/models/models.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/edit.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/view.dart';
 import 'package:flutter_my_bakery/services/database.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:flutter_my_bakery/shared/cards.dart';
 
 class Expense extends StatefulWidget {
-  Function(Brightness brightness) changeTheme;
-  Expense({Key key, this.title, Function(Brightness brightness) changeTheme})
-      : super(key: key) {
-    this.changeTheme = changeTheme;
-  }
+  Expense({Key key, this.title}) : super(key: key);
 
   final String title;
 
@@ -25,12 +19,9 @@ class Expense extends StatefulWidget {
 }
 
 class _ExpenseState extends State<Expense> {
-  bool isFlagOn = false;
   bool headerShouldHide = false;
   List<ExpensesModel> expensesList = [];
   TextEditingController searchController = TextEditingController();
-
-  bool isSearchEmpty = true;
 
   @override
   void initState() {
@@ -75,40 +66,8 @@ class _ExpenseState extends State<Expense> {
           child: ListView(
             physics: BouncingScrollPhysics(),
             children: <Widget>[
-              /*Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => SettingsPage(
-                                  changeTheme: widget.changeTheme)));
-                    },
-                    child: AnimatedContainer(
-                      duration: Duration(milliseconds: 200),
-                      padding: EdgeInsets.all(16),
-                      alignment: Alignment.centerRight,
-                      child: Icon(
-                        OMIcons.settings,
-                        color: Theme.of(context).brightness == Brightness.light
-                            ? Colors.grey.shade600
-                            : Colors.grey.shade300,
-                      ),
-                    ),
-                  ),
-                ],
-              ),*/
-              buildHeaderWidget(context),
-              // buildButtonRow(),
-              // buildImportantIndicatorText(),
-              // Container(height: 32),
+              Container(height: 32),
               ...buildExpenseComponentsList(),
-              GestureDetector(
-                  onTap: gotoEditExpense, child: AddExpenseCardComponent()),
-              Container(height: 100)
             ],
           ),
           margin: EdgeInsets.only(top: 2),
@@ -118,144 +77,18 @@ class _ExpenseState extends State<Expense> {
     );
   }
 
-  // Widget buildButtonRow() {
-  //   return Padding(
-  //     padding: const EdgeInsets.only(left: 10, right: 10),
-  //     child: Row(
-  // children: <Widget>[
-  //   GestureDetector(
-  //     onTap: () {
-  //       setState(() {
-  //         isFlagOn = !isFlagOn;
-  //       });
-  //     },
-  // child: AnimatedContainer(
-  //   duration: Duration(milliseconds: 160),
-  //   height: 50,
-  //   width: 50,
-  //   curve: Curves.slowMiddle,
-  //   child: Icon(
-  //     isFlagOn ? Icons.flag : OMIcons.flag,
-  //     color: isFlagOn ? Colors.white : Colors.grey.shade300,
-  //   ),
-  // decoration: BoxDecoration(
-  //     color: isFlagOn ? Colors.blue : Colors.transparent,
-  //     border: Border.all(
-  //       width: isFlagOn ? 2 : 1,
-  //       color:
-  //           isFlagOn ? Colors.blue.shade700 : Colors.grey.shade300,
-  //     ),
-  //     borderRadius: BorderRadius.all(Radius.circular(16))),
-  //   ),
-  // ),
-  // Expanded(
-  //   child: Container(
-  //     alignment: Alignment.center,
-  //     margin: EdgeInsets.only(left: 8),
-  //     padding: EdgeInsets.only(left: 16),
-  //     height: 50,
-  //     decoration: BoxDecoration(
-  //         border: Border.all(color: Colors.grey.shade300),
-  //         borderRadius: BorderRadius.all(Radius.circular(16))),
-  //     // child: Row(
-  //     //   mainAxisSize: MainAxisSize.max,
-  //     //   crossAxisAlignment: CrossAxisAlignment.center,
-  //     //   children: <Widget>[
-  //     //     // Expanded(
-  //     //     //   child: TextField(
-  //     //     //     controller: searchController,
-  //     //     //     maxLines: 1,
-  //     //     //     onChanged: (value) {
-  //     //     //       handleSearch(value);
-  //     //     //     },
-  //     //     //     autofocus: false,
-  //     //     //     keyboardType: TextInputType.text,
-  //     //     //     style:
-  //     //     //         TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-  //     //     //     textInputAction: TextInputAction.search,
-  //     //     //     decoration: InputDecoration.collapsed(
-  //     //     //       hintText: 'Ara',
-  //     //     //       hintStyle: TextStyle(
-  //     //     //           color: Colors.grey.shade300,
-  //     //     //           fontSize: 18,
-  //     //     //           fontWeight: FontWeight.w500),
-  //     //     //       border: InputBorder.none,
-  //     //     //     ),
-  //     //     //   ),
-  //     //     // ),
-  //     //   ],
-  //     ),
-  //   ),
-  // )
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  Widget buildHeaderWidget(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        AnimatedContainer(
-          duration: Duration(milliseconds: 200),
-          curve: Curves.easeIn,
-          margin: EdgeInsets.only(top: 8, bottom: 32, left: 10),
-          width: headerShouldHide ? 0 : 200,
-          child: Text(
-            'Giderler',
-            style: TextStyle(
-                fontFamily: 'ZillaSlab',
-                fontWeight: FontWeight.w700,
-                fontSize: 36,
-                color: Theme.of(context).primaryColor),
-            overflow: TextOverflow.clip,
-            softWrap: false,
-          ),
-        ),
-      ],
-    );
-  }
-
   List<Widget> buildExpenseComponentsList() {
     List<Widget> expenseComponentsList = [];
     expensesList.sort((a, b) {
       return b.date.compareTo(a.date);
     });
-    if (searchController.text.isNotEmpty) {
-      expensesList.forEach((note) {
-        if (note.title
-                .toLowerCase()
-                .contains(searchController.text.toLowerCase()) ||
-            note.content
-                .toLowerCase()
-                .contains(searchController.text.toLowerCase()))
-          expenseComponentsList.add(ExpenseCardComponent(
-            expenseData: note,
-            onTapAction: openExpenseToRead,
-          ));
-      });
-      return expenseComponentsList;
-    }
-    // else {
     expensesList.forEach((note) {
       expenseComponentsList.add(ExpenseCardComponent(
         expenseData: note,
         onTapAction: openExpenseToRead,
       ));
     });
-    // }
     return expenseComponentsList;
-  }
-
-  void handleSearch(String value) {
-    if (value.isNotEmpty) {
-      setState(() {
-        isSearchEmpty = false;
-      });
-    } else {
-      setState(() {
-        isSearchEmpty = true;
-      });
-    }
   }
 
   void gotoEditExpense() {
@@ -286,14 +119,6 @@ class _ExpenseState extends State<Expense> {
 
     setState(() {
       headerShouldHide = false;
-    });
-  }
-
-  void cancelSearch() {
-    FocusScope.of(context).requestFocus(new FocusNode());
-    setState(() {
-      searchController.clear();
-      isSearchEmpty = true;
     });
   }
 }

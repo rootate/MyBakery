@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/shared/loading.dart';
-import 'package:flutter_my_bakery/services/auth.dart';
 import 'package:flutter_my_bakery/screens/administrator/products.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/note.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/expense.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/ekmek.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/veresiye.dart';
+import 'package:flutter_my_bakery/screens/home/home.dart';
 
 class Tezgahtar extends StatefulWidget {
   @override
@@ -13,7 +13,6 @@ class Tezgahtar extends StatefulWidget {
 }
 
 class _TezgahtarState extends State<Tezgahtar> {
-  final AuthService _auth = AuthService();
   bool loading = false;
 
   int seciliSayfa = 0;
@@ -35,28 +34,6 @@ class _TezgahtarState extends State<Tezgahtar> {
               ),
               centerTitle: true,
               backgroundColor: Colors.blueGrey,
-              // actions: <Widget>[
-              //   FlatButton.icon(
-              //     icon: Icon(
-              //       Icons.exit_to_app,
-              //       color: Colors.blueGrey[100],
-              //     ),
-              //     label: Text(
-              //       "Exit",
-              //       style: TextStyle(
-              //           color: Colors.blueGrey[100], fontFamily: "Poppins"),
-              //     ),
-              //     onPressed: () async {
-              //       setState(() => loading = true);
-              //       dynamic result = await _auth.signOut();
-              //       if (result == null) {
-              //         setState(() {
-              //           loading = false;
-              //         });
-              //       }
-              //     },
-              //   )
-              // ],
             ),
             body: SafeArea(
               child: Container(
@@ -130,62 +107,4 @@ class _TezgahtarState extends State<Tezgahtar> {
             ),
           );
   }
-}
-
-Widget myBox(BuildContext context, Icon icon, String string, Widget function) {
-  return InkWell(
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => function),
-      );
-    },
-    child: Container(
-      alignment: Alignment.topRight,
-      decoration: BoxDecoration(
-          color: Color(0xFFF5F5F5),
-          borderRadius: BorderRadius.all(Radius.circular(15.0))),
-      width: MediaQuery.of(context).size.width / 3 - 10,
-      height: MediaQuery.of(context).size.width / 3 - 10,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            icon,
-            Text(
-              string,
-              style: TextStyle(
-                  fontFamily: "Poppins",
-                  fontWeight: FontWeight.w700,
-                  fontSize: 17),
-            )
-          ],
-        ),
-      ),
-    ),
-  );
-}
-
-Widget myBox2(BuildContext context) {
-  return Container(
-    alignment: Alignment.topRight,
-    decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(30.0))),
-    width: MediaQuery.of(context).size.width - 10,
-    height: 85,
-    child: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.cached_sharp,
-            color: Colors.black,
-            size: 30,
-          ),
-          Text("Deneme")
-        ],
-      ),
-    ),
-  );
 }
