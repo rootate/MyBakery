@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_my_bakery/SetupScreen/screens/Workers.dart';
 import 'package:flutter_my_bakery/SetupScreen/widgets/categoryItem.dart';
 import '../models/Category.dart';
+import '../models/Worker.dart';
 
 const categories = const [
   Category(name: "Ekmekler", image: "assets/images/ekmekler.jpeg"),
@@ -14,6 +16,18 @@ const categories = const [
 ];
 
 class Categories extends StatelessWidget {
+  final List<Worker> workerList = [];
+
+  void nextPage(BuildContext cx) {
+    Navigator.of(cx).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return Workers(list: workerList);
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +47,12 @@ class Categories extends StatelessWidget {
       appBar: AppBar(
         title: Text("Kategoriler"),
         backgroundColor: Colors.orange[600],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.orange[600],
+        child: Icon(Icons.done),
+        onPressed: () => nextPage(context),
       ),
     );
   }
