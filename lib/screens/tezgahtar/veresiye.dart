@@ -8,15 +8,10 @@ import 'package:flutter_my_bakery/models/models.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/edit.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/view.dart';
 import 'package:flutter_my_bakery/services/database.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:flutter_my_bakery/shared/cards.dart';
 
 class Veresiye extends StatefulWidget {
-  Function(Brightness brightness) changeTheme;
-  Veresiye({Key key, this.title, Function(Brightness brightness) changeTheme})
-      : super(key: key) {
-    this.changeTheme = changeTheme;
-  }
+  Veresiye({Key key, this.title}) : super(key: key);
 
   final String title;
 
@@ -25,11 +20,9 @@ class Veresiye extends StatefulWidget {
 }
 
 class _VeresiyeState extends State<Veresiye> {
-  bool isFlagOn = false;
   bool headerShouldHide = false;
   List<VeresiyeModel> veresiyeList = [];
   TextEditingController searchController = TextEditingController();
-
   bool isSearchEmpty = true;
 
   @override
@@ -75,40 +68,9 @@ class _VeresiyeState extends State<Veresiye> {
           child: ListView(
             physics: BouncingScrollPhysics(),
             children: <Widget>[
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.end,
-              //   children: <Widget>[
-              //     GestureDetector(
-              //       behavior: HitTestBehavior.opaque,
-              //       onTap: () {
-              //         Navigator.push(
-              //             context,
-              //             CupertinoPageRoute(
-              //                 builder: (context) => SettingsPage(
-              //                     changeTheme: widget.changeTheme)));
-              //       },
-              //       child: AnimatedContainer(
-              //         duration: Duration(milliseconds: 200),
-              //         padding: EdgeInsets.all(16),
-              //         alignment: Alignment.centerRight,
-              //         child: Icon(
-              //           OMIcons.settings,
-              //           color: Theme.of(context).brightness == Brightness.light
-              //               ? Colors.grey.shade600
-              //               : Colors.grey.shade300,
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              // buildHeaderWidget(context),
               buildButtonRow(),
-              // buildImportantIndicatorText(),
               Container(height: 32),
               ...buildveresiyeComponentsList(),
-              GestureDetector(
-                  onTap: gotoEditVeresiye, child: AddVeresiyeCardComponent()),
-              Container(height: 100)
             ],
           ),
           margin: EdgeInsets.only(top: 2),
@@ -178,54 +140,6 @@ class _VeresiyeState extends State<Veresiye> {
           ],
         ));
   }
-
-  Widget buildHeaderWidget(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        AnimatedContainer(
-          duration: Duration(milliseconds: 200),
-          curve: Curves.easeIn,
-          margin: EdgeInsets.only(top: 8, bottom: 32, left: 10),
-          width: headerShouldHide ? 0 : 200,
-          child: Text(
-            'Notlar',
-            style: TextStyle(
-                fontFamily: 'ZillaSlab',
-                fontWeight: FontWeight.w700,
-                fontSize: 36,
-                color: Theme.of(context).primaryColor),
-            overflow: TextOverflow.clip,
-            softWrap: false,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget testListItem(Color color) {
-    return new NoteCardComponent(
-      noteData: NotesModel.random(),
-    );
-  }
-
-  // Widget buildImportantIndicatorText() {
-  //   return AnimatedCrossFade(
-  //     duration: Duration(milliseconds: 200),
-  //     firstChild: Padding(
-  //       padding: const EdgeInsets.only(top: 8),
-  //       child: Text(
-  //         '\t\t\t\t\tYalnızca işaretlenmiş notlar listeleniyor.',
-  //         style: TextStyle(
-  //             fontSize: 12, color: Colors.blue, fontWeight: FontWeight.w500),
-  //       ),
-  //     ),
-  //     secondChild: Container(
-  //       height: 2,
-  //     ),
-  //     crossFadeState:
-  //         isFlagOn ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-  //   );
-  // }
 
   List<Widget> buildveresiyeComponentsList() {
     List<Widget> veresiyeComponentsList = [];

@@ -40,7 +40,6 @@ class ExpensesModel {
   int id;
   String title;
   String content;
-  // bool isImportant;
   DateTime date;
 
   ExpensesModel({this.id, this.title, this.content, this.date});
@@ -60,21 +59,12 @@ class ExpensesModel {
       'date': this.date.toIso8601String()
     };
   }
-
-  ExpensesModel.random() {
-    this.id = Random(10).nextInt(1000) + 1;
-    this.title = 'Lorem Ipsum ' * (Random().nextInt(4) + 1);
-    this.content = 'Lorem Ipsum ' * (Random().nextInt(4) + 1);
-    this.date = DateTime.now().add(Duration(hours: Random().nextInt(100)));
-  }
 }
 
 class EkmekModel {
   int id;
   String amount;
   String time;
-  // bool isImportant;
-  // DateTime date;
 
   EkmekModel({this.id, this.amount, this.time});
 
@@ -91,20 +81,12 @@ class EkmekModel {
       'content': this.time,
     };
   }
-
-  // EkmekModel.random() {
-  //   this.id = Random(10).nextInt(1000) + 1;
-  //   this.title = 'Lorem Ipsum ' * (Random().nextInt(4) + 1);
-  //   this.content = 'Lorem Ipsum ' * (Random().nextInt(4) + 1);
-  //   this.date = DateTime.now().add(Duration(hours: Random().nextInt(100)));
-//   }
 }
 
 class VeresiyeModel {
   int id;
   String title;
   String content;
-  // bool isImportant;
   DateTime date;
 
   VeresiyeModel({this.id, this.title, this.content, this.date});
@@ -123,12 +105,5 @@ class VeresiyeModel {
       'content': this.content,
       'date': this.date.toIso8601String()
     };
-  }
-
-  VeresiyeModel.random() {
-    this.id = Random(10).nextInt(1000) + 1;
-    this.title = 'Lorem Ipsum ' * (Random().nextInt(4) + 1);
-    this.content = 'Lorem Ipsum ' * (Random().nextInt(4) + 1);
-    this.date = DateTime.now().add(Duration(hours: Random().nextInt(100)));
   }
 }

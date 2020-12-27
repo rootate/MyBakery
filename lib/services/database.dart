@@ -128,7 +128,6 @@ class NotesDatabaseService {
     print('Veresiye updated: ${updatedVeresiye.title} ${updatedVeresiye.content}');
   }
 
-
   deleteNoteInDB(NotesModel noteToDelete) async {
     final db = await database;
     await db.delete('Notes', where: '_id = ?', whereArgs: [noteToDelete.id]);
@@ -153,8 +152,6 @@ class NotesDatabaseService {
     await db.delete('Veresiye', where: '_id = ?', whereArgs: [veresiyeToDelete.id]);
     print('Veresiye deleted');
   }
-
-
 
   Future<NotesModel> addNoteInDB(NotesModel newNote) async {
     final db = await database;
@@ -209,7 +206,7 @@ class NotesDatabaseService {
     if (newVeresiye.title.trim().isEmpty) newVeresiye.title = 'Anonim';
     int id = await db.transaction((transaction) {
       transaction.rawInsert(
-          'INSERT into Veresiye(title, content, date) VALUES ("${newVeresiye.title}", "${newVeresiye.content}", "${newVeresiye.date.toIso8601String()}");');
+          'INSERT into Veresiye(title, content, date) VALUES ("${newVeresiye.title}", "${newVeresiye.content} ₺", "${newVeresiye.date.toIso8601String()}");');
     });
     newVeresiye.id = id;
     print('Veresiye added: ${newVeresiye.title} ${newVeresiye.content}');

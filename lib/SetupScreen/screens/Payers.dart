@@ -1,53 +1,68 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/SetupScreen/models/Product.dart';
-import 'package:flutter_my_bakery/SetupScreen/widgets/NewProduct.dart';
+import '../models/Payer.dart';
+import '../widgets/NewPayer.dart';
 
-class Urunler extends StatefulWidget {
-  final String category;
-  final List<Product> list;
-  Urunler({this.category, this.list});
+class Payers extends StatefulWidget {
+  final List<Payer> list;
+  Payers({this.list});
   @override
-  _UrunlerState createState() =>
-      _UrunlerState(categoryName: category, productList: list);
+  _PayersState createState() => _PayersState(payerList: list);
 }
 
-class _UrunlerState extends State<Urunler> {
-  final String categoryName;
-  List<Product> productList = [];
-  void _addNewProduct(String prName, double prAmount) {
-    final newProduct = Product(name: prName, amount: prAmount);
+class _PayersState extends State<Payers> {
+  List<Payer> payerList = [];
+  void _addNewPayer(String prName, double prAmount) {
+    final newPayer = Payer(name: prName, debt: prAmount);
     setState(() {
-      productList.add(newProduct);
+      payerList.add(newPayer);
     });
   }
 
-  _UrunlerState({this.categoryName, this.productList});
+  _PayersState({this.payerList});
 
-  void _startAddNewProduct(BuildContext ctx) {
+  void _startAddNewpayer(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
         return GestureDetector(
           onTap: () {},
-          child: NewProduct(_addNewProduct),
+          child: NewPayer(_addNewPayer),
           behavior: HitTestBehavior.opaque,
         );
       },
     );
   }
 
-  void deleteProduct(String name) {
+  void deletePayer(String name) {
     setState(() {
-      productList.removeWhere((pr) => pr.name == name);
+      payerList.removeWhere((pr) => pr.name == name);
     });
+  }
+
+  void nextPage(BuildContext cx) {
+    Navigator.of(cx).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return Scaffold();
+        },
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange[700],
-        title: Text(categoryName),
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              onPressed: () => _startAddNewpayer(context))
+        ],
+        backgroundColor: Colors.green,
+        title: Text("Veresiyeler"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -55,7 +70,7 @@ class _UrunlerState extends State<Urunler> {
             Container(
               height: MediaQuery.of(context).size.height * 0.90,
               child: ListView.builder(
-                itemCount: productList.length,
+                itemCount: payerList.length,
                 padding: EdgeInsets.only(top: 10),
                 itemBuilder: (ctx, index) {
                   return Container(
@@ -68,21 +83,20 @@ class _UrunlerState extends State<Urunler> {
                           Container(
                             margin: EdgeInsets.only(left: 7),
                             child: Text(
-                              productList[index].name,
+                              payerList[index].name,
                               style: TextStyle(fontSize: 24),
                             ),
                           ),
                           Container(
                             child: Text(
-                              productList[index].amount.toStringAsFixed(2) +
-                                  " ₺",
+                              payerList[index].debt.toStringAsFixed(2) + " ₺",
                               style: TextStyle(fontSize: 24),
                             ),
                           ),
                           IconButton(
                               icon: Icon(Icons.delete),
                               onPressed: () =>
-                                  deleteProduct(productList[index].name))
+                                  deletePayer(payerList[index].name))
                         ],
                       ),
                     ),
@@ -95,9 +109,9 @@ class _UrunlerState extends State<Urunler> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.orange[700],
-        child: Icon(Icons.add),
-        onPressed: () => _startAddNewProduct(context),
+        backgroundColor: Colors.green,
+        child: Icon(Icons.done),
+        onPressed: () => nextPage(context),
       ),
     );
   }
