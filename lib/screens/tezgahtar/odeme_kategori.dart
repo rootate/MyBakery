@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_my_bakery/screens/tezgahtar/sepet.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
 
 List products = ['Ürün 1', 'Ürün 2', 'Ürün 3', 'Ürün 4',
   'Ürün 5', 'Ürün 6', 'Ürün 7', 'Ürün 8'];
-
-List prices = [10, 5, 2, 3,
-  6, 4, 1, 8];
-
-int sumPrice = 0;
+List prices = [10, 5, 2, 3, 6, 4, 1, 8];
 int indirim = 0;
+
+List product = List();
+List price = List();
+List piece = List();
 
 class OdemeKategori extends StatefulWidget {
   String category;
@@ -21,6 +22,14 @@ class OdemeKategori extends StatefulWidget {
 }
 
 class _OdemeKategoriState extends State<OdemeKategori> {
+  int sumPrice(){
+    int sum = 0;
+    for(int i=0;i<price.length;++i){
+      sum += price[i] * piece[i];
+    }
+    return sum;
+  }
+
   @override
   Widget build(BuildContext context) {
     final contextW = MediaQuery.of(context).size.width;
@@ -65,12 +74,12 @@ class _OdemeKategoriState extends State<OdemeKategori> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: (){
-          controller2.text = sumPrice.toString();
+          controller2.text = sumPrice().toString();
           controller3.text = indirim.toString();
           confirmationPopup2(context,image,controller2,controller3);
         },
         icon: Icon(Icons.shopping_cart_outlined),
-        label: Text(sumPrice.toString() + " ₺",style: TextStyle(fontFamily: "Poppins",fontSize: 20),),
+        label: Text(sumPrice().toString() + " ₺",style: TextStyle(fontFamily: "Poppins",fontSize: 20),),
       ),
     );
   }
@@ -129,8 +138,9 @@ class _OdemeKategoriState extends State<OdemeKategori> {
             ),
             onPressed: () {
               setState(() {
-                int x = prices[index] * int.parse(controller.value.text);
-                sumPrice += x;
+                product.add(products[index]);
+                price.add(prices[index]);
+                piece.add(int.parse(controller.value.text));
               });
               Navigator.pop(context);
             },
@@ -183,10 +193,10 @@ class _OdemeKategoriState extends State<OdemeKategori> {
               style: TextStyle(color: Colors.white, fontSize: sizeW),
             ),
             onPressed: () {
-              setState(() {
-
-              });
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Sepet(product: product,piece: piece,price: price,)),
+              );
             },
             color: Colors.blue,
           )
