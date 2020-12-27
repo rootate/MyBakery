@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_my_bakery/screens/tezgahtar/odeme.dart';
 import 'package:flutter_my_bakery/shared/loading.dart';
 import 'package:flutter_my_bakery/services/auth.dart';
 import 'package:flutter_my_bakery/screens/administrator/products.dart';
@@ -96,7 +97,7 @@ class _TezgahtarState extends State<Tezgahtar> {
                               size: 65,
                             ),
                             "Ürün sat",
-                            Products()),
+                            Odeme()),
                       ],
                     ),
                     SizedBox(height: 10),
