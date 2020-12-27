@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_my_bakery/screens/tezgahtar/odeme_kategori.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
-import 'package:flutter_my_bakery/screens/administrator/products_in.dart';
 
 List categories = ['Ekmekler', 'Kahvaltılıklar', 'Pastalar', 'İçecekler',
   'Tatlılar', 'Kurabiyeler', 'Hazır Gıdalar', 'Diğer'];
 
-class Products extends StatefulWidget {
+class Odeme extends StatefulWidget {
   @override
-  _ProductsState createState() => _ProductsState();
+  _OdemeState createState() => _OdemeState();
 }
 
-class _ProductsState extends State<Products> {
+class _OdemeState extends State<Odeme> {
   @override
   Widget build(BuildContext context) {
     final contextW = MediaQuery.of(context).size.width;
@@ -25,45 +25,45 @@ class _ProductsState extends State<Products> {
     TextEditingController controller = TextEditingController();
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Products",style: TextStyle(fontFamily: "Poppins"),),
-          centerTitle: true,
-          backgroundColor: Colors.blueGrey,
-        ),
-        body: ListView.builder(
-          itemCount: categories.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              onLongPress: (){
-                controller.text = categories[index];
-                confirmationPopup(context,image,1,index,controller);
-              },
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProductsIn()),
-                );
-              },
-              leading: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minWidth: sizeW,
-                  minHeight: sizeH,
-                  maxWidth: sizeW + 20,
-                  maxHeight: sizeH + 20,
-                ),
-                child: image,
+      appBar: AppBar(
+        title: Text("Ödeme",style: TextStyle(fontFamily: "Poppins"),),
+        centerTitle: true,
+        backgroundColor: Colors.blueGrey,
+      ),
+      body: ListView.builder(
+        itemCount: categories.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            onLongPress: (){
+              controller.text = categories[index];
+              confirmationPopup(context,image,1,index,controller);
+            },
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => OdemeKategori(category: categories[index])),
+              );
+            },
+            leading: ConstrainedBox(
+              constraints: BoxConstraints(
+                minWidth: sizeW,
+                minHeight: sizeH,
+                maxWidth: sizeW + 20,
+                maxHeight: sizeH + 20,
               ),
-              title: Text(categories[index],style: TextStyle(fontFamily: "Poppins"),),
-            );
-          },
+              child: image,
+            ),
+            title: Text(categories[index],style: TextStyle(fontFamily: "Poppins"),),
+          );
+        },
 
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: (){
-            confirmationPopup(context,image,0,0,controller);
-          },
-          child: Icon(Icons.add),
-        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          confirmationPopup(context,image,0,0,controller);
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 

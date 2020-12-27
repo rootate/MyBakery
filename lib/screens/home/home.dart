@@ -98,6 +98,8 @@ Widget myBox(BuildContext context, Icon icon, String string, Widget function) {
 
 Widget myBox2(BuildContext context) {
   double size1 = MediaQuery.of(context).size.height / 30;
+  double size2 = MediaQuery.of(context).size.height / 40;
+
   return Container(
     decoration: BoxDecoration(
         color: Colors.white,
@@ -111,14 +113,14 @@ Widget myBox2(BuildContext context) {
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 12,),
+            SizedBox(height: size1 / 2,),
             Text("\₺ 370,345",style: textStyle4,),
             Text("Çarşamba",style: textStyle4,),
           ],
         ),
         Column(
           children: [
-            SizedBox(height: 20,),
+            SizedBox(height: size2,),
             RaisedButton(
               onPressed: (){},
               shape: RoundedRectangleBorder(
