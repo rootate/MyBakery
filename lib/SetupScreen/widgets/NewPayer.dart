@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class NewMarket extends StatefulWidget {
+class NewPayer extends StatefulWidget {
   final Function addTx;
 
-  NewMarket(this.addTx);
+  NewPayer(this.addTx);
 
   @override
-  _NewMarketState createState() => _NewMarketState();
+  _NewPayerState createState() => _NewPayerState();
 }
 
-class _NewMarketState extends State<NewMarket> {
+class _NewPayerState extends State<NewPayer> {
   final _nameController = TextEditingController();
   final _amountController = TextEditingController();
 
@@ -57,8 +57,8 @@ class _NewMarketState extends State<NewMarket> {
               // onChanged: (val) => amountInput = val,
             ),
             FlatButton(
-              child: Text('Market Ekle'),
-              textColor: Colors.pink,
+              child: Text('Veresiye Ekle'),
+              textColor: Colors.green,
               onPressed: () => _submitData(),
             ),
           ],
