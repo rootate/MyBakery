@@ -31,7 +31,7 @@ class NoteCardComponent extends StatelessWidget {
     Color color = colorList.elementAt(noteData.title.length % colorList.length);
     return Container(
         margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
-        height: 110,
+        height: 116,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           boxShadow: [buildBoxShadow(color, context)],
@@ -134,7 +134,7 @@ class ExpenseCardComponent extends StatelessWidget {
         colorList.elementAt(expenseData.title.length % colorList.length);
     return Container(
         margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
-        height: 120,
+        height: 140,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           // boxShadow: [buildBoxShadow(color, context)],
@@ -175,12 +175,6 @@ class ExpenseCardComponent extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: Row(
                       children: <Widget>[
-                        // Icon(Icons.flag,
-                        //     size: 16,
-                        //     color: expenseData.isImportant
-                        //         ? color
-                        //         : Colors.transparent
-                        //         ),
                         Spacer(),
                         Text(
                           '$neatDate',

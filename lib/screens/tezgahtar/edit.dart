@@ -141,7 +141,7 @@ class _EditNotePageState extends State<EditNotePage> {
                       AnimatedContainer(
                         margin: EdgeInsets.only(left: 10),
                         duration: Duration(milliseconds: 200),
-                        width: isDirty ? 110 : 0,
+                        width: isDirty ? 120 : 0,
                         height: 42,
                         curve: Curves.decelerate,
                         child: RaisedButton.icon(
@@ -154,11 +154,10 @@ class _EditNotePageState extends State<EditNotePage> {
                           icon: Icon(Icons.done),
                           label: Text(
                             'Kaydet',
-                            style: TextStyle(letterSpacing: 1),
                           ),
                           onPressed: handleSave,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -380,9 +379,9 @@ class _EditExpensePageState extends State<EditExpensePage> {
                         },
                       ),
                       AnimatedContainer(
-                        margin: EdgeInsets.only(left: 10),
+                        margin: EdgeInsets.only(left: 20),
                         duration: Duration(milliseconds: 200),
-                        width: isDirty ? 110 : 0,
+                        width: isDirty ? 150 : 0,
                         height: 42,
                         curve: Curves.decelerate,
                         child: RaisedButton.icon(
@@ -395,7 +394,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
                           icon: Icon(Icons.done),
                           label: Text(
                             'Kaydet',
-                            style: TextStyle(letterSpacing: 1),
+                            style: TextStyle(letterSpacing: 0),
                           ),
                           onPressed: handleSave,
                         ),
@@ -618,7 +617,7 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
                       AnimatedContainer(
                         margin: EdgeInsets.only(left: 10),
                         duration: Duration(milliseconds: 200),
-                        width: isDirty ? 110 : 0,
+                        width: isDirty ? 130 : 0,
                         height: 42,
                         curve: Curves.decelerate,
                         child: RaisedButton.icon(
@@ -631,7 +630,7 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
                           icon: Icon(Icons.done),
                           label: Text(
                             'Kaydet',
-                            style: TextStyle(letterSpacing: 1),
+                            style: TextStyle(letterSpacing: 0),
                           ),
                           onPressed: handleSave,
                         ),
