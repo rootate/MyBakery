@@ -60,7 +60,7 @@ class _NewWorkerState extends State<NewWorker> {
                 }).toList()),
             FlatButton(
               child: Text('Çalışan Ekle'),
-              textColor: Colors.orange,
+              textColor: Colors.blue,
               onPressed: () => _submitData(),
             ),
           ],
