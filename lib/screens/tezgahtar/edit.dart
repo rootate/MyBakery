@@ -71,7 +71,7 @@ class _EditNotePageState extends State<EditNotePage> {
                 },
                 textInputAction: TextInputAction.next,
                 style: TextStyle(
-                    fontFamily: 'ZillaSlab',
+                    fontFamily: 'Poppins',
                     fontSize: 32,
                     fontWeight: FontWeight.w700),
                 decoration: InputDecoration.collapsed(
@@ -79,7 +79,7 @@ class _EditNotePageState extends State<EditNotePage> {
                   hintStyle: TextStyle(
                       color: Colors.grey.shade400,
                       fontSize: 32,
-                      fontFamily: 'ZillaSlab',
+                      fontFamily: 'Poppins',
                       fontWeight: FontWeight.w700),
                   border: InputBorder.none,
                 ),
@@ -141,7 +141,7 @@ class _EditNotePageState extends State<EditNotePage> {
                       AnimatedContainer(
                         margin: EdgeInsets.only(left: 10),
                         duration: Duration(milliseconds: 200),
-                        width: isDirty ? 110 : 0,
+                        width: isDirty ? 120 : 0,
                         height: 42,
                         curve: Curves.decelerate,
                         child: RaisedButton.icon(
@@ -154,11 +154,10 @@ class _EditNotePageState extends State<EditNotePage> {
                           icon: Icon(Icons.done),
                           label: Text(
                             'Kaydet',
-                            style: TextStyle(letterSpacing: 1),
                           ),
                           onPressed: handleSave,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -322,7 +321,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
                 },
                 textInputAction: TextInputAction.next,
                 style: TextStyle(
-                    fontFamily: 'ZillaSlab',
+                    fontFamily: 'Poppins',
                     fontSize: 32,
                     fontWeight: FontWeight.w700),
                 decoration: InputDecoration.collapsed(
@@ -330,7 +329,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
                   hintStyle: TextStyle(
                       color: Colors.grey.shade400,
                       fontSize: 32,
-                      fontFamily: 'ZillaSlab',
+                      fontFamily: 'Poppins',
                       fontWeight: FontWeight.w700),
                   border: InputBorder.none,
                 ),
@@ -373,16 +372,6 @@ class _EditExpensePageState extends State<EditExpensePage> {
                         onPressed: handleBack,
                       ),
                       Spacer(),
-                      // IconButton(
-                      //   tooltip: 'Önemli olarak işaretleyin!',
-                      //   icon: Icon(currentNote.isImportant
-                      //       ? Icons.flag
-                      //       : Icons.outlined_flag),
-                      //   onPressed: titleController.text.trim().isNotEmpty &&
-                      //           contentController.text.trim().isNotEmpty
-                      //       ? markImportantAsDirty
-                      //       : null,
-                      // ),
                       IconButton(
                         icon: Icon(Icons.delete_outline),
                         onPressed: () {
@@ -390,9 +379,9 @@ class _EditExpensePageState extends State<EditExpensePage> {
                         },
                       ),
                       AnimatedContainer(
-                        margin: EdgeInsets.only(left: 10),
+                        margin: EdgeInsets.only(left: 20),
                         duration: Duration(milliseconds: 200),
-                        width: isDirty ? 110 : 0,
+                        width: isDirty ? 150 : 0,
                         height: 42,
                         curve: Curves.decelerate,
                         child: RaisedButton.icon(
@@ -405,7 +394,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
                           icon: Icon(Icons.done),
                           label: Text(
                             'Kaydet',
-                            style: TextStyle(letterSpacing: 1),
+                            style: TextStyle(letterSpacing: 0),
                           ),
                           onPressed: handleSave,
                         ),
@@ -568,7 +557,7 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
                 },
                 textInputAction: TextInputAction.next,
                 style: TextStyle(
-                    fontFamily: 'ZillaSlab',
+                    fontFamily: 'Poppins',
                     fontSize: 32,
                     fontWeight: FontWeight.w700),
                 decoration: InputDecoration.collapsed(
@@ -576,7 +565,7 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
                   hintStyle: TextStyle(
                       color: Colors.grey.shade400,
                       fontSize: 32,
-                      fontFamily: 'ZillaSlab',
+                      fontFamily: 'Poppins',
                       fontWeight: FontWeight.w700),
                   border: InputBorder.none,
                 ),
@@ -628,7 +617,7 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
                       AnimatedContainer(
                         margin: EdgeInsets.only(left: 10),
                         duration: Duration(milliseconds: 200),
-                        width: isDirty ? 110 : 0,
+                        width: isDirty ? 130 : 0,
                         height: 42,
                         curve: Curves.decelerate,
                         child: RaisedButton.icon(
@@ -641,7 +630,7 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
                           icon: Icon(Icons.done),
                           label: Text(
                             'Kaydet',
-                            style: TextStyle(letterSpacing: 1),
+                            style: TextStyle(letterSpacing: 0),
                           ),
                           onPressed: handleSave,
                         ),
