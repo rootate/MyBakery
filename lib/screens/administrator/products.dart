@@ -3,6 +3,9 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
 import 'package:flutter_my_bakery/screens/administrator/products_in.dart';
 
+List categories = ['Ekmekler', 'Kahvaltılıklar', 'Pastalar', 'İçecekler',
+  'Tatlılar', 'Kurabiyeler', 'Hazır Gıdalar', 'Diğer'];
+
 class Products extends StatefulWidget {
   @override
   _ProductsState createState() => _ProductsState();
@@ -19,9 +22,6 @@ class _ProductsState extends State<Products> {
 
     final image = Image(image: AssetImage('assets/images/icons/bread2.png'));
 
-    final categories = ['Ekmekler', 'Kahvaltılıklar', 'Pastalar', 'İçecekler',
-      'Tatlılar', 'Kurabiyeler', 'Hazır Gıdalar', 'Diğer'];
-
     TextEditingController controller = TextEditingController();
 
     return Scaffold(
@@ -36,7 +36,7 @@ class _ProductsState extends State<Products> {
             return ListTile(
               onLongPress: (){
                 controller.text = categories[index];
-                confirmationPopup(context,image,1,controller);
+                confirmationPopup(context,image,1,index,controller);
               },
               onTap: () {
                 Navigator.push(
@@ -60,14 +60,14 @@ class _ProductsState extends State<Products> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: (){
-            confirmationPopup(context,image,0,controller);
+            confirmationPopup(context,image,0,0,controller);
           },
           child: Icon(Icons.add),
         ),
     );
   }
 
-  confirmationPopup(BuildContext dialogContext,Widget image,int val,TextEditingController controller) {
+  confirmationPopup(BuildContext dialogContext,Widget image,int val,int index,TextEditingController controller) {
     final contextW = MediaQuery.of(context).size.width;
     final sizeW = contextW / 20;
 
@@ -110,6 +110,9 @@ class _ProductsState extends State<Products> {
               style: TextStyle(color: Colors.white, fontSize: sizeW),
             ),
             onPressed: () {
+              setState(() {
+                categories.remove(controller.value.text);
+              });
               Navigator.pop(context);
             },
             color: Colors.red,
@@ -130,6 +133,15 @@ class _ProductsState extends State<Products> {
               style: TextStyle(color: Colors.white, fontSize: sizeW),
             ),
             onPressed: () {
+              setState(() {
+                setState(() {
+                  if(val == 0) {
+                    categories.add(controller.value.text);
+                  } else {
+                    categories[index] = controller.value.text;
+                  }
+                });
+              });
               Navigator.pop(context);
             },
             color: Colors.blue,
