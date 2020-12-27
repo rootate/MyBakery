@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/screens/authenticate/sign_in.dart';
-// import 'package:flutter_my_bakery/screens/home/home.dart';
 import 'package:flutter_my_bakery/screens/home/bottom_bar_state.dart';
 import 'package:firebase_core/firebase_core.dart';
 
