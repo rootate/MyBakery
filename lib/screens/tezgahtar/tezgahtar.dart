@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/shared/loading.dart';
 import 'package:flutter_my_bakery/services/auth.dart';
-import 'package:flutter_my_bakery/screens/products.dart';
-import 'package:flutter_my_bakery/screens/employees.dart';
+import 'package:flutter_my_bakery/screens/administrator/products.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/note.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/expense.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/ekmek.dart';
@@ -75,7 +74,7 @@ class _TezgahtarState extends State<Tezgahtar> {
                         myBox(
                             context,
                             Icon(
-                              Icons.local_shipping,
+                              Icons.attach_money_outlined,
                               size: 65,
                             ),
                             "Gider Gir",
@@ -84,7 +83,7 @@ class _TezgahtarState extends State<Tezgahtar> {
                         myBox(
                             context,
                             Icon(
-                              Icons.bubble_chart,
+                              Icons.all_out,
                               size: 65,
                             ),
                             "Veresiye",
@@ -93,7 +92,7 @@ class _TezgahtarState extends State<Tezgahtar> {
                         myBox(
                             context,
                             Icon(
-                              Icons.fastfood,
+                              Icons.fastfood_outlined,
                               size: 65,
                             ),
                             "Ürün sat",
@@ -108,7 +107,7 @@ class _TezgahtarState extends State<Tezgahtar> {
                         myBox(
                             context,
                             Icon(
-                              Icons.file_copy,
+                              Icons.note_add,
                               size: 65,
                             ),
                             "Not Al",
@@ -117,7 +116,7 @@ class _TezgahtarState extends State<Tezgahtar> {
                         myBox(
                             context,
                             Icon(
-                              Icons.people,
+                              Icons.breakfast_dining,
                               size: 65,
                             ),
                             "Ekmek Gir",
