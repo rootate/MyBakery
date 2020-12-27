@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
+List employees = ['Harun Albayrak', 'Ümit Altıntaş', 'Yusuf Akgül', 'Bilal Bayrakdar',
+  'Ömer Faruk Sayar'];
+
+List subtitles = ['Şoför', 'Tezgahtar', 'None', 'None', 'None'];
+
 class Employees extends StatefulWidget {
   @override
   _EmployeesState createState() => _EmployeesState();
@@ -21,11 +26,6 @@ class _EmployeesState extends State<Employees> {
     TextEditingController controller = TextEditingController();
     TextEditingController controller2 = TextEditingController();
 
-    final employees = ['Harun Albayrak', 'Ümit Altıntaş', 'Yusuf Akgül', 'Bilal Bayrakdar',
-      'Ömer Faruk Sayar'];
-
-    final subtitles = ['Şoför', 'Tezgahtar', 'None', 'None', 'None'];
-
     return Scaffold(
         appBar: AppBar(
           title: Text("Employees",style: TextStyle(fontFamily: "Poppins"),),
@@ -39,12 +39,12 @@ class _EmployeesState extends State<Employees> {
               onLongPress: (){
                 controller.text = employees[index];
                 controller2.text = subtitles[index];
-                confirmationPopup(context,image,1,controller,controller2);
+                confirmationPopup(context,image,1,index,controller,controller2);
               },
               onTap: () {
                 controller.text = employees[index];
                 controller2.text = subtitles[index];
-                confirmationPopup(context,image,1,controller,controller2);
+                confirmationPopup(context,image,1,index,controller,controller2);
               },
               leading: ConstrainedBox(
                 constraints: BoxConstraints(
@@ -62,14 +62,14 @@ class _EmployeesState extends State<Employees> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: (){
-            confirmationPopup(context,image,0,controller,controller2);
+            confirmationPopup(context,image,0,0,controller,controller2);
           },
           child: Icon(Icons.add),
         ),
     );
   }
 
-  confirmationPopup(BuildContext dialogContext,Widget image,int val,TextEditingController controller,TextEditingController controller2) {
+  confirmationPopup(BuildContext dialogContext,Widget image,int val,int index,TextEditingController controller,TextEditingController controller2) {
     final contextW = MediaQuery.of(context).size.width;
     final sizeW = contextW / 20;
 
@@ -127,6 +127,9 @@ class _EmployeesState extends State<Employees> {
               style: TextStyle(color: Colors.white, fontSize: sizeW),
             ),
             onPressed: () {
+              setState(() {
+                employees.remove(controller.value.text);
+              });
               Navigator.pop(context);
             },
             color: Colors.red,
@@ -147,6 +150,15 @@ class _EmployeesState extends State<Employees> {
               style: TextStyle(color: Colors.white, fontSize: sizeW),
             ),
             onPressed: () {
+              setState(() {
+                if(val == 0) {
+                  employees.add(controller.value.text);
+                  subtitles.add(controller2.value.text);
+                } else {
+                  employees[index] = controller.value.text;
+                  subtitles[index] = controller2.value.text;
+                }
+              });
               Navigator.pop(context);
             },
             color: Colors.blue,

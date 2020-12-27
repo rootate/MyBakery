@@ -128,7 +128,6 @@ class NotesDatabaseService {
     print('Veresiye updated: ${updatedVeresiye.title} ${updatedVeresiye.content}');
   }
 
-
   deleteNoteInDB(NotesModel noteToDelete) async {
     final db = await database;
     await db.delete('Notes', where: '_id = ?', whereArgs: [noteToDelete.id]);
@@ -153,8 +152,6 @@ class NotesDatabaseService {
     await db.delete('Veresiye', where: '_id = ?', whereArgs: [veresiyeToDelete.id]);
     print('Veresiye deleted');
   }
-
-
 
   Future<NotesModel> addNoteInDB(NotesModel newNote) async {
     final db = await database;
