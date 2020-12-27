@@ -12,11 +12,7 @@ import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:flutter_my_bakery/shared/cards.dart';
 
 class Note extends StatefulWidget {
-  Function(Brightness brightness) changeTheme;
-  Note({Key key, this.title, Function(Brightness brightness) changeTheme})
-      : super(key: key) {
-    this.changeTheme = changeTheme;
-  }
+  Note({Key key, this.title}) : super(key: key);
 
   final String title;
 
@@ -52,7 +48,7 @@ class _NoteState extends State<Note> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Notlar",
+          "Not Al",
           style: TextStyle(fontFamily: "Poppins"),
         ),
         centerTitle: true,
@@ -75,40 +71,11 @@ class _NoteState extends State<Note> {
           child: ListView(
             physics: BouncingScrollPhysics(),
             children: <Widget>[
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.end,
-              //   children: <Widget>[
-              //     GestureDetector(
-              //       behavior: HitTestBehavior.opaque,
-              //       onTap: () {
-              //         Navigator.push(
-              //             context,
-              //             CupertinoPageRoute(
-              //                 builder: (context) => SettingsPage(
-              //                     changeTheme: widget.changeTheme)));
-              //       },
-              //       child: AnimatedContainer(
-              //         duration: Duration(milliseconds: 200),
-              //         padding: EdgeInsets.all(16),
-              //         alignment: Alignment.centerRight,
-              //         child: Icon(
-              //           OMIcons.settings,
-              //           color: Theme.of(context).brightness == Brightness.light
-              //               ? Colors.grey.shade600
-              //               : Colors.grey.shade300,
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
               buildHeaderWidget(context),
               buildButtonRow(),
               buildImportantIndicatorText(),
               Container(height: 32),
               ...buildNoteComponentsList(),
-              GestureDetector(
-                  onTap: gotoEditNote, child: AddNoteCardComponent()),
-              Container(height: 100)
             ],
           ),
           margin: EdgeInsets.only(top: 2),

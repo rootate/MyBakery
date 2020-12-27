@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_my_bakery/models/models.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:flutter_my_bakery/services/database.dart';
 
 List<Color> colorList = [
   Colors.blue,
@@ -56,7 +55,7 @@ class NoteCardComponent extends StatelessWidget {
                   Text(
                     '${noteData.title.trim().length <= 20 ? noteData.title.trim() : noteData.title.trim().substring(0, 20) + '...'}',
                     style: TextStyle(
-                        fontFamily: 'ZillaSlab',
+                        fontFamily: 'Poppins',
                         fontSize: 20,
                         fontWeight: noteData.isImportant
                             ? FontWeight.w800
@@ -117,55 +116,6 @@ class NoteCardComponent extends StatelessWidget {
   }
 }
 
-class AddNoteCardComponent extends StatelessWidget {
-  const AddNoteCardComponent({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
-        height: 110,
-        decoration: BoxDecoration(
-          border: Border.all(color: Theme.of(context).primaryColor, width: 2),
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Material(
-          borderRadius: BorderRadius.circular(16),
-          clipBehavior: Clip.antiAlias,
-          child: Container(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(
-                        Icons.add,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Yeni not ekle',
-                            style: TextStyle(
-                                fontFamily: 'ZillaSlab',
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 20),
-                          ))
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ));
-  }
-}
-
 class ExpenseCardComponent extends StatelessWidget {
   const ExpenseCardComponent({
     this.expenseData,
@@ -184,7 +134,7 @@ class ExpenseCardComponent extends StatelessWidget {
         colorList.elementAt(expenseData.title.length % colorList.length);
     return Container(
         margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
-        height: 110,
+        height: 120,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           // boxShadow: [buildBoxShadow(color, context)],
@@ -208,7 +158,7 @@ class ExpenseCardComponent extends StatelessWidget {
                   Text(
                     '${expenseData.title.trim().length <= 20 ? expenseData.title : expenseData.title.trim().substring(0, 20) + '...'}',
                     style: TextStyle(
-                        fontFamily: 'ZillaSlab',
+                        fontFamily: 'Poppins',
                         fontSize: 20,
                         fontWeight: FontWeight.normal),
                   ),
@@ -251,55 +201,6 @@ class ExpenseCardComponent extends StatelessWidget {
   }
 }
 
-class AddExpenseCardComponent extends StatelessWidget {
-  const AddExpenseCardComponent({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
-        height: 110,
-        decoration: BoxDecoration(
-          border: Border.all(color: Theme.of(context).primaryColor, width: 2),
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Material(
-          borderRadius: BorderRadius.circular(16),
-          clipBehavior: Clip.antiAlias,
-          child: Container(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(
-                        Icons.add,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Yeni gider ekle',
-                            style: TextStyle(
-                                fontFamily: 'ZillaSlab',
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 20),
-                          ))
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ));
-  }
-}
-
 class EkmekCardComponent extends StatelessWidget {
   const EkmekCardComponent({
     this.ekmekData,
@@ -319,7 +220,7 @@ class EkmekCardComponent extends StatelessWidget {
         colorList.elementAt(ekmekData.amount.length % colorList.length);
     return Container(
         margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
-        height: 110,
+        height: 80,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           // boxShadow: [buildBoxShadow(color, context)],
@@ -341,35 +242,20 @@ class EkmekCardComponent extends StatelessWidget {
                   Text(
                     '${ekmekData.amount.trim().length <= 20 ? ekmekData.amount : ekmekData.amount.trim().substring(0, 20) + '...'}',
                     style: TextStyle(
-                        fontFamily: 'ZillaSlab',
+                        fontFamily: 'Poppins',
                         fontSize: 20,
                         fontWeight: FontWeight.normal),
                   ),
-                  // Container(
-                  //   margin: EdgeInsets.only(top: 8),
-                  //   child: Text(
-                  //     '${ekmekData.time.trim().split('\n').first.length <= 30 ? ekmekData.time.trim().split('\n').first : ekmekData.time.trim().split('\n').first.substring(0, 30) + '...'}',
-                  //     style:
-                  //         TextStyle(fontSize: 20, color: Colors.grey.shade600),
-                  //   ),
-                  // ),
                   Container(
-                    margin: EdgeInsets.only(top: 10),
                     alignment: Alignment.centerRight,
                     child: Row(
                       children: <Widget>[
-                        // Icon(Icons.flag,
-                        //     size: 16,
-                        //     color: expenseData.isImportant
-                        //         ? color
-                        //         : Colors.transparent
-                        //         ),
                         Spacer(),
                         Text(
                           '$neatDate',
                           textAlign: TextAlign.right,
                           style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 15,
                               color: Colors.grey.shade300,
                               fontWeight: FontWeight.w500),
                         ),
@@ -398,7 +284,8 @@ class VeresiyeCardComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     initializeDateFormatting('tr'); //bu satırı ekliyoruz
     String neatDate = DateFormat.yMMMd('tr').add_Hm().format(veresiyeData.date);
-    Color color = colorList.elementAt(veresiyeData.title.length % colorList.length);
+    Color color =
+        colorList.elementAt(veresiyeData.title.length % colorList.length);
     return Container(
         margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
         height: 110,
@@ -425,28 +312,28 @@ class VeresiyeCardComponent extends StatelessWidget {
                   Text(
                     '${veresiyeData.title.trim().length <= 20 ? veresiyeData.title.trim() : veresiyeData.title.trim().substring(0, 20) + '...'}',
                     style: TextStyle(
-                        fontFamily: 'ZillaSlab',
+                        fontFamily: 'Poppins',
                         fontSize: 20,
                         fontWeight: FontWeight.normal),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 8),
+                    margin: EdgeInsets.only(top: 6),
                     child: Text(
                       '${veresiyeData.content.trim().split('\n').first.length <= 30 ? veresiyeData.content.trim().split('\n').first : veresiyeData.content.trim().split('\n').first.substring(0, 30) + '...'}',
-                      style:
-                          TextStyle(fontSize: 14, color: Colors.grey.shade400),
+                      style: TextStyle(fontSize: 18),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 14),
+                    margin: EdgeInsets.only(top: 3),
                     alignment: Alignment.centerRight,
                     child: Row(
                       children: <Widget>[
+                        Spacer(),
                         Text(
                           '$neatDate',
                           textAlign: TextAlign.right,
                           style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 15,
                               color: Colors.grey.shade300,
                               fontWeight: FontWeight.w500),
                         ),
@@ -468,57 +355,6 @@ class VeresiyeCardComponent extends StatelessWidget {
           offset: Offset(0, 8));
     }
     return BoxShadow(
-        color: color.withAlpha(25),
-        blurRadius: 8,
-        offset: Offset(0, 8));
-  }
-}
-
-class AddVeresiyeCardComponent extends StatelessWidget {
-  const AddVeresiyeCardComponent({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
-        height: 110,
-        decoration: BoxDecoration(
-          border: Border.all(color: Theme.of(context).primaryColor, width: 2),
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Material(
-          borderRadius: BorderRadius.circular(16),
-          clipBehavior: Clip.antiAlias,
-          child: Container(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(
-                        Icons.add,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Veresiye ekle',
-                            style: TextStyle(
-                                fontFamily: 'ZillaSlab',
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 20),
-                          ))
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ));
+        color: color.withAlpha(25), blurRadius: 8, offset: Offset(0, 8));
   }
 }

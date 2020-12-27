@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -23,7 +22,6 @@ class ViewNotePage extends StatefulWidget {
   @override
   _ViewNotePageState createState() => _ViewNotePageState();
 }
-
 class _ViewNotePageState extends State<ViewNotePage> {
   @override
   void initState() {
@@ -61,7 +59,7 @@ class _ViewNotePageState extends State<ViewNotePage> {
                 child: Text(
                   widget.currentNote.title,
                   style: TextStyle(
-                    fontFamily: 'ZillaSlab',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w700,
                     fontSize: 36,
                   ),
@@ -257,7 +255,7 @@ class _ViewExpensePageState extends State<ViewExpensePage> {
                 child: Text(
                   widget.currentExpense.title,
                   style: TextStyle(
-                    fontFamily: 'ZillaSlab',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w700,
                     fontSize: 36,
                   ),
@@ -327,13 +325,6 @@ class _ViewExpensePageState extends State<ViewExpensePage> {
     await NotesDatabaseService.db.updateExpenseInDB(widget.currentExpense);
     widget.triggerRefetch();
   }
-
-  // void markImportantAsDirty() {
-  //   setState(() {
-  //     widget.currentNote.isImportant = !widget.currentNote.isImportant;
-  //   });
-  //   handleSave();
-  // }
 
   void handleEdit() {
     Navigator.pop(context);
@@ -444,7 +435,7 @@ class _ViewVeresiyePageState extends State<ViewVeresiyePage> {
                 child: Text(
                   widget.currentVeresiye.title,
                   style: TextStyle(
-                    fontFamily: 'ZillaSlab',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w700,
                     fontSize: 36,
                   ),
