@@ -52,7 +52,7 @@ class _NoteState extends State<Note> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Notlar",
+          "Not Al",
           style: TextStyle(fontFamily: "Poppins"),
         ),
         centerTitle: true,
