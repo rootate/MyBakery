@@ -394,3 +394,183 @@ class _ViewExpensePageState extends State<ViewExpensePage> {
         });
   }
 }
+
+class ViewVeresiyePage extends StatefulWidget {
+  Function() triggerRefetch;
+  VeresiyeModel currentVeresiye;
+  ViewVeresiyePage({Key key, Function() triggerRefetch, VeresiyeModel currentVeresiye})
+      : super(key: key) {
+    this.triggerRefetch = triggerRefetch;
+    this.currentVeresiye = currentVeresiye;
+  }
+  @override
+  _ViewVeresiyePageState createState() => _ViewVeresiyePageState();
+}
+
+class _ViewVeresiyePageState extends State<ViewVeresiyePage> {
+  @override
+  void initState() {
+    super.initState();
+    showHeader();
+  }
+
+  void showHeader() async {
+    Future.delayed(Duration(milliseconds: 100), () {
+      setState(() {
+        headerShouldShow = true;
+      });
+    });
+  }
+
+  bool headerShouldShow = false;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Stack(
+      children: <Widget>[
+        ListView(
+          physics: BouncingScrollPhysics(),
+          children: <Widget>[
+            Container(
+              height: 40,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 24.0, right: 24.0, top: 40.0, bottom: 16),
+              child: AnimatedOpacity(
+                opacity: headerShouldShow ? 1 : 0,
+                duration: Duration(milliseconds: 200),
+                curve: Curves.easeIn,
+                child: Text(
+                  widget.currentVeresiye.title,
+                  style: TextStyle(
+                    fontFamily: 'ZillaSlab',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 36,
+                  ),
+                  overflow: TextOverflow.visible,
+                  softWrap: true,
+                ),
+              ),
+            ),
+            AnimatedOpacity(
+              duration: Duration(milliseconds: 500),
+              opacity: headerShouldShow ? 1 : 0,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24),
+                child: Text(
+                  DateFormat.yMd().add_jm().format(widget.currentVeresiye.date),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500, color: Colors.grey.shade500),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 24.0, top: 36, bottom: 24, right: 24),
+              child: Text(
+                widget.currentVeresiye.content,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              ),
+            )
+          ],
+        ),
+        ClipRect(
+          child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+              child: Container(
+                height: 80,
+                color: Theme.of(context).canvasColor.withOpacity(0.3),
+                child: SafeArea(
+                  child: Row(
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.arrow_back),
+                        onPressed: handleBack,
+                      ),
+                      Spacer(),
+                      IconButton(
+                        icon: Icon(Icons.delete_outline),
+                        onPressed: handleDelete,
+                      ),
+                      IconButton(
+                        icon: Icon(OMIcons.share),
+                        onPressed: handleShare,
+                      ),
+                      IconButton(
+                        icon: Icon(OMIcons.edit),
+                        onPressed: handleEdit,
+                      ),
+                    ],
+                  ),
+                ),
+              )),
+        )
+      ],
+    ));
+  }
+
+  void handleSave() async {
+    await NotesDatabaseService.db.updateVeresiyeInDB(widget.currentVeresiye);
+    widget.triggerRefetch();
+  }
+
+  void handleEdit() {
+    Navigator.pop(context);
+    Navigator.push(
+        context,
+        CupertinoPageRoute(
+            builder: (context) => EditVeresiyePage(
+                  existingVeresiye: widget.currentVeresiye,
+                  triggerRefetch: widget.triggerRefetch,
+                )));
+  }
+
+  void handleShare() {
+    Share.share(
+        '${widget.currentVeresiye.title.trim()}\n(On: ${widget.currentVeresiye.date.toIso8601String().substring(0, 10)})\n\n${widget.currentVeresiye.content}');
+  }
+
+  void handleBack() {
+    Navigator.pop(context);
+  }
+
+  void handleDelete() async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            title: Text('Veresiye hesabını Sil'),
+            content: Text('Bu veresiye hesabı kalıcı olarak silinecektir.'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Sil',
+                    style: TextStyle(
+                        color: Colors.red.shade300,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 1)),
+                onPressed: () async {
+                  await NotesDatabaseService.db
+                      .deleteVeresiyeInDB(widget.currentVeresiye);
+                  widget.triggerRefetch();
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+              ),
+              FlatButton(
+                child: Text('İptal',
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 1)),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          );
+        });
+  }
+}
