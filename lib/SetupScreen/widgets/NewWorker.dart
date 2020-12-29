@@ -16,8 +16,16 @@ class _NewWorkerState extends State<NewWorker> {
 
   void _submitData() {
     final enteredTitle = _nameController.text;
-    final enteredJob = _value;
-    final enteredMail = _mailController;
+    jobs enteredJobs;
+    if (_value == "Yönetici") {
+      enteredJobs = jobs.yonetici;
+    } else if (_value == "Tezgahtar") {
+      enteredJobs = jobs.tezgahtar;
+    } else {
+      enteredJobs = jobs.sofor;
+    }
+    final enteredMail = _mailController.text;
+    final enteredJob = enteredJobs;
 
     if (enteredTitle.isEmpty) {
       return;
@@ -32,7 +40,7 @@ class _NewWorkerState extends State<NewWorker> {
     Navigator.of(context).pop();
   }
 
-  jobs _value = jobs.yonetici;
+  String _value = "Yönetici";
 
   @override
   Widget build(BuildContext context) {
@@ -53,21 +61,26 @@ class _NewWorkerState extends State<NewWorker> {
               controller: _mailController,
               onSubmitted: (_) => _submitData(),
             ),
-            DropdownButton<jobs>(
+            DropdownButton<String>(
+                iconSize: 34,
                 value: _value,
-                onChanged: (value) {
+                onChanged: (String newValue) {
                   setState(() {
-                    _value = value;
+                    _value = newValue;
                   });
                 },
-                items: jobs.values.map((jobs gorevler) {
-                  return DropdownMenuItem(
-                    child: Text(gorevler.toString()),
-                    value: gorevler,
+                items: <String>['Yönetici', 'Tezgahtar', 'Şoför']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
                   );
                 }).toList()),
             FlatButton(
-              child: Text('Çalışan Ekle'),
+              child: Text(
+                'Çalışan Ekle',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               textColor: Colors.blue,
               onPressed: () => _submitData(),
             ),

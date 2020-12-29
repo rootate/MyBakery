@@ -57,7 +57,10 @@ class _NewProductState extends State<NewProduct> {
               // onChanged: (val) => amountInput = val,
             ),
             FlatButton(
-              child: Text('Ürün Ekle'),
+              child: Text(
+                'Ürün Ekle',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               textColor: Colors.orange,
               onPressed: () => _submitData(),
             ),

@@ -35,7 +35,7 @@ class CategoryItem extends StatelessWidget {
               margin: EdgeInsets.only(bottom: 14),
               child: Image.asset(
                 image,
-                height: MediaQuery.of(context).size.height * 0.1,
+                height: MediaQuery.of(context).size.height * 0.11,
               ),
             ),
             Text(

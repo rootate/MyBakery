@@ -20,7 +20,7 @@ class _NewPayerState extends State<NewPayer> {
     final enteredTitle = _nameController.text;
     final enteredAmount = double.parse(_amountController.text);
 
-    if (enteredTitle.isEmpty || enteredAmount <= 0) {
+    if (enteredTitle.isEmpty || enteredAmount < 0) {
       return;
     }
 
@@ -54,10 +54,12 @@ class _NewPayerState extends State<NewPayer> {
               controller: _amountController,
               keyboardType: TextInputType.number,
               onSubmitted: (_) => _submitData(),
-              // onChanged: (val) => amountInput = val,
             ),
             FlatButton(
-              child: Text('Veresiye Ekle'),
+              child: Text(
+                'Veresiye Ekle',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
               textColor: Colors.green,
               onPressed: () => _submitData(),
             ),
