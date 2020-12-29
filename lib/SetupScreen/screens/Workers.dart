@@ -72,7 +72,7 @@ class _WorkersState extends State<Workers> {
         child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * 0.90,
+              height: MediaQuery.of(context).size.height * 0.80,
               child: ListView.builder(
                 itemCount: workerList.length,
                 padding: EdgeInsets.only(top: 10),
