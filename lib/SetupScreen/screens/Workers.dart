@@ -13,8 +13,8 @@ class Workers extends StatefulWidget {
 
 class _WorkersState extends State<Workers> {
   List<Worker> workerList = [];
-  void _addNewWorker(String workerName, jobs gorevi) {
-    final newWorker = Worker(name: workerName, job: gorevi);
+  void _addNewWorker(String workerName, String workerMail, jobs gorevi) {
+    final newWorker = Worker(name: workerName, mail: workerMail, job: gorevi);
     setState(() {
       workerList.add(newWorker);
     });
@@ -72,7 +72,7 @@ class _WorkersState extends State<Workers> {
         child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * 0.90,
+              height: MediaQuery.of(context).size.height * 0.80,
               child: ListView.builder(
                 itemCount: workerList.length,
                 padding: EdgeInsets.only(top: 10),

@@ -72,7 +72,7 @@ class _MarketsState extends State<Markets> {
         child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * 0.90,
+              height: MediaQuery.of(context).size.height * 0.80,
               child: ListView.builder(
                 itemCount: marketList.length,
                 padding: EdgeInsets.only(top: 10),
@@ -107,16 +107,16 @@ class _MarketsState extends State<Markets> {
                   );
                 },
               ),
-            )
+            ),
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.pink,
         child: Icon(Icons.done),
         onPressed: () => nextPage(context),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
