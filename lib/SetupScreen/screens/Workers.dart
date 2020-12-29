@@ -13,8 +13,8 @@ class Workers extends StatefulWidget {
 
 class _WorkersState extends State<Workers> {
   List<Worker> workerList = [];
-  void _addNewWorker(String workerName, jobs gorevi) {
-    final newWorker = Worker(name: workerName, job: gorevi);
+  void _addNewWorker(String workerName, String workerMail, jobs gorevi) {
+    final newWorker = Worker(name: workerName, mail: workerMail, job: gorevi);
     setState(() {
       workerList.add(newWorker);
     });
