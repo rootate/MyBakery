@@ -143,7 +143,7 @@ class _EkmekState extends State<Ekmek> {
           margin: EdgeInsets.only(top: 8, bottom: 32, left: 10),
           width: headerShouldHide ? 0 : 200,
           child: Text(
-            'Ekmekler',
+            'Ekmekler2',
             style: TextStyle(
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w700,

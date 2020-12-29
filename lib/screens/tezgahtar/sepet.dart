@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/odeme_kategori.dart';
+import 'package:flutter_my_bakery/screens/tezgahtar/tezgahtar.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -22,6 +23,28 @@ class _SepetState extends State<Sepet> {
       sum += price[i] * piece[i];
     }
     return sum;
+  }
+  
+  void goTezgahtar(BuildContext cx) {
+    setState((){
+      product = [];
+      piece = [];
+      price = [];
+    });
+    Fluttertoast.showToast(
+        msg: "✓ Kaydedildi",
+        toastLength: Toast.LENGTH_SHORT,
+        fontSize: 28,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.green,
+    );
+    Navigator.of(cx).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return Tezgahtar();
+        },
+      ),
+    );
   }
 
   @override
@@ -170,13 +193,13 @@ class _SepetState extends State<Sepet> {
         buttons: [
           DialogButton(
             child: Text(
-              "Sil",
-              style: TextStyle(color: Colors.white, fontSize: sizeW),
+              "Güncelle",
+              style: TextStyle(color: Colors.white, fontSize: sizeW*0.6),
             ),
             onPressed: () {
               Navigator.pop(context);
             },
-            color: Colors.red,
+            color: Colors.green,
           ),
           DialogButton(
             child: Text(
@@ -184,11 +207,18 @@ class _SepetState extends State<Sepet> {
               style: TextStyle(color: Colors.white, fontSize: sizeW),
             ),
             onPressed: () {
+              if (int.parse(controller.text) > 0 ) {
               setState(() {
                 controller.text =
                     (int.parse(controller.value.text) - 1).toString();
                 widget.piece[index] = int.parse(controller.value.text);
+                if (int.parse(controller.value.text) == 0) { //remove from list
+                  widget.product.removeAt(index);
+                  widget.price.removeAt(index);
+                  widget.piece.removeAt(index);
+                }
               });
+            }
             },
             color: Colors.blue,
           ),
@@ -233,7 +263,7 @@ class _SepetState extends State<Sepet> {
             ),
             RaisedButton(
               onPressed: () {
-                Navigator.pop(context);
+                goTezgahtar(context);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -258,8 +288,8 @@ class _SepetState extends State<Sepet> {
               color: Colors.purple,
             ),
             RaisedButton(
-              onPressed: () {
-                Navigator.pop(context);
+              onPressed: () { 
+                goTezgahtar(context);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
