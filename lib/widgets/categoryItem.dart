@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/SetupScreen/screens/urunler.dart';
+import 'package:flutter_my_bakery/screens/setup/urunler.dart';
 import '../models/Product.dart';
 
 class CategoryItem extends StatelessWidget {

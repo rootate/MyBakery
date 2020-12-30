@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/Payer.dart';
-import '../widgets/NewPayer.dart';
+import '../../models/Payer.dart';
+import '../../widgets/NewPayer.dart';
 
 class Payers extends StatefulWidget {
   final List<Payer> list;

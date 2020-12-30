@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/SetupScreen/models/Worker.dart';
+import 'package:flutter_my_bakery/models/Worker.dart';
 
 class NewWorker extends StatefulWidget {
   final Function addWr;
@@ -27,7 +27,10 @@ class _NewWorkerState extends State<NewWorker> {
     final enteredMail = _mailController.text;
     final enteredJob = enteredJobs;
 
-    if (enteredTitle.isEmpty) {
+    if (enteredTitle.isEmpty ||
+        enteredMail.isEmpty ||
+        !enteredMail.contains('@') ||
+        !enteredMail.contains('.com')) {
       return;
     }
 

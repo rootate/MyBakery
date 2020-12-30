@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/SetupScreen/models/Market.dart';
-import 'package:flutter_my_bakery/SetupScreen/models/Payer.dart';
-import 'package:flutter_my_bakery/SetupScreen/widgets/NewMarket.dart';
-import '../screens/Payers.dart';
+import 'package:flutter_my_bakery/models/Market.dart';
+import 'package:flutter_my_bakery/models/Payer.dart';
+import 'package:flutter_my_bakery/widgets/NewMarket.dart';
+import 'Payers.dart';
 
 class Markets extends StatefulWidget {
   final List<Market> list;
