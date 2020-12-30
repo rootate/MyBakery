@@ -160,7 +160,7 @@ class _EmployeesState extends State<Employees> {
             ),
             onPressed: () {
               setState(() {
-                employees.remove(controller.value.text);
+                service.deleteHarunEmployee(uid);
               });
               Navigator.pop(context);
             },

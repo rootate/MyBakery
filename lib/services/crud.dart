@@ -32,15 +32,6 @@ class DatabaseService{
     });
   }
 
-  Future getHarunEmployees() async{
-    harun_employees.get().then((QuerySnapshot querySnapshot) => {
-      querySnapshot.docs.forEach((doc) {
-        print(doc["name"]);
-        print(doc["job"]);
-      })
-    });
-  }
-
   Future<void> addHarunEmployee(Map data) async{
     if(isLoggedIn()){
       harun_employees.add(data).catchError((e){
@@ -54,6 +45,16 @@ class DatabaseService{
   Future<void> updateHarunEmployee(String uid,Map data) async{
     if(isLoggedIn()){
       harun_employees.doc(uid).update(data).catchError((e){
+        print(e);
+      });
+    } else {
+      print("You need to login");
+    }
+  }
+
+  Future<void> deleteHarunEmployee(String uid) async{
+    if(isLoggedIn()){
+      harun_employees.doc(uid).delete().catchError((e){
         print(e);
       });
     } else {
