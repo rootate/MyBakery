@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/SetupScreen/screens/urunler.dart';
+import 'package:flutter_my_bakery/screens/setup/urunler.dart';
 import '../models/Product.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -35,7 +35,7 @@ class CategoryItem extends StatelessWidget {
               margin: EdgeInsets.only(bottom: 14),
               child: Image.asset(
                 image,
-                height: MediaQuery.of(context).size.height * 0.1,
+                height: MediaQuery.of(context).size.height * 0.11,
               ),
             ),
             Text(

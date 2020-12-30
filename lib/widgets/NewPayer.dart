@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class NewProduct extends StatefulWidget {
+class NewPayer extends StatefulWidget {
   final Function addTx;
 
-  NewProduct(this.addTx);
+  NewPayer(this.addTx);
 
   @override
-  _NewProductState createState() => _NewProductState();
+  _NewPayerState createState() => _NewPayerState();
 }
 
-class _NewProductState extends State<NewProduct> {
+class _NewPayerState extends State<NewPayer> {
   final _nameController = TextEditingController();
   final _amountController = TextEditingController();
 
@@ -20,7 +20,7 @@ class _NewProductState extends State<NewProduct> {
     final enteredTitle = _nameController.text;
     final enteredAmount = double.parse(_amountController.text);
 
-    if (enteredTitle.isEmpty || enteredAmount <= 0) {
+    if (enteredTitle.isEmpty || enteredAmount < 0) {
       return;
     }
 
@@ -50,15 +50,17 @@ class _NewProductState extends State<NewProduct> {
               // },
             ),
             TextField(
-              decoration: InputDecoration(labelText: 'Fiyatı'),
+              decoration: InputDecoration(labelText: 'Borcu'),
               controller: _amountController,
               keyboardType: TextInputType.number,
               onSubmitted: (_) => _submitData(),
-              // onChanged: (val) => amountInput = val,
             ),
             FlatButton(
-              child: Text('Ürün Ekle'),
-              textColor: Colors.orange,
+              child: Text(
+                'Veresiye Ekle',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              textColor: Colors.green,
               onPressed: () => _submitData(),
             ),
           ],

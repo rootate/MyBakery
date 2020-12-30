@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/SetupScreen/screens/categories.dart';
+import 'package:flutter_my_bakery/screens/setup/categories.dart';
 
 class FirstPage extends StatelessWidget {
   void nextPage(BuildContext cx) {
