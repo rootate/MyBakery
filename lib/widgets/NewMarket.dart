@@ -20,7 +20,7 @@ class _NewMarketState extends State<NewMarket> {
     final enteredTitle = _nameController.text;
     final enteredAmount = double.parse(_amountController.text);
 
-    if (enteredTitle.isEmpty || enteredAmount <= 0) {
+    if (enteredTitle.isEmpty || enteredAmount < 0) {
       return;
     }
 
@@ -57,7 +57,10 @@ class _NewMarketState extends State<NewMarket> {
               // onChanged: (val) => amountInput = val,
             ),
             FlatButton(
-              child: Text('Market Ekle'),
+              child: Text(
+                'Market Ekle',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
               textColor: Colors.pink,
               onPressed: () => _submitData(),
             ),

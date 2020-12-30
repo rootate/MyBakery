@@ -6,6 +6,9 @@ import 'package:flutter_my_bakery/screens/administrator/products_in.dart';
 List categories = ['Ekmekler', 'Kahvaltılıklar', 'Pastalar', 'İçecekler',
   'Tatlılar', 'Kurabiyeler', 'Hazır Gıdalar', 'Diğer'];
 
+List images = ['ekmekler.jpeg','kahvaltiliklar.jpeg','pastalar.jpeg','icecekler.jpeg',
+  'tatlilar.jpeg','kurabiyeler.jpeg','hazirGidalar.jpeg','diger.jpeg'];
+
 class Products extends StatefulWidget {
   @override
   _ProductsState createState() => _ProductsState();
@@ -20,7 +23,7 @@ class _ProductsState extends State<Products> {
     final sizeW = contextW / 20;
     final sizeH = contextH / 20;
 
-    final image = Image(image: AssetImage('assets/images/icons/bread2.png'));
+    var image = Image(image: AssetImage('assets/images/icons/'));
 
     TextEditingController controller = TextEditingController();
 
@@ -36,12 +39,13 @@ class _ProductsState extends State<Products> {
             return ListTile(
               onLongPress: (){
                 controller.text = categories[index];
+                image = Image(image: AssetImage('assets/images/' + images[index]));
                 confirmationPopup(context,image,1,index,controller);
               },
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProductsIn()),
+                  MaterialPageRoute(builder: (context) => ProductsIn(category: categories[index])),
                 );
               },
               leading: ConstrainedBox(
@@ -51,7 +55,7 @@ class _ProductsState extends State<Products> {
                   maxWidth: sizeW + 20,
                   maxHeight: sizeH + 20,
                 ),
-                child: image,
+                child: Image(image: AssetImage('assets/images/' + images[index])),
               ),
               title: Text(categories[index],style: TextStyle(fontFamily: "Poppins"),),
             );
@@ -86,7 +90,15 @@ class _ProductsState extends State<Products> {
         content: Column(
           children: [
             SizedBox(height: sizeW,),
-            image,
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                minWidth: 50,
+                minHeight: 100,
+                maxWidth: 100,
+                maxHeight: 150,
+              ),
+              child: Image(image: AssetImage('assets/images/' + images[index]))
+            ),
             SizedBox(height: sizeW,),
             TextFormField(
               controller: controller,
@@ -112,6 +124,7 @@ class _ProductsState extends State<Products> {
             onPressed: () {
               setState(() {
                 categories.remove(controller.value.text);
+                images.remove(index);
               });
               Navigator.pop(context);
             },
@@ -133,7 +146,7 @@ class _ProductsState extends State<Products> {
               style: TextStyle(color: Colors.white, fontSize: sizeW),
             ),
             onPressed: () {
-              setState(() {
+              if(controller.value.text != ""){
                 setState(() {
                   if(val == 0) {
                     categories.add(controller.value.text);
@@ -141,7 +154,7 @@ class _ProductsState extends State<Products> {
                     categories[index] = controller.value.text;
                   }
                 });
-              });
+              }
               Navigator.pop(context);
             },
             color: Colors.blue,

@@ -76,7 +76,15 @@ class _OdemeKategoriState extends State<OdemeKategori> {
         onPressed: (){
           controller2.text = sumPrice().toString();
           controller3.text = indirim.toString();
-          confirmationPopup2(context,image,controller2,controller3);
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Sepet(product: product,piece: piece,price: price,)),
+              ).then((_) {
+                setState((){}); 
+                });// sepetten geri donunce guncellmesi icin
+
+          // confirmationPopup2(context,image,controller2,controller3);
         },
         icon: Icon(Icons.shopping_cart_outlined),
         label: Text(sumPrice().toString() + " ₺",style: TextStyle(fontFamily: "Poppins",fontSize: 20),),
@@ -107,14 +115,16 @@ class _OdemeKategoriState extends State<OdemeKategori> {
             SizedBox(height: sizeW,),
             TextFormField(
               controller: controller,
+              keyboardType: TextInputType.number,
               style: textStyle1,
               decoration: textInputDecoration.copyWith(
                 labelText: "Adeti giriniz",
               ),
               validator: (val) => val.isEmpty ? "Enter an email" : null,
+
               onChanged: (val) {
                 setState(() {
-
+                  piece.add(int.parse(controller.value.text));
                 });
               },
             ),
@@ -162,45 +172,48 @@ class _OdemeKategoriState extends State<OdemeKategori> {
       animationDuration: Duration(milliseconds: 400),
     );
 
-    Alert(
-        context: dialogContext,
-        style: alertStyle,
-        title: "Sepet",
-        content: Column(
-          children: [
-            SizedBox(height: 20,),
-            Text("Fiyat : " + controller2.value.text + " ₺"),
-            SizedBox(height: 30,),
-            Text("İndirim oranı : " + indirim.toString() + " %"),
-            SizedBox(height: 30,),
-            Text("Son fiyat : " + finalPrice.toString() + " ₺"),
-          ],
-        ),
-        buttons: [
-          DialogButton(
-            child: Text(
-              "İptal",
-              style: TextStyle(color: Colors.white, fontSize: sizeW),
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            color: Colors.red,
-          ),
-          DialogButton(
-            child: Text(
-              "Ürünleri gör",
-              style: TextStyle(color: Colors.white, fontSize: sizeW),
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Sepet(product: product,piece: piece,price: price,)),
-              );
-            },
-            color: Colors.blue,
-          )
-        ]).show();
+    // Alert(
+    //     context: dialogContext,
+    //     style: alertStyle,
+    //     title: "Sepet",
+    //     content: Column(
+    //       children: [
+    //         SizedBox(height: 20,),
+    //         Text("Fiyat : " + controller2.value.text + " ₺"),
+    //         SizedBox(height: 30,),
+    //         Text("İndirim oranı : " + indirim.toString() + " %"),
+    //         SizedBox(height: 30,),
+    //         Text("Son fiyat : " + finalPrice.toString() + " ₺"),
+    //       ],
+    //     ),
+    //     buttons: [
+    //       DialogButton(
+    //         child: Text(
+    //           "İptal",
+    //           style: TextStyle(color: Colors.white, fontSize: sizeW),
+    //         ),
+    //         onPressed: () {
+    //           Navigator.pop(context);
+    //         },
+    //         color: Colors.red,
+    //       ),
+    //       DialogButton(
+    //         child: Text(
+    //           "Ürünleri gör",
+    //           style: TextStyle(color: Colors.white, fontSize: sizeW),
+    //         ),
+    //         onPressed: () {
+    //           Navigator.pop(context); // pop-up'i kapat
+    //           Navigator.push(
+    //             context,
+    //             MaterialPageRoute(builder: (context) => Sepet(product: product,piece: piece,price: price,)),
+    //           ).then((_) {
+    //             setState((){}); 
+    //             });// sepetten geri donunce guncellmesi icin
+    //         },
+    //         color: Colors.blue,
+    //       )
+    //     ]).show();
   }
 
 }

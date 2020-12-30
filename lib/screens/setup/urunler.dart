@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/SetupScreen/models/Product.dart';
-import 'package:flutter_my_bakery/SetupScreen/widgets/NewProduct.dart';
+import 'package:flutter_my_bakery/models/Product.dart';
+import 'package:flutter_my_bakery/widgets/NewProduct.dart';
 
 class Urunler extends StatefulWidget {
   final String category;
@@ -53,7 +53,7 @@ class _UrunlerState extends State<Urunler> {
         child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * 0.90,
+              height: MediaQuery.of(context).size.height * 0.80,
               child: ListView.builder(
                 itemCount: productList.length,
                 padding: EdgeInsets.only(top: 10),

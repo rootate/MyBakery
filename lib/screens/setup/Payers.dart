@@ -1,53 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/SetupScreen/models/Market.dart';
-import 'package:flutter_my_bakery/SetupScreen/models/Payer.dart';
-import 'package:flutter_my_bakery/SetupScreen/widgets/NewMarket.dart';
-import '../screens/Payers.dart';
+import '../../models/Payer.dart';
+import '../../widgets/NewPayer.dart';
 
-class Markets extends StatefulWidget {
-  final List<Market> list;
-  Markets({this.list});
+class Payers extends StatefulWidget {
+  final List<Payer> list;
+  Payers({this.list});
   @override
-  _MarketsState createState() => _MarketsState(marketList: list);
+  _PayersState createState() => _PayersState(payerList: list);
 }
 
-class _MarketsState extends State<Markets> {
-  List<Market> marketList = [];
-  void _addNewMarket(String prName, double prAmount) {
-    final newMarket = Market(name: prName, debt: prAmount);
+class _PayersState extends State<Payers> {
+  List<Payer> payerList = [];
+  void _addNewPayer(String prName, double prAmount) {
+    final newPayer = Payer(name: prName, debt: prAmount);
     setState(() {
-      marketList.add(newMarket);
+      payerList.add(newPayer);
     });
   }
 
-  _MarketsState({this.marketList});
+  _PayersState({this.payerList});
 
-  void _startAddNewMarket(BuildContext ctx) {
+  void _startAddNewpayer(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
         return GestureDetector(
           onTap: () {},
-          child: NewMarket(_addNewMarket),
+          child: NewPayer(_addNewPayer),
           behavior: HitTestBehavior.opaque,
         );
       },
     );
   }
 
-  void deleteMarket(String name) {
+  void deletePayer(String name) {
     setState(() {
-      marketList.removeWhere((pr) => pr.name == name);
+      payerList.removeWhere((pr) => pr.name == name);
     });
   }
-
-  final List<Payer> payerList = [];
 
   void nextPage(BuildContext cx) {
     Navigator.of(cx).push(
       MaterialPageRoute(
         builder: (_) {
-          return Payers(list: payerList);
+          return Scaffold();
         },
       ),
     );
@@ -63,18 +59,18 @@ class _MarketsState extends State<Markets> {
                 Icons.add,
                 color: Colors.white,
               ),
-              onPressed: () => _startAddNewMarket(context))
+              onPressed: () => _startAddNewpayer(context))
         ],
-        backgroundColor: Colors.pink,
-        title: Text("Marketler"),
+        backgroundColor: Colors.green,
+        title: Text("Veresiyeler"),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * 0.90,
+              height: MediaQuery.of(context).size.height * 0.80,
               child: ListView.builder(
-                itemCount: marketList.length,
+                itemCount: payerList.length,
                 padding: EdgeInsets.only(top: 10),
                 itemBuilder: (ctx, index) {
                   return Container(
@@ -87,20 +83,20 @@ class _MarketsState extends State<Markets> {
                           Container(
                             margin: EdgeInsets.only(left: 7),
                             child: Text(
-                              marketList[index].name,
+                              payerList[index].name,
                               style: TextStyle(fontSize: 24),
                             ),
                           ),
                           Container(
                             child: Text(
-                              marketList[index].debt.toStringAsFixed(2) + " ₺",
+                              payerList[index].debt.toStringAsFixed(2) + " ₺",
                               style: TextStyle(fontSize: 24),
                             ),
                           ),
                           IconButton(
                               icon: Icon(Icons.delete),
                               onPressed: () =>
-                                  deleteMarket(marketList[index].name))
+                                  deletePayer(payerList[index].name))
                         ],
                       ),
                     ),
@@ -113,7 +109,7 @@ class _MarketsState extends State<Markets> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.pink,
+        backgroundColor: Colors.green,
         child: Icon(Icons.done),
         onPressed: () => nextPage(context),
       ),

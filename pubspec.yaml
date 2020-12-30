@@ -44,6 +44,7 @@ dependencies:
   share: ^0.6.1+1
   rflutter_alert: ^1.1.0
   fluttertoast: ^7.1.6
+  cloud_firestore: ^0.14.4
 
 dev_dependencies:
 

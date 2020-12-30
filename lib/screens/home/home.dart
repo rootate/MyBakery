@@ -4,6 +4,7 @@ import 'package:flutter_my_bakery/screens/administrator/products.dart';
 import 'package:flutter_my_bakery/screens/administrator/employees.dart';
 import 'package:flutter_my_bakery/screens/administrator/reports.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/tezgahtar.dart';
+import 'package:flutter_my_bakery/screens/tezgahtar/veresiye.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
 
 class Home extends StatefulWidget {
@@ -49,7 +50,7 @@ class _HomeState extends State<Home> {
                         SizedBox(width: size1),
                         myBox(context,Icon(Icons.people,size: iconSize,),"Çalışanlar",Employees()),
                         SizedBox(width: size1),
-                        myBox(context,Icon(Icons.all_out,size: iconSize,),"Veresiyeler",Products()),
+                        myBox(context,Icon(Icons.all_out,size: iconSize,),"Veresiyeler",Veresiye()),
                       ],
                     ),
                   ],
@@ -122,7 +123,12 @@ Widget myBox2(BuildContext context) {
           children: [
             SizedBox(height: size2,),
             RaisedButton(
-              onPressed: (){},
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Reports()),
+                );
+              },
               shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(18.0),
                 side: BorderSide(color: Colors.black),

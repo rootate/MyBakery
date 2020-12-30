@@ -1,49 +1,53 @@
 import 'package:flutter/material.dart';
-import '../models/Payer.dart';
-import '../widgets/NewPayer.dart';
+import 'package:flutter_my_bakery/models/Market.dart';
+import 'package:flutter_my_bakery/models/Worker.dart';
+import 'package:flutter_my_bakery/screens/setup/Markets.dart';
+import '../../widgets/NewWorker.dart';
 
-class Payers extends StatefulWidget {
-  final List<Payer> list;
-  Payers({this.list});
+class Workers extends StatefulWidget {
+  final List<Worker> list;
+  Workers({this.list});
   @override
-  _PayersState createState() => _PayersState(payerList: list);
+  _WorkersState createState() => _WorkersState(workerList: list);
 }
 
-class _PayersState extends State<Payers> {
-  List<Payer> payerList = [];
-  void _addNewPayer(String prName, double prAmount) {
-    final newPayer = Payer(name: prName, debt: prAmount);
+class _WorkersState extends State<Workers> {
+  List<Worker> workerList = [];
+  void _addNewWorker(String workerName, String workerMail, jobs gorevi) {
+    final newWorker = Worker(name: workerName, mail: workerMail, job: gorevi);
     setState(() {
-      payerList.add(newPayer);
+      workerList.add(newWorker);
     });
   }
 
-  _PayersState({this.payerList});
+  _WorkersState({this.workerList});
 
-  void _startAddNewpayer(BuildContext ctx) {
+  void _startAddNewWorker(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
         return GestureDetector(
           onTap: () {},
-          child: NewPayer(_addNewPayer),
+          child: NewWorker(_addNewWorker),
           behavior: HitTestBehavior.opaque,
         );
       },
     );
   }
 
-  void deletePayer(String name) {
+  void deleteWorker(String name) {
     setState(() {
-      payerList.removeWhere((pr) => pr.name == name);
+      workerList.removeWhere((wr) => wr.name == name);
     });
   }
+
+  final List<Market> marketList = [];
 
   void nextPage(BuildContext cx) {
     Navigator.of(cx).push(
       MaterialPageRoute(
         builder: (_) {
-          return Scaffold();
+          return Markets(list: marketList);
         },
       ),
     );
@@ -51,6 +55,7 @@ class _PayersState extends State<Payers> {
 
   @override
   Widget build(BuildContext context) {
+    String jobName;
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -59,20 +64,25 @@ class _PayersState extends State<Payers> {
                 Icons.add,
                 color: Colors.white,
               ),
-              onPressed: () => _startAddNewpayer(context))
+              onPressed: () => _startAddNewWorker(context))
         ],
-        backgroundColor: Colors.green,
-        title: Text("Veresiyeler"),
+        title: Text("Çalışanlar"),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * 0.90,
+              height: MediaQuery.of(context).size.height * 0.80,
               child: ListView.builder(
-                itemCount: payerList.length,
+                itemCount: workerList.length,
                 padding: EdgeInsets.only(top: 10),
                 itemBuilder: (ctx, index) {
+                  if (workerList[index].job == jobs.tezgahtar) {
+                    jobName = "Tezgahtar";
+                  } else if (workerList[index].job == jobs.sofor) {
+                    jobName = "Şoför";
+                  } else
+                    jobName = "Yönetici";
                   return Container(
                     margin: EdgeInsets.symmetric(horizontal: 10),
                     child: Card(
@@ -83,20 +93,20 @@ class _PayersState extends State<Payers> {
                           Container(
                             margin: EdgeInsets.only(left: 7),
                             child: Text(
-                              payerList[index].name,
+                              workerList[index].name,
                               style: TextStyle(fontSize: 24),
                             ),
                           ),
                           Container(
                             child: Text(
-                              payerList[index].debt.toStringAsFixed(2) + " ₺",
+                              jobName,
                               style: TextStyle(fontSize: 24),
                             ),
                           ),
                           IconButton(
                               icon: Icon(Icons.delete),
                               onPressed: () =>
-                                  deletePayer(payerList[index].name))
+                                  deleteWorker(workerList[index].name))
                         ],
                       ),
                     ),
@@ -109,7 +119,6 @@ class _PayersState extends State<Payers> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green,
         child: Icon(Icons.done),
         onPressed: () => nextPage(context),
       ),

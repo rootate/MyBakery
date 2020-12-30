@@ -1,53 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/SetupScreen/models/Market.dart';
-import 'package:flutter_my_bakery/SetupScreen/models/Worker.dart';
-import 'package:flutter_my_bakery/SetupScreen/screens/Markets.dart';
-import '../widgets/NewWorker.dart';
+import 'package:flutter_my_bakery/models/Market.dart';
+import 'package:flutter_my_bakery/models/Payer.dart';
+import 'package:flutter_my_bakery/widgets/NewMarket.dart';
+import 'Payers.dart';
 
-class Workers extends StatefulWidget {
-  final List<Worker> list;
-  Workers({this.list});
+class Markets extends StatefulWidget {
+  final List<Market> list;
+  Markets({this.list});
   @override
-  _WorkersState createState() => _WorkersState(workerList: list);
+  _MarketsState createState() => _MarketsState(marketList: list);
 }
 
-class _WorkersState extends State<Workers> {
-  List<Worker> workerList = [];
-  void _addNewWorker(String workerName, jobs gorevi) {
-    final newWorker = Worker(name: workerName, job: gorevi);
+class _MarketsState extends State<Markets> {
+  List<Market> marketList = [];
+  void _addNewMarket(String prName, double prAmount) {
+    final newMarket = Market(name: prName, debt: prAmount);
     setState(() {
-      workerList.add(newWorker);
+      marketList.add(newMarket);
     });
   }
 
-  _WorkersState({this.workerList});
+  _MarketsState({this.marketList});
 
-  void _startAddNewWorker(BuildContext ctx) {
+  void _startAddNewMarket(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
         return GestureDetector(
           onTap: () {},
-          child: NewWorker(_addNewWorker),
+          child: NewMarket(_addNewMarket),
           behavior: HitTestBehavior.opaque,
         );
       },
     );
   }
 
-  void deleteWorker(String name) {
+  void deleteMarket(String name) {
     setState(() {
-      workerList.removeWhere((wr) => wr.name == name);
+      marketList.removeWhere((pr) => pr.name == name);
     });
   }
 
-  final List<Market> marketList = [];
+  final List<Payer> payerList = [];
 
   void nextPage(BuildContext cx) {
     Navigator.of(cx).push(
       MaterialPageRoute(
         builder: (_) {
-          return Markets(list: marketList);
+          return Payers(list: payerList);
         },
       ),
     );
@@ -55,7 +55,6 @@ class _WorkersState extends State<Workers> {
 
   @override
   Widget build(BuildContext context) {
-    String jobName;
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -64,25 +63,20 @@ class _WorkersState extends State<Workers> {
                 Icons.add,
                 color: Colors.white,
               ),
-              onPressed: () => _startAddNewWorker(context))
+              onPressed: () => _startAddNewMarket(context))
         ],
-        title: Text("Çalışanlar"),
+        backgroundColor: Colors.pink,
+        title: Text("Marketler"),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * 0.90,
+              height: MediaQuery.of(context).size.height * 0.80,
               child: ListView.builder(
-                itemCount: workerList.length,
+                itemCount: marketList.length,
                 padding: EdgeInsets.only(top: 10),
                 itemBuilder: (ctx, index) {
-                  if (workerList[index].job == jobs.tezgahtar) {
-                    jobName = "Tezgahtar";
-                  } else if (workerList[index].job == jobs.sofor) {
-                    jobName = "Şoför";
-                  } else
-                    jobName = "Yönetici";
                   return Container(
                     margin: EdgeInsets.symmetric(horizontal: 10),
                     child: Card(
@@ -93,35 +87,36 @@ class _WorkersState extends State<Workers> {
                           Container(
                             margin: EdgeInsets.only(left: 7),
                             child: Text(
-                              workerList[index].name,
+                              marketList[index].name,
                               style: TextStyle(fontSize: 24),
                             ),
                           ),
                           Container(
                             child: Text(
-                              jobName,
+                              marketList[index].debt.toStringAsFixed(2) + " ₺",
                               style: TextStyle(fontSize: 24),
                             ),
                           ),
                           IconButton(
                               icon: Icon(Icons.delete),
                               onPressed: () =>
-                                  deleteWorker(workerList[index].name))
+                                  deleteMarket(marketList[index].name))
                         ],
                       ),
                     ),
                   );
                 },
               ),
-            )
+            ),
           ],
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.pink,
         child: Icon(Icons.done),
         onPressed: () => nextPage(context),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
