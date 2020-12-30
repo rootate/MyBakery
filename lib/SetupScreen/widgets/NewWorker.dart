@@ -12,10 +12,12 @@ class NewWorker extends StatefulWidget {
 
 class _NewWorkerState extends State<NewWorker> {
   final _nameController = TextEditingController();
+  final _mailController = TextEditingController();
 
   void _submitData() {
     final enteredTitle = _nameController.text;
     final enteredJob = _value;
+    final enteredMail = _mailController;
 
     if (enteredTitle.isEmpty) {
       return;
@@ -23,6 +25,7 @@ class _NewWorkerState extends State<NewWorker> {
 
     widget.addWr(
       enteredTitle,
+      enteredMail,
       enteredJob,
     );
 
@@ -41,8 +44,13 @@ class _NewWorkerState extends State<NewWorker> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             TextField(
-              decoration: InputDecoration(labelText: 'Adı'),
+              decoration: InputDecoration(labelText: 'Ad'),
               controller: _nameController,
+              onSubmitted: (_) => _submitData(),
+            ),
+            TextField(
+              decoration: InputDecoration(labelText: 'Mail'),
+              controller: _mailController,
               onSubmitted: (_) => _submitData(),
             ),
             DropdownButton<jobs>(

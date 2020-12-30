@@ -68,7 +68,7 @@ class _PayersState extends State<Payers> {
         child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * 0.90,
+              height: MediaQuery.of(context).size.height * 0.80,
               child: ListView.builder(
                 itemCount: payerList.length,
                 padding: EdgeInsets.only(top: 10),

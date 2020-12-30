@@ -53,7 +53,7 @@ class _UrunlerState extends State<Urunler> {
         child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * 0.90,
+              height: MediaQuery.of(context).size.height * 0.80,
               child: ListView.builder(
                 itemCount: productList.length,
                 padding: EdgeInsets.only(top: 10),
