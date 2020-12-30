@@ -23,6 +23,8 @@ environment:
 
 dependencies:
   horizontal_calendar: ^0.0.4
+  multi_select_item: ^1.0.3
+  modal_bottom_sheet: ^1.0.0+1
   flutter:
     sdk: flutter
 
