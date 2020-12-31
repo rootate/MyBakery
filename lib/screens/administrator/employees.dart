@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:flutter_my_bakery/services/crud.dart';
+import 'package:firebase_database/firebase_database.dart';
 
-List employees = ['Harun Albayrak', 'Ümit Altıntaş', 'Yusuf Akgül', 'Bilal Bayrakdar',
-  'Ömer Faruk Sayar'];
-
-List subtitles = ['Şoför', 'Tezgahtar', 'None', 'None', 'None'];
+String uid;
 
 class Employees extends StatefulWidget {
   @override
@@ -13,6 +12,13 @@ class Employees extends StatefulWidget {
 }
 
 class _EmployeesState extends State<Employees> {
+  DatabaseService service = DatabaseService();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final contextW = MediaQuery.of(context).size.width;
@@ -26,46 +32,88 @@ class _EmployeesState extends State<Employees> {
     TextEditingController controller = TextEditingController();
     TextEditingController controller2 = TextEditingController();
 
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Employees",style: TextStyle(fontFamily: "Poppins"),),
-          centerTitle: true,
-          backgroundColor: Colors.blueGrey,
-        ),
-        body: ListView.builder(
-          itemCount: employees.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              onLongPress: (){
-                controller.text = employees[index];
-                controller2.text = subtitles[index];
-                confirmationPopup(context,image,1,index,controller,controller2);
-              },
-              onTap: () {
-                controller.text = employees[index];
-                controller2.text = subtitles[index];
-                confirmationPopup(context,image,1,index,controller,controller2);
-              },
-              leading: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minWidth: sizeW,
-                  minHeight: sizeH,
-                  maxWidth: sizeW + 20,
-                  maxHeight: sizeH + 20,
-                ),
-                child: image,
+    return StreamBuilder<Event>(
+      stream: service.employeesReference.onValue,
+      builder: (context,snapshot){
+        Map data = {};
+        List item = [];
+        if(snapshot.hasData) {
+          data = snapshot.data.snapshot.value;
+          if(data == null){
+            return Scaffold(
+              appBar: AppBar(
+                title: Text("Employees",style: TextStyle(fontFamily: "Poppins"),),
+                centerTitle: true,
+                backgroundColor: Colors.blueGrey,
               ),
-              title: Text(employees[index],style: TextStyle(fontFamily: "Poppins"),),
-              trailing: Text(subtitles[index],style: TextStyle(fontFamily: "Poppins"),),
+              floatingActionButton: FloatingActionButton(
+                onPressed: (){
+                  confirmationPopup(context,image,0,0,controller,controller2);
+                },
+                child: Icon(Icons.add),
+              ),
             );
-          },
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: (){
-            confirmationPopup(context,image,0,0,controller,controller2);
-          },
-          child: Icon(Icons.add),
-        ),
+          }
+          data.forEach(
+                  (index, data) => item.add({"key": index, ...data}));
+        }
+
+        if (snapshot.hasError)
+          return new Text('Error: ${snapshot.error}');
+        switch (snapshot.connectionState){
+          case ConnectionState.waiting:
+            return  Container(
+              height: 200.0,
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black45),
+              ),
+            );
+          default: return Scaffold(
+            appBar: AppBar(
+              title: Text("Employees",style: TextStyle(fontFamily: "Poppins"),),
+              centerTitle: true,
+              backgroundColor: Colors.blueGrey,
+            ),
+            body: ListView.builder(
+              itemCount: item.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  onLongPress: (){
+                    controller.text = item[index]["name"];
+                    controller2.text = item[index]["role"];
+                    uid = item[index]["key"];
+                    confirmationPopup(context,image,1,index,controller,controller2);
+                  },
+                  onTap: () {
+                    controller.text = item[index]["name"];
+                    controller2.text = item[index]["role"];
+                    uid = item[index]["key"];
+                    confirmationPopup(context,image,1,index,controller,controller2);
+                  },
+                  leading: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minWidth: sizeW,
+                      minHeight: sizeH,
+                      maxWidth: sizeW + 20,
+                      maxHeight: sizeH + 20,
+                    ),
+                    child: image,
+                  ),
+                  title: Text(item[index]["name"],style: TextStyle(fontFamily: "Poppins"),),
+                  trailing: Text(item[index]["role"],style: TextStyle(fontFamily: "Poppins"),),
+                );
+              },
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: (){
+                confirmationPopup(context,image,0,0,controller,controller2);
+              },
+              child: Icon(Icons.add),
+            ),
+          );
+        }
+      },
     );
   }
 
@@ -128,7 +176,7 @@ class _EmployeesState extends State<Employees> {
             ),
             onPressed: () {
               setState(() {
-                employees.remove(controller.value.text);
+                service.deleteEmployee(uid);
               });
               Navigator.pop(context);
             },
@@ -151,13 +199,15 @@ class _EmployeesState extends State<Employees> {
             ),
             onPressed: () {
               if(controller.value.text != "" && controller2.value.text != ""){
+                final params = {
+                  'name' : controller.value.text,
+                  'role' : controller2.value.text
+                };
                 setState(() {
                   if(val == 0) {
-                    employees.add(controller.value.text);
-                    subtitles.add(controller2.value.text);
+                    service.addEmployee(params);
                   } else {
-                    employees[index] = controller.value.text;
-                    subtitles[index] = controller2.value.text;
+                    service.updateEmployee(uid, params);
                   }
                 });
               }
