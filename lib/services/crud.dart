@@ -1,64 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:uuid/uuid.dart';
+import 'package:uuid/uuid_util.dart';
 
 class DatabaseService{
+  var uuid = Uuid();
+
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   CollectionReference harun = FirebaseFirestore.instance.collection('harun');
   CollectionReference harun_employees = FirebaseFirestore.instance.collection('harun').doc("VC8qu0uo2yOiaNsoOR5q").collection('employees').doc("iPQuXllnINUyswJfP7SZ").collection('user');
+  final employeesReference = FirebaseDatabase.instance.reference().child('bakery').child('employees');
 
-  bool isLoggedIn(){
-    if (FirebaseAuth.instance.currentUser != null){
-      return true;
-    } else {
-      return false;
-    }
+  void addEmployee(Map data){
+    var v1 = uuid.v1();
+    employeesReference.child(v1).set(data);
   }
 
-  Future<void> addData(Map data) async{
-    if(isLoggedIn()){
-      users.add(data).catchError((e){
-        print(e);
-      });
-    } else {
-      print("You need to login");
-    }
+  void updateEmployee(String uid,Map data){
+    employeesReference.child(uid).update(data);
   }
 
-  Future getCollections() async{
-    users.get().then((QuerySnapshot querySnapshot) => {
-      querySnapshot.docs.forEach((doc) {
-        print(doc["full_name"]);
-      })
-    });
-  }
-
-  Future<void> addHarunEmployee(Map data) async{
-    if(isLoggedIn()){
-      harun_employees.add(data).catchError((e){
-        print(e);
-      });
-    } else {
-      print("You need to login");
-    }
-  }
-
-  Future<void> updateHarunEmployee(String uid,Map data) async{
-    if(isLoggedIn()){
-      harun_employees.doc(uid).update(data).catchError((e){
-        print(e);
-      });
-    } else {
-      print("You need to login");
-    }
-  }
-
-  Future<void> deleteHarunEmployee(String uid) async{
-    if(isLoggedIn()){
-      harun_employees.doc(uid).delete().catchError((e){
-        print(e);
-      });
-    } else {
-      print("You need to login");
-    }
+  void deleteEmployee(String uid){
+    employeesReference.child(uid).remove();
   }
 }

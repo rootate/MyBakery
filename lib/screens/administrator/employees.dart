@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/services/crud.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 List employees = ['Harun Albayrak', 'Ümit Altıntaş', 'Yusuf Akgül', 'Bilal Bayrakdar',
   'Ömer Faruk Sayar'];
@@ -10,6 +11,7 @@ List employees = ['Harun Albayrak', 'Ümit Altıntaş', 'Yusuf Akgül', 'Bilal B
 List subtitles = ['Şoför', 'Tezgahtar', 'None', 'None', 'None'];
 
 String uid;
+
 
 class Employees extends StatefulWidget {
   @override
@@ -21,7 +23,6 @@ class _EmployeesState extends State<Employees> {
 
   @override
   void initState() {
-    //DocumentSnapshot documentSnapshot = service.getHarunEmployees();
     super.initState();
   }
 
@@ -38,9 +39,17 @@ class _EmployeesState extends State<Employees> {
     TextEditingController controller = TextEditingController();
     TextEditingController controller2 = TextEditingController();
 
-    return StreamBuilder<QuerySnapshot>(
-      stream: service.harun_employees.snapshots(),
+    return StreamBuilder<Event>(
+      stream: service.employeesReference.onValue,
       builder: (context,snapshot){
+        Map data = {};
+        List item = [];
+        if(snapshot.hasData) {
+          data = snapshot.data.snapshot.value;
+          data.forEach(
+                  (index, data) => item.add({"key": index, ...data}));
+        }
+
         if (snapshot.hasError)
           return new Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState){
@@ -59,20 +68,19 @@ class _EmployeesState extends State<Employees> {
               backgroundColor: Colors.blueGrey,
             ),
             body: ListView.builder(
-              itemCount: snapshot.data.docs.length,
+              itemCount: item.length,
               itemBuilder: (context, index) {
-                List<DocumentSnapshot> employeeList = snapshot.data.docs;
                 return ListTile(
                   onLongPress: (){
-                    controller.text = employeeList[index].data()['name'];
-                    controller2.text = employeeList[index].data()['job'];
-                    uid = employeeList[index].id;
+                    controller.text = item[index]["name"];
+                    controller2.text = item[index]["role"];
+                    uid = item[index]["key"];
                     confirmationPopup(context,image,1,index,controller,controller2);
                   },
                   onTap: () {
-                    controller.text = employeeList[index].data()['name'];
-                    controller2.text = employeeList[index].data()['job'];
-                    uid = employeeList[index].id;
+                    controller.text = item[index]["name"];
+                    controller2.text = item[index]["role"];
+                    uid = item[index]["key"];
                     confirmationPopup(context,image,1,index,controller,controller2);
                   },
                   leading: ConstrainedBox(
@@ -84,8 +92,8 @@ class _EmployeesState extends State<Employees> {
                     ),
                     child: image,
                   ),
-                  title: Text(employeeList[index].data()['name'],style: TextStyle(fontFamily: "Poppins"),),
-                  trailing: Text(employeeList[index].data()['job'],style: TextStyle(fontFamily: "Poppins"),),
+                  title: Text(item[index]["name"],style: TextStyle(fontFamily: "Poppins"),),
+                  trailing: Text(item[index]["role"],style: TextStyle(fontFamily: "Poppins"),),
                 );
               },
             ),
@@ -160,7 +168,7 @@ class _EmployeesState extends State<Employees> {
             ),
             onPressed: () {
               setState(() {
-                service.deleteHarunEmployee(uid);
+                service.deleteEmployee(uid);
               });
               Navigator.pop(context);
             },
@@ -185,13 +193,13 @@ class _EmployeesState extends State<Employees> {
               if(controller.value.text != "" && controller2.value.text != ""){
                 final params = {
                   'name' : controller.value.text,
-                  'job' : controller2.value.text
+                  'role' : controller2.value.text
                 };
                 setState(() {
                   if(val == 0) {
-                    service.addHarunEmployee(params);
+                    service.addEmployee(params);
                   } else {
-                    service.updateHarunEmployee(uid, params);
+                    service.updateEmployee(uid, params);
                   }
                 });
               }
