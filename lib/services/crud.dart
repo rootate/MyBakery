@@ -1,15 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:uuid/uuid.dart';
-import 'package:uuid/uuid_util.dart';
 
 class DatabaseService{
   var uuid = Uuid();
-
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
-  CollectionReference harun = FirebaseFirestore.instance.collection('harun');
-  CollectionReference harun_employees = FirebaseFirestore.instance.collection('harun').doc("VC8qu0uo2yOiaNsoOR5q").collection('employees').doc("iPQuXllnINUyswJfP7SZ").collection('user');
   final employeesReference = FirebaseDatabase.instance.reference().child('bakery').child('employees');
 
   void addEmployee(Map data){

@@ -1,17 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/services/crud.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-List employees = ['Harun Albayrak', 'Ümit Altıntaş', 'Yusuf Akgül', 'Bilal Bayrakdar',
-  'Ömer Faruk Sayar'];
-
-List subtitles = ['Şoför', 'Tezgahtar', 'None', 'None', 'None'];
-
 String uid;
-
 
 class Employees extends StatefulWidget {
   @override
@@ -46,6 +39,21 @@ class _EmployeesState extends State<Employees> {
         List item = [];
         if(snapshot.hasData) {
           data = snapshot.data.snapshot.value;
+          if(data == null){
+            return Scaffold(
+              appBar: AppBar(
+                title: Text("Employees",style: TextStyle(fontFamily: "Poppins"),),
+                centerTitle: true,
+                backgroundColor: Colors.blueGrey,
+              ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: (){
+                  confirmationPopup(context,image,0,0,controller,controller2);
+                },
+                child: Icon(Icons.add),
+              ),
+            );
+          }
           data.forEach(
                   (index, data) => item.add({"key": index, ...data}));
         }
