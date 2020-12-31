@@ -1,72 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/SetupScreen/models/Market.dart';
-import 'package:flutter_my_bakery/SetupScreen/models/Worker.dart';
-import 'package:flutter_my_bakery/SetupScreen/screens/Markets.dart';
-import '../widgets/NewWorker.dart';
+import 'package:flutter_my_bakery/models/Product.dart';
+import 'package:flutter_my_bakery/widgets/NewProduct.dart';
 
-class Workers extends StatefulWidget {
-  final List<Worker> list;
-  Workers({this.list});
+class Urunler extends StatefulWidget {
+  final String category;
+  final List<Product> list;
+  Urunler({this.category, this.list});
   @override
-  _WorkersState createState() => _WorkersState(workerList: list);
+  _UrunlerState createState() =>
+      _UrunlerState(categoryName: category, productList: list);
 }
 
-class _WorkersState extends State<Workers> {
-  List<Worker> workerList = [];
-  void _addNewWorker(String workerName, String workerMail, jobs gorevi) {
-    final newWorker = Worker(name: workerName, mail: workerMail, job: gorevi);
+class _UrunlerState extends State<Urunler> {
+  final String categoryName;
+  List<Product> productList = [];
+  void _addNewProduct(String prName, double prAmount) {
+    final newProduct = Product(name: prName, amount: prAmount);
     setState(() {
-      workerList.add(newWorker);
+      productList.add(newProduct);
     });
   }
 
-  _WorkersState({this.workerList});
+  _UrunlerState({this.categoryName, this.productList});
 
-  void _startAddNewWorker(BuildContext ctx) {
+  void _startAddNewProduct(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
         return GestureDetector(
           onTap: () {},
-          child: NewWorker(_addNewWorker),
+          child: NewProduct(_addNewProduct),
           behavior: HitTestBehavior.opaque,
         );
       },
     );
   }
 
-  void deleteWorker(String name) {
+  void deleteProduct(String name) {
     setState(() {
-      workerList.removeWhere((wr) => wr.name == name);
+      productList.removeWhere((pr) => pr.name == name);
     });
-  }
-
-  final List<Market> marketList = [];
-
-  void nextPage(BuildContext cx) {
-    Navigator.of(cx).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return Markets(list: marketList);
-        },
-      ),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    String jobName;
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          IconButton(
-              icon: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              onPressed: () => _startAddNewWorker(context))
-        ],
-        title: Text("Çalışanlar"),
+        backgroundColor: Colors.orange[700],
+        title: Text(categoryName),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -74,15 +55,9 @@ class _WorkersState extends State<Workers> {
             Container(
               height: MediaQuery.of(context).size.height * 0.80,
               child: ListView.builder(
-                itemCount: workerList.length,
+                itemCount: productList.length,
                 padding: EdgeInsets.only(top: 10),
                 itemBuilder: (ctx, index) {
-                  if (workerList[index].job == jobs.tezgahtar) {
-                    jobName = "Tezgahtar";
-                  } else if (workerList[index].job == jobs.sofor) {
-                    jobName = "Şoför";
-                  } else
-                    jobName = "Yönetici";
                   return Container(
                     margin: EdgeInsets.symmetric(horizontal: 10),
                     child: Card(
@@ -93,20 +68,21 @@ class _WorkersState extends State<Workers> {
                           Container(
                             margin: EdgeInsets.only(left: 7),
                             child: Text(
-                              workerList[index].name,
+                              productList[index].name,
                               style: TextStyle(fontSize: 24),
                             ),
                           ),
                           Container(
                             child: Text(
-                              jobName,
+                              productList[index].amount.toStringAsFixed(2) +
+                                  " ₺",
                               style: TextStyle(fontSize: 24),
                             ),
                           ),
                           IconButton(
                               icon: Icon(Icons.delete),
                               onPressed: () =>
-                                  deleteWorker(workerList[index].name))
+                                  deleteProduct(productList[index].name))
                         ],
                       ),
                     ),
@@ -119,8 +95,9 @@ class _WorkersState extends State<Workers> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.done),
-        onPressed: () => nextPage(context),
+        backgroundColor: Colors.orange[700],
+        child: Icon(Icons.add),
+        onPressed: () => _startAddNewProduct(context),
       ),
     );
   }

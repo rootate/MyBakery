@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/SetupScreen/screens/Workers.dart';
-import 'package:flutter_my_bakery/SetupScreen/widgets/categoryItem.dart';
-import '../models/Category.dart';
-import '../models/Worker.dart';
+import 'package:flutter_my_bakery/screens/setup/Workers.dart';
+import 'package:flutter_my_bakery/widgets/categoryItem.dart';
+import '../../models/Category.dart';
+import '../../models/Worker.dart';
 
 const categories = const [
   Category(name: "Ekmekler", image: "assets/images/ekmekler.jpeg"),
