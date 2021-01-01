@@ -95,7 +95,7 @@ class _SepetState extends State<Sepet> {
           itemBuilder: (context, index) {
             return ListTile(
               onLongPress: () {
-                //confirmationPopup(context,image,1,index,controller);
+                deletePopup(context, image, index, controller);
               },
               onTap: () {
                 controller.text = widget.piece[index].toString();
@@ -173,6 +173,69 @@ class _SepetState extends State<Sepet> {
         ));
   }
 
+  deletePopup(BuildContext dialogContext, Widget image, int index,
+      TextEditingController controller) {
+    final contextW = MediaQuery.of(context).size.width;
+    final sizeW = contextW / 20;
+
+    var alertStyle = AlertStyle(
+      animationType: AnimationType.grow,
+      overlayColor: Colors.black87,
+      isOverlayTapDismiss: true,
+      titleStyle: TextStyle(
+          fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: sizeW),
+      animationDuration: Duration(milliseconds: 400),
+    );
+
+    Alert(
+        context: dialogContext,
+        style: alertStyle,
+        title: "Ürün Sil!",
+        content: Column(
+          children: [
+            SizedBox(
+              height: sizeW,
+            ),
+            image,
+            SizedBox(
+              height: sizeW,
+            ),
+          ],
+        ),
+        buttons: [
+          DialogButton(
+            child: Text(
+              "Sil",
+              style: TextStyle(color: Colors.white, fontSize: sizeW * 0.6),
+            ),
+            onPressed: () {
+              // if (int.parse(controller.text) >= 0) {
+              setState(() {
+                widget.piece[index] = 0;
+                //remove from list
+                widget.product.removeAt(index);
+                widget.price.removeAt(index);
+                widget.piece.removeAt(index);
+              });
+              Navigator.pop(context);
+              // }
+              // Navigator.pop(context);
+            },
+            color: Colors.red,
+          ),
+          DialogButton(
+            child: Text(
+              "Vazgeç",
+              style: TextStyle(color: Colors.white, fontSize: sizeW * 0.6),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.blue,
+          ),
+        ]).show();
+  }
+
   confirmationPopup(BuildContext dialogContext, Widget image, int index,
       TextEditingController controller) {
     final contextW = MediaQuery.of(context).size.width;
@@ -220,6 +283,17 @@ class _SepetState extends State<Sepet> {
               style: TextStyle(color: Colors.white, fontSize: sizeW * 0.6),
             ),
             onPressed: () {
+              if (int.parse(controller.text) >= 0) {
+                setState(() {
+                  widget.piece[index] = int.parse(controller.value.text);
+                  if (int.parse(controller.value.text) == 0) {
+                    //remove from list
+                    widget.product.removeAt(index);
+                    widget.price.removeAt(index);
+                    widget.piece.removeAt(index);
+                  }
+                });
+              }
               Navigator.pop(context);
             },
             color: Colors.green,
