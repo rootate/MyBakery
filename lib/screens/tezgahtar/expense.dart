@@ -25,7 +25,6 @@ class _ExpenseState extends State<Expense> {
   bool headerShouldHide = false;
   List<ExpensesModel> expensesList = [];
   TextEditingController searchController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
   DatabaseService service = DatabaseService();
 
@@ -63,7 +62,6 @@ class _ExpenseState extends State<Expense> {
         });
       });
     });
-    print("alright?--------------------------------------------------");
   }
 
   @override
