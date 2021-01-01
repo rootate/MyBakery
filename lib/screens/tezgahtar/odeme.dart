@@ -34,10 +34,10 @@ class _OdemeState extends State<Odeme> {
         itemCount: categories.length,
         itemBuilder: (context, index) {
           return ListTile(
-            onLongPress: (){
-              controller.text = categories[index];
-              confirmationPopup(context,image,1,index,controller);
-            },
+            // onLongPress: (){
+            //   controller.text = categories[index];
+            //   confirmationPopup(context,image,1,index,controller);
+            // },
             onTap: () {
               Navigator.push(
                 context,
@@ -58,12 +58,12 @@ class _OdemeState extends State<Odeme> {
         },
 
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          confirmationPopup(context,image,0,0,controller);
-        },
-        child: Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: (){
+      //     confirmationPopup(context,image,0,0,controller);
+      //   },
+      //   // child: Icon(Icons.add),
+      // ),
     );
   }
 
