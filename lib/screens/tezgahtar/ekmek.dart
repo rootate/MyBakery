@@ -107,11 +107,17 @@ class _EkmekState extends State<Ekmek> {
                               child: RaisedButton(
                                 child: Text("Kaydet"),
                                 onPressed: () {
-                                  if (_formKey.currentState.validate()) {
+                                  if (!(_textFieldController.text.isEmpty ||
+                                      int.parse(_textFieldController.text) <=
+                                          0)) if (_formKey.currentState
+                                      .validate()) {
                                     _formKey.currentState.save();
-                                    NotesDatabaseService.db.addEkmekInDB(
-                                        EkmekModel(
-                                            amount: _textFieldController.text,
+                                    NotesDatabaseService
+                                        .db
+                                        .addEkmekInDB(EkmekModel(
+                                            amount: int.parse(
+                                                    _textFieldController.text)
+                                                .toString(),
                                             time: DateTime.now()
                                                 .toIso8601String()));
                                     _textFieldController.clear();
