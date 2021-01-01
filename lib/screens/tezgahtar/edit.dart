@@ -6,6 +6,8 @@ import 'package:flutter/painting.dart' as prefix0;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_my_bakery/models/models.dart';
 import 'package:flutter_my_bakery/services/database.dart';
+import 'package:flutter_my_bakery/services/crud.dart';
+import 'package:uuid/uuid.dart';
 
 class EditNotePage extends StatefulWidget {
   Function() triggerRefetch;
@@ -279,6 +281,8 @@ class _EditExpensePageState extends State<EditExpensePage> {
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
 
+  DatabaseService service = DatabaseService();
+
   @override
   void initState() {
     super.initState();
@@ -410,13 +414,15 @@ class _EditExpensePageState extends State<EditExpensePage> {
 
   void handleSave() async {
     setState(() {
+      currentExpense.id = Uuid().v1();
       currentExpense.title = titleController.text;
       currentExpense.content = contentController.text;
       print('Hey there ${currentExpense.content}');
     });
     if (isExpenseNew) {
-      var latestNote =
-          await NotesDatabaseService.db.addExpenseInDB(currentExpense);
+      var latestNote = currentExpense;
+      // await NotesDatabaseService.db.addExpenseInDB(currentExpense);
+      service.addExpense(currentExpense.id, currentExpense.toMap());
       setState(() {
         currentExpense = latestNote;
       });

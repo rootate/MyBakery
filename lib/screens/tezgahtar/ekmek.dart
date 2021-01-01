@@ -43,7 +43,7 @@ class _EkmekState extends State<Ekmek> {
     //     .onValue;
     print("Entered setEkmek");
     service.dailyDataReference
-        .child("2021-01-01")
+        .child(formatter.format(DateTime.now()))
         .child("producedBreads")
         .once()
         .then((DataSnapshot snapshot) {
@@ -58,8 +58,6 @@ class _EkmekState extends State<Ekmek> {
               values["title"], values["content"], values["_id"]));
         });
       });
-      // ekmekList = fetchedEkmek.value;
-      // print(ekmekList);
     });
   }
 

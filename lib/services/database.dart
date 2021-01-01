@@ -169,7 +169,7 @@ class NotesDatabaseService {
     final db = await database;
     if (newExpense.title.trim().isEmpty) newExpense.title = 'Untitled Expense';
 
-    int id = await db.transaction((transaction) {
+    String id = await db.transaction((transaction) {
       transaction.rawInsert(
           'INSERT into Expenses(title, content, date) VALUES ("${newExpense.title + " ₺"}", "${newExpense.content}", "${newExpense.date.toIso8601String()}");');
     });

@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:uuid/uuid.dart';
+
 class NotesModel {
   int id;
   String title;
@@ -37,12 +38,13 @@ class NotesModel {
 }
 
 class ExpensesModel {
-  int id;
+  String id = Uuid().v1();
   String title;
   String content;
   DateTime date;
 
-  ExpensesModel({this.id, this.title, this.content, this.date});
+  ExpensesModel({this.title, this.content, this.date});
+  ExpensesModel.withID(this.title, this.content, this.date, this.id);
 
   ExpensesModel.fromMap(Map<String, dynamic> map) {
     this.id = map['_id'];
@@ -67,18 +69,17 @@ class EkmekModel {
   String time;
 
   EkmekModel({this.amount, this.time});
-  EkmekModel.withID(this.amount, this.time,this.id);
+  EkmekModel.withID(this.amount, this.time, this.id);
 
   EkmekModel.fromMap(Map<dynamic, dynamic> map) {
     this.id = map['_id'];
     this.amount = map['amount'];
     this.time = map['time'];
   }
-  
 
   Map<String, String> toMap() {
     return <String, String>{
-      '_id': this.id.toString(),
+      '_id': this.id,
       'title': this.amount,
       'content': this.time,
     };

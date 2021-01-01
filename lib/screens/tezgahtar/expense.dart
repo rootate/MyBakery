@@ -8,6 +8,9 @@ import 'package:flutter_my_bakery/screens/tezgahtar/edit.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/view.dart';
 import 'package:flutter_my_bakery/services/database.dart';
 import 'package:flutter_my_bakery/shared/cards.dart';
+import 'package:flutter_my_bakery/services/crud.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart';
 
 class Expense extends StatefulWidget {
   Expense({Key key, this.title}) : super(key: key);
@@ -22,6 +25,9 @@ class _ExpenseState extends State<Expense> {
   bool headerShouldHide = false;
   List<ExpensesModel> expensesList = [];
   TextEditingController searchController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  DatabaseService service = DatabaseService();
 
   @override
   void initState() {
@@ -32,10 +38,28 @@ class _ExpenseState extends State<Expense> {
 
   setExpensesFromDB() async {
     print("Entered setExpenses");
-    var fetchedExpenses = await NotesDatabaseService.db.getExpensesFromDB();
-    setState(() {
-      expensesList = fetchedExpenses;
+    // var fetchedExpenses = await NotesDatabaseService.db.getExpensesFromDB();
+    // setState(() {
+    //   expensesList = fetchedExpenses;
+    // });
+    service.dailyDataReference
+        .child(formatter.format(DateTime.now()))
+        .child("expenses")
+        .once()
+        .then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> map = snapshot.value;
+      map.forEach((key, values) {
+        print(values);
+        print("data: " +
+            values["title"] +
+            "--------------------------------------");
+        setState(() {
+          expensesList.add(ExpensesModel.withID(values["title"],
+              values["content"], DateTime.parse(values["date"]), values["_id"]));
+        });
+      });
     });
+    print("alright?--------------------------------------------------");
   }
 
   @override
