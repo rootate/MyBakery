@@ -36,28 +36,28 @@ class _EkmekState extends State<Ekmek> {
   }
 
   setEkmekFromDB() async {
-    
-
     // var fetchedEkmek = await NotesDatabaseService.db.getEkmekFromDB();
     // var fetchedEkmek = await service.dailyDataReference
     //     .child(formatter.format(DateTime.now()))
     //     .child("producedBreads")
     //     .onValue;
-    setState(() {
-      print("Entered setEkmek");
+    print("Entered setEkmek");
     service.dailyDataReference
         .child("2021-01-01")
         .child("producedBreads")
         .once()
         .then((DataSnapshot snapshot) {
-      Map<dynamic, dynamic> values = snapshot.value;
-      values.forEach((key, values) {
+      Map<dynamic, dynamic> map = snapshot.value;
+      map.forEach((key, values) {
+        print(values);
         print("data: " +
             values["title"] +
             "--------------------------------------");
-        ekmekList.add(EkmekModel.fromMap(values));
+        setState(() {
+          ekmekList.add(EkmekModel.withID(
+              values["title"], values["content"], values["_id"]));
+        });
       });
-    });
       // ekmekList = fetchedEkmek.value;
       // print(ekmekList);
     });
@@ -151,12 +151,18 @@ class _EkmekState extends State<Ekmek> {
                                         amount:
                                             int.parse(_textFieldController.text)
                                                 .toString(),
-                                        time: DateTime.now().toIso8601String());
+                                        time: DateFormat.yMMMd('tr')
+                                            .add_Hm()
+                                            .format(DateTime.now()));
                                     service.addEkmek(
                                         res.id.toString(), res.toMap());
 
                                     _textFieldController.clear();
+                                    setState(() {
+                                      ekmekList = [];
+                                    });
                                     setEkmekFromDB();
+
                                     Navigator.pop(
                                         context); // Close the add todo screen
                                   }
