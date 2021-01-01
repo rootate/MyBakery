@@ -78,7 +78,7 @@ class _EkmekState extends State<Ekmek> {
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
-        child: AnimatedContainer(
+        child:  AnimatedContainer(
           duration: Duration(milliseconds: 200),
           child: ListView(
             physics: BouncingScrollPhysics(),
@@ -159,9 +159,9 @@ class _EkmekState extends State<Ekmek> {
 
                                     _textFieldController.clear();
                                     setState(() {
-                                      ekmekList = [];
+                                      ekmekList.add(res);
                                     });
-                                    setEkmekFromDB();
+                                    // setEkmekFromDB();
 
                                     Navigator.pop(
                                         context); // Close the add todo screen
