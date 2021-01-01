@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/screens/home/bottom_bar_state.dart';
-import 'package:flutter_my_bakery/screens/home/home.dart';
-import 'package:flutter_my_bakery/screens/setup/firstPage.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/odeme_kategori.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/tezgahtar.dart';
+import 'package:flutter_my_bakery/screens/tezgahtar/veresiye.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -41,21 +39,33 @@ class _SepetState extends State<Sepet> {
       gravity: ToastGravity.BOTTOM,
       backgroundColor: Colors.green,
     );
+    Navigator.of(cx).pop(); // :)
+    Navigator.of(cx).pop(); // ;)
+    Navigator.of(cx).pop(); // :D
+    Navigator.of(cx).pop(); // xD
+  }
 
-    Navigator.of(cx).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return BottomBarState();
-        },
-      ),
-    );
+  void goVeresiye(BuildContext cx) {
+    setState(() {
+      product = [];
+      piece = [];
+      price = [];
+    });
+    // Fluttertoast.showToast(
+    //   msg: "✓ Kaydedildi",
+    //   toastLength: Toast.LENGTH_SHORT,
+    //   fontSize: 28,
+    //   gravity: ToastGravity.BOTTOM,
+    //   backgroundColor: Colors.green,
+    // );
+    Navigator.of(cx).pop(); // :)
+    Navigator.of(cx).pop(); // ;)
+    Navigator.of(cx).pop(); // :D
+    Navigator.of(cx).pop(); // xD
 
-    Navigator.of(cx).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return Tezgahtar();
-        },
-      ),
+    Navigator.push(
+      cx,
+      MaterialPageRoute(builder: (context) => Veresiye()),
     );
   }
 
@@ -125,11 +135,12 @@ class _SepetState extends State<Sepet> {
             children: [
               RawMaterialButton(
                 onPressed: () {
-                  setState(() {
-                    product = [];
-                    price = [];
-                    piece = [];
-                  });
+                  Navigator.pop(context);
+                  // setState(() {
+                  //   product = [];
+                  //   price = [];
+                  //   piece = [];
+                  // });
                 },
                 elevation: 2.0,
                 fillColor: Colors.red,
@@ -146,7 +157,7 @@ class _SepetState extends State<Sepet> {
               ),
               RawMaterialButton(
                 onPressed: () {
-                  confirmationPopup2(context);
+                  if (product.isNotEmpty) confirmationPopup2(context);
                 },
                 elevation: 2.0,
                 fillColor: Colors.green,
@@ -328,7 +339,7 @@ class _SepetState extends State<Sepet> {
             ),
             RaisedButton(
               onPressed: () {
-                Navigator.pop(context);
+                goVeresiye(context);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
