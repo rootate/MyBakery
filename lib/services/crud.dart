@@ -16,11 +16,10 @@ class DatabaseService {
     employeesReference.child(v1).set(data);
   }
 
-  void addEkmek(Map data) {
-    var v1 = uuid.v1();
+  void addEkmek(String uid, Map data) {
     var day = formatter.format(DateTime.now());
 
-    dailyDataReference.child(day).child("producedBreads").child(v1).set(data);
+    dailyDataReference.child(day).child("producedBreads").child(uid).set(data);
   }
 
   void updateEmployee(String uid, Map data) {

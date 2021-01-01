@@ -1,8 +1,9 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_my_bakery/models/models.dart';
-import 'package:flutter_my_bakery/services/database.dart';
+// import 'package:flutter_my_bakery/services/database.dart';
 import 'package:flutter_my_bakery/shared/cards.dart';
 import 'package:flutter_my_bakery/services/crud.dart';
 import 'package:intl/intl.dart';
@@ -30,19 +31,35 @@ class _EkmekState extends State<Ekmek> {
   @override
   void initState() {
     super.initState();
-    NotesDatabaseService.db.init();
+    // NotesDatabaseService.db.init();
     setEkmekFromDB();
   }
 
   setEkmekFromDB() async {
-    print("Entered setEkmek");
-    var fetchedEkmek = await NotesDatabaseService.db.getEkmekFromDB();
+    
+
+    // var fetchedEkmek = await NotesDatabaseService.db.getEkmekFromDB();
     // var fetchedEkmek = await service.dailyDataReference
     //     .child(formatter.format(DateTime.now()))
     //     .child("producedBreads")
     //     .onValue;
     setState(() {
-      ekmekList = fetchedEkmek;
+      print("Entered setEkmek");
+    service.dailyDataReference
+        .child("2021-01-01")
+        .child("producedBreads")
+        .once()
+        .then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> values = snapshot.value;
+      values.forEach((key, values) {
+        print("data: " +
+            values["title"] +
+            "--------------------------------------");
+        ekmekList.add(EkmekModel.fromMap(values));
+      });
+    });
+      // ekmekList = fetchedEkmek.value;
+      // print(ekmekList);
     });
   }
 
@@ -121,25 +138,23 @@ class _EkmekState extends State<Ekmek> {
                                           0)) if (_formKey.currentState
                                       .validate()) {
                                     _formKey.currentState.save();
-                                    NotesDatabaseService
-                                        .db
-                                        .addEkmekInDB(
-                                          EkmekModel(
-                                            amount: int.parse(
-                                                    _textFieldController.text)
-                                                .toString(),
-                                            time: DateTime.now()
-                                                .toIso8601String()));
+                                    // NotesDatabaseService
+                                    //     .db
+                                    //     .addEkmekInDB(
+                                    //       EkmekModel(
+                                    //         amount: int.parse(
+                                    //                 _textFieldController.text)
+                                    //             .toString(),
+                                    //         time: DateTime.now()
+                                    //             .toIso8601String()));
                                     var res = EkmekModel(
-                                            amount: int.parse(
-                                                    _textFieldController.text)
+                                        amount:
+                                            int.parse(_textFieldController.text)
                                                 .toString(),
-                                            time: DateTime.now()
-                                                .toIso8601String());
-                                    var temp = res.toMap();
-                                    service.addEkmek(temp);
+                                        time: DateTime.now().toIso8601String());
+                                    service.addEkmek(
+                                        res.id.toString(), res.toMap());
 
-                                    
                                     _textFieldController.clear();
                                     setEkmekFromDB();
                                     Navigator.pop(
@@ -195,7 +210,8 @@ class _EkmekState extends State<Ekmek> {
               new FlatButton(
                   child: new Text('Sil'),
                   onPressed: () {
-                    NotesDatabaseService.db.deleteEkmekInDB(ekmek);
+                    // NotesDatabaseService.db.deleteEkmekInDB(ekmek);
+                    // service.
                     Navigator.of(context).pop();
                     setEkmekFromDB();
                   })

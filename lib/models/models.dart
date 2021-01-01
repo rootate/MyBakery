@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'package:uuid/uuid.dart';
 class NotesModel {
   int id;
   String title;
@@ -62,11 +62,11 @@ class ExpensesModel {
 }
 
 class EkmekModel {
-  int id;
+  String id = Uuid().v1();
   String amount;
   String time;
 
-  EkmekModel({this.id, this.amount, this.time});
+  EkmekModel({this.amount, this.time});
 
   EkmekModel.fromMap(Map<String, dynamic> map) {
     this.id = map['_id'];

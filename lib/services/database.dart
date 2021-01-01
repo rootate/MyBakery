@@ -187,7 +187,7 @@ class NotesDatabaseService {
     final db = await database;
     if (newEkmek.amount.trim().isEmpty) newEkmek.time = 'Untitled Expense';
 
-    int id = await db.transaction((transaction) {
+    String id = await db.transaction((transaction) {
       transaction.rawInsert(
           'INSERT into Ekmek(amount, time) VALUES ("${newEkmek.amount + " Ekmek"}", "${newEkmek.time}");');
     });
