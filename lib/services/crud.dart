@@ -18,7 +18,7 @@ class DatabaseService {
 
   void addEkmek(String uid, Map data) {
     var day = formatter.format(DateTime.now());
-    
+
     dailyDataReference.child(day).child("producedBreads").child(uid).set(data);
   }
 

@@ -209,8 +209,7 @@ class EkmekCardComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting('tr'); //bu satırı ekliyoruz
-    String neatDate = ekmekData.time;
-
+    String neatDate = DateFormat.yMMMd('tr').add_Hm().format(DateTime.now());
     Color color =
         colorList.elementAt(ekmekData.amount.length % colorList.length);
     return Container(
