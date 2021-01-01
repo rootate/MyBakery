@@ -67,12 +67,14 @@ class EkmekModel {
   String time;
 
   EkmekModel({this.amount, this.time});
+  EkmekModel.withID(this.amount, this.time,this.id);
 
-  EkmekModel.fromMap(Map<String, dynamic> map) {
+  EkmekModel.fromMap(Map<dynamic, dynamic> map) {
     this.id = map['_id'];
     this.amount = map['amount'];
     this.time = map['time'];
   }
+  
 
   Map<String, String> toMap() {
     return <String, String>{
