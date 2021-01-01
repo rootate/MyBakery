@@ -10,6 +10,7 @@ import 'package:flutter_my_bakery/screens/tezgahtar/edit.dart';
 import 'package:flutter_my_bakery/services/database.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:share/share.dart';
+import 'package:flutter_my_bakery/services/crud.dart';
 
 class ViewNotePage extends StatefulWidget {
   Function() triggerRefetch;
@@ -22,6 +23,7 @@ class ViewNotePage extends StatefulWidget {
   @override
   _ViewNotePageState createState() => _ViewNotePageState();
 }
+
 class _ViewNotePageState extends State<ViewNotePage> {
   @override
   void initState() {
@@ -219,6 +221,8 @@ class ViewExpensePage extends StatefulWidget {
 }
 
 class _ViewExpensePageState extends State<ViewExpensePage> {
+  DatabaseService service = DatabaseService();
+
   @override
   void initState() {
     super.initState();
@@ -363,8 +367,9 @@ class _ViewExpensePageState extends State<ViewExpensePage> {
                         fontWeight: FontWeight.w500,
                         letterSpacing: 1)),
                 onPressed: () async {
-                  await NotesDatabaseService.db
-                      .deleteExpenseInDB(widget.currentExpense);
+                  // await NotesDatabaseService.db
+                  //     .deleteExpenseInDB(widget.currentExpense);
+                  service.deleteExpense(widget.currentExpense.id);
                   widget.triggerRefetch();
                   Navigator.pop(context);
                   Navigator.pop(context);
@@ -389,7 +394,8 @@ class _ViewExpensePageState extends State<ViewExpensePage> {
 class ViewVeresiyePage extends StatefulWidget {
   Function() triggerRefetch;
   VeresiyeModel currentVeresiye;
-  ViewVeresiyePage({Key key, Function() triggerRefetch, VeresiyeModel currentVeresiye})
+  ViewVeresiyePage(
+      {Key key, Function() triggerRefetch, VeresiyeModel currentVeresiye})
       : super(key: key) {
     this.triggerRefetch = triggerRefetch;
     this.currentVeresiye = currentVeresiye;

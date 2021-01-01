@@ -36,11 +36,7 @@ class _EkmekState extends State<Ekmek> {
   }
 
   setEkmekFromDB() async {
-    // var fetchedEkmek = await NotesDatabaseService.db.getEkmekFromDB();
-    // var fetchedEkmek = await service.dailyDataReference
-    //     .child(formatter.format(DateTime.now()))
-    //     .child("producedBreads")
-    //     .onValue;
+    ekmekList.clear();
     print("Entered setEkmek");
     service.dailyDataReference
         .child(formatter.format(DateTime.now()))
@@ -76,7 +72,7 @@ class _EkmekState extends State<Ekmek> {
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
-        child:  AnimatedContainer(
+        child: AnimatedContainer(
           duration: Duration(milliseconds: 200),
           child: ListView(
             physics: BouncingScrollPhysics(),

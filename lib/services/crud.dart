@@ -40,4 +40,11 @@ class DatabaseService {
 
     dailyDataReference.child(day).child("producedBreads").child(uid).remove();
   }
+
+  void deleteExpense(String uid) {
+    print("inside delete--------------------------------------");
+    var day = formatter.format(DateTime.now());
+    print("day: " + day);
+    dailyDataReference.child(day).child("expenses").child(uid).remove();
+  }
 }

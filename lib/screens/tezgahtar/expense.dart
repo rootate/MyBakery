@@ -37,6 +37,7 @@ class _ExpenseState extends State<Expense> {
   }
 
   setExpensesFromDB() async {
+    expensesList.clear();
     print("Entered setExpenses");
     // var fetchedExpenses = await NotesDatabaseService.db.getExpensesFromDB();
     // setState(() {
@@ -54,8 +55,11 @@ class _ExpenseState extends State<Expense> {
             values["title"] +
             "--------------------------------------");
         setState(() {
-          expensesList.add(ExpensesModel.withID(values["title"],
-              values["content"], DateTime.parse(values["date"]), values["_id"]));
+          expensesList.add(ExpensesModel.withID(
+              values["title"],
+              values["content"],
+              DateTime.parse(values["date"]),
+              values["_id"]));
         });
       });
     });
@@ -75,7 +79,7 @@ class _ExpenseState extends State<Expense> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Theme.of(context).primaryColor,
-        onPressed: () {
+        onPressed: () async {
           gotoEditExpense();
         },
         label: Text('Gider Ekle'.toUpperCase()),

@@ -470,8 +470,10 @@ class _EditExpensePageState extends State<EditExpensePage> {
                           fontWeight: FontWeight.w500,
                           letterSpacing: 1)),
                   onPressed: () async {
-                    await NotesDatabaseService.db
-                        .deleteExpenseInDB(currentExpense);
+                    service.deleteExpense(
+                        currentExpense.id);
+                    // await NotesDatabaseService.db
+                    // .deleteExpenseInDB(currentExpense);
                     widget.triggerRefetch();
                     Navigator.pop(context);
                     Navigator.pop(context);
