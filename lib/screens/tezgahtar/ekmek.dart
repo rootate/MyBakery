@@ -4,6 +4,8 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_my_bakery/models/models.dart';
 import 'package:flutter_my_bakery/services/database.dart';
 import 'package:flutter_my_bakery/shared/cards.dart';
+import 'package:flutter_my_bakery/services/crud.dart';
+import 'package:intl/intl.dart';
 
 class Ekmek extends StatefulWidget {
   Ekmek({Key key, this.title}) : super(key: key);
@@ -18,8 +20,11 @@ class _EkmekState extends State<Ekmek> {
   bool headerShouldHide = false;
   final TextEditingController _textFieldController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final DateFormat formatter = DateFormat('yyyy-MM-dd');
+
   List<EkmekModel> ekmekList = [];
 
+  DatabaseService service = DatabaseService();
   bool isSearchEmpty = true;
 
   @override
@@ -32,6 +37,10 @@ class _EkmekState extends State<Ekmek> {
   setEkmekFromDB() async {
     print("Entered setEkmek");
     var fetchedEkmek = await NotesDatabaseService.db.getEkmekFromDB();
+    // var fetchedEkmek = await service.dailyDataReference
+    //     .child(formatter.format(DateTime.now()))
+    //     .child("producedBreads")
+    //     .onValue;
     setState(() {
       ekmekList = fetchedEkmek;
     });
@@ -114,12 +123,23 @@ class _EkmekState extends State<Ekmek> {
                                     _formKey.currentState.save();
                                     NotesDatabaseService
                                         .db
-                                        .addEkmekInDB(EkmekModel(
+                                        .addEkmekInDB(
+                                          EkmekModel(
                                             amount: int.parse(
                                                     _textFieldController.text)
                                                 .toString(),
                                             time: DateTime.now()
                                                 .toIso8601String()));
+                                    var res = EkmekModel(
+                                            amount: int.parse(
+                                                    _textFieldController.text)
+                                                .toString(),
+                                            time: DateTime.now()
+                                                .toIso8601String());
+                                    var temp = res.toMap();
+                                    service.addEkmek(temp);
+
+                                    
                                     _textFieldController.clear();
                                     setEkmekFromDB();
                                     Navigator.pop(

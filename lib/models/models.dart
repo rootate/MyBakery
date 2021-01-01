@@ -74,9 +74,9 @@ class EkmekModel {
     this.time = map['time'];
   }
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      '_id': this.id,
+  Map<String, String> toMap() {
+    return <String, String>{
+      '_id': this.id.toString(),
       'title': this.amount,
       'content': this.time,
     };
