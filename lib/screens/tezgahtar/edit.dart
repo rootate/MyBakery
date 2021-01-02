@@ -189,7 +189,7 @@ class _EditNotePageState extends State<EditNotePage> {
         currentNote = latestNote;
       });
     } else {
-      await NotesDatabaseService.db.updateNoteInDB(currentNote);
+      service.updateNote(currentNote.id,currentNote.toMap());
     }
     setState(() {
       isNoteNew = false;
@@ -239,7 +239,7 @@ class _EditNotePageState extends State<EditNotePage> {
                           fontWeight: FontWeight.w500,
                           letterSpacing: 1)),
                   onPressed: () async {
-                    await NotesDatabaseService.db.deleteNoteInDB(currentNote);
+                    service.deleteNote(currentNote.id);
                     widget.triggerRefetch();
                     Navigator.pop(context);
                     Navigator.pop(context);
