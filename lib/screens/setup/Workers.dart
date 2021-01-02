@@ -1,7 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/models/Market.dart';
 import 'package:flutter_my_bakery/models/Worker.dart';
 import 'package:flutter_my_bakery/screens/setup/Markets.dart';
+import 'package:flutter_my_bakery/screens/setup/Setup.dart';
 import '../../widgets/NewWorker.dart';
 
 class Workers extends StatefulWidget {
@@ -13,9 +16,11 @@ class Workers extends StatefulWidget {
 
 class _WorkersState extends State<Workers> {
   List<Worker> workerList = [];
-  void _addNewWorker(String workerName, String workerMail, jobs gorevi) {
+  SetupDatabaseService sv = SetupDatabaseService();
+  void _addNewWorker(String workerName, String workerMail, String gorevi) {
     final newWorker = Worker(name: workerName, mail: workerMail, job: gorevi);
     setState(() {
+      sv.addWorker(newWorker);
       workerList.add(newWorker);
     });
   }
@@ -37,6 +42,7 @@ class _WorkersState extends State<Workers> {
 
   void deleteWorker(String name) {
     setState(() {
+      sv.deleteWorker(name);
       workerList.removeWhere((wr) => wr.name == name);
     });
   }
@@ -55,7 +61,6 @@ class _WorkersState extends State<Workers> {
 
   @override
   Widget build(BuildContext context) {
-    String jobName;
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -77,12 +82,6 @@ class _WorkersState extends State<Workers> {
                 itemCount: workerList.length,
                 padding: EdgeInsets.only(top: 10),
                 itemBuilder: (ctx, index) {
-                  if (workerList[index].job == jobs.tezgahtar) {
-                    jobName = "Tezgahtar";
-                  } else if (workerList[index].job == jobs.sofor) {
-                    jobName = "Şoför";
-                  } else
-                    jobName = "Yönetici";
                   return Container(
                     margin: EdgeInsets.symmetric(horizontal: 10),
                     child: Card(
@@ -99,7 +98,7 @@ class _WorkersState extends State<Workers> {
                           ),
                           Container(
                             child: Text(
-                              jobName,
+                              workerList[index].job,
                               style: TextStyle(fontSize: 24),
                             ),
                           ),
