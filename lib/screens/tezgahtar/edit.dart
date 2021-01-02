@@ -26,6 +26,7 @@ class _EditNotePageState extends State<EditNotePage> {
   bool isNoteNew = true;
   FocusNode titleFocus = FocusNode();
   FocusNode contentFocus = FocusNode();
+  DatabaseService service = DatabaseService();
 
   NotesModel currentNote;
   TextEditingController titleController = TextEditingController();
@@ -176,9 +177,10 @@ class _EditNotePageState extends State<EditNotePage> {
       print('Hey there ${currentNote.content}');
     });
     if (isNoteNew) {
-      var latestNote = await NotesDatabaseService.db.addNoteInDB(currentNote);
+      // var latestNote = await NotesDatabaseService.db.addNoteInDB(currentNote);
+      service.addNote(currentNote.id, currentNote.toMap());
       setState(() {
-        currentNote = latestNote;
+        // currentNote;
       });
     } else {
       await NotesDatabaseService.db.updateNoteInDB(currentNote);

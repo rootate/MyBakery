@@ -26,19 +26,31 @@ class DatabaseService {
     dailyDataReference.child(day).child("expenses").child(uid).set(data);
   }
 
+  void addNote(String uid, Map data) {
+    print("inside addNote");
+    print("data: " + data.toString();
+    print("uid: " + uid);
+    var day = formatter.format(DateTime.now());
+    dailyDataReference.child(day).child("notes").child(uid).set(data);
+  }
+
   void updateEmployee(String uid, Map data) {
     employeesReference.child(uid).update(data);
   }
 
-  void updateExpense(String uid, Map data){
+  void updateExpense(String uid, Map data) {
     var day = formatter.format(DateTime.now());
     dailyDataReference.child(day).child("expenses").child(uid).update(data);
+  }
+
+  void updateNote(String uid, Map data) {
+    var day = formatter.format(DateTime.now());
+    dailyDataReference.child(day).child("notes").child(uid).update(data);
   }
 
   void deleteEmployee(String uid) {
     employeesReference.child(uid).remove();
   }
-
 
   void deleteEkmek(String uid) {
     var day = formatter.format(DateTime.now());
@@ -48,5 +60,10 @@ class DatabaseService {
   void deleteExpense(String uid) {
     var day = formatter.format(DateTime.now());
     dailyDataReference.child(day).child("expenses").child(uid).remove();
+  }
+
+  void deleteNote(String uid) {
+    var day = formatter.format(DateTime.now());
+    dailyDataReference.child(day).child("notes").child(uid).remove();
   }
 }
