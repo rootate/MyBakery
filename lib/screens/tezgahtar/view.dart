@@ -139,7 +139,7 @@ class _ViewNotePageState extends State<ViewNotePage> {
 
   void handleSave() async {
     print("save state: " + widget.currentNote.toMap().toString());
-    service.updateNote(widget.currentNote.id,widget.currentNote.toMap());
+    service.updateNote(widget.currentNote.id, widget.currentNote.toMap());
     widget.triggerRefetch();
   }
 
@@ -412,6 +412,7 @@ class ViewVeresiyePage extends StatefulWidget {
 }
 
 class _ViewVeresiyePageState extends State<ViewVeresiyePage> {
+  DatabaseService service = DatabaseService();
   @override
   void initState() {
     super.initState();
@@ -515,7 +516,8 @@ class _ViewVeresiyePageState extends State<ViewVeresiyePage> {
   }
 
   void handleSave() async {
-    await NotesDatabaseService.db.updateVeresiyeInDB(widget.currentVeresiye);
+    // await NotesDatabaseService.db.updateVeresiyeInDB(widget.currentVeresiye);
+    service.updateVeresiye(widget.currentVeresiye.title, widget.currentVeresiye.toMap());
     widget.triggerRefetch();
   }
 
@@ -556,8 +558,9 @@ class _ViewVeresiyePageState extends State<ViewVeresiyePage> {
                         fontWeight: FontWeight.w500,
                         letterSpacing: 1)),
                 onPressed: () async {
-                  await NotesDatabaseService.db
-                      .deleteVeresiyeInDB(widget.currentVeresiye);
+                  // await NotesDatabaseService.db
+                  //     .deleteVeresiyeInDB(widget.currentVeresiye);
+                  service.deleteVeresiye(widget.currentVeresiye.title);
                   widget.triggerRefetch();
                   Navigator.pop(context);
                   Navigator.pop(context);

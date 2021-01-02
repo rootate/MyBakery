@@ -31,7 +31,6 @@ class _ExpenseState extends State<Expense> {
   @override
   void initState() {
     super.initState();
-    NotesDatabaseService.db.init();
     setExpensesFromDB();
   }
 

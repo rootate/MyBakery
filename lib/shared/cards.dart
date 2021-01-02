@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_my_bakery/screens/tezgahtar/edit.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_my_bakery/models/models.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_my_bakery/screens/tezgahtar/veresiye.dart';
 
 List<Color> colorList = [
   Colors.blue,
@@ -340,6 +343,9 @@ class VeresiyeCardComponent extends StatelessWidget {
                 ],
               ),
             ),
+            // onLongPress: () => CupertinoPageRoute(
+            // builder: (context) =>
+            //     EditVeresiyePage()),
           ),
         ));
   }

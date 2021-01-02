@@ -189,7 +189,7 @@ class _EditNotePageState extends State<EditNotePage> {
         currentNote = latestNote;
       });
     } else {
-      service.updateNote(currentNote.id,currentNote.toMap());
+      service.updateNote(currentNote.id, currentNote.toMap());
     }
     setState(() {
       isNoteNew = false;
@@ -528,6 +528,7 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
   VeresiyeModel currentVeresiye;
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
+  DatabaseService service = DatabaseService();
 
   @override
   void initState() {
@@ -665,13 +666,16 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
       print('Hey there ${currentVeresiye.content}');
     });
     if (isVeresiyeNew) {
-      var latestVeresiye =
-          await NotesDatabaseService.db.addVeresiyeInDB(currentVeresiye);
+      service.addVeresiye(currentVeresiye.title, currentVeresiye.toMap());
+      // var latestVeresiye =
+      // await NotesDatabaseService.db.addVeresiyeInDB(currentVeresiye);
+
       setState(() {
-        currentVeresiye = latestVeresiye;
+        // currentVeresiye ;
       });
     } else {
-      await NotesDatabaseService.db.updateVeresiyeInDB(currentVeresiye);
+      // await NotesDatabaseService.db.updateVeresiyeInDB(currentVeresiye);
+      service.updateVeresiye(currentVeresiye.title, currentVeresiye.toMap());
     }
     setState(() {
       isVeresiyeNew = false;
@@ -713,13 +717,6 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
                           color: Colors.red.shade300,
                           fontWeight: FontWeight.w500,
                           letterSpacing: 1)),
-                  onPressed: () async {
-                    await NotesDatabaseService.db
-                        .deleteVeresiyeInDB(currentVeresiye);
-                    widget.triggerRefetch();
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                  },
                 ),
                 FlatButton(
                   child: Text('İptal',

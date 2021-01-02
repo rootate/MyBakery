@@ -11,6 +11,8 @@ import 'package:flutter_my_bakery/services/database.dart';
 import 'package:flutter_my_bakery/shared/cards.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
+import 'package:flutter_my_bakery/services/crud.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class Veresiye extends StatefulWidget {
   Veresiye({Key key, this.title}) : super(key: key);
@@ -26,19 +28,38 @@ class _VeresiyeState extends State<Veresiye> {
   List<VeresiyeModel> veresiyeList = [];
   TextEditingController searchController = TextEditingController();
   bool isSearchEmpty = true;
+  DatabaseService service = DatabaseService();
 
   @override
   void initState() {
     super.initState();
-    NotesDatabaseService.db.init();
     setVeresiyeFromDB();
   }
 
   setVeresiyeFromDB() async {
     print("Entered setVeresiye");
-    var fetchedVeresiye = await NotesDatabaseService.db.getVeresiyeFromDB();
-    setState(() {
-      veresiyeList = fetchedVeresiye;
+    veresiyeList.clear();
+    service.veresiyelerDataReference.once().then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> map = snapshot.value;
+      if (map != null) {
+        map.forEach((key, values) {
+          print(values);
+          print("data: " +
+              values["title"] +
+              "--------------------------------------");
+          setState(() {
+            veresiyeList.add(VeresiyeModel.withID(
+              values["title"],
+              values["content"],
+              DateTime.parse(values["date"]),
+            ));
+          });
+        });
+      } else {
+        setState(() {
+          veresiyeList.clear();
+        });
+      }
     });
   }
 
@@ -174,8 +195,8 @@ class _VeresiyeState extends State<Veresiye> {
               keyboardType: TextInputType.number,
               style: textStyle1,
               decoration: textInputDecoration.copyWith(
-                labelText: veresiye.content,
-              ),
+                  // labelText: ,
+                  ),
               validator: (val) => val.isEmpty ? "Enter an email" : null,
 
               // onChanged: (val) {
@@ -198,9 +219,11 @@ class _VeresiyeState extends State<Veresiye> {
                   veresiye.content = ((int.parse(veresiye.content)) -
                           (int.parse(controller.value.text)))
                       .toString();
+                  service.updateVeresiye(veresiye.title, veresiye.toMap());
                 }
               });
               Navigator.pop(context);
+              setVeresiyeFromDB();
             },
             color: Colors.red,
           ),
@@ -212,13 +235,17 @@ class _VeresiyeState extends State<Veresiye> {
             onPressed: () {
               print("inside ekle");
               setState(() {
+                print("inside setstate");
                 if (int.parse(controller.value.text) > 0) {
                   veresiye.content = ((int.parse(veresiye.content)) +
                           (int.parse(controller.value.text)))
                       .toString();
+                  service.updateVeresiye(veresiye.title, veresiye.toMap());
+                  ;
                 }
               });
               Navigator.pop(context);
+              setVeresiyeFromDB();
             },
             color: Colors.blue,
           )

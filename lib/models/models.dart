@@ -79,15 +79,16 @@ class EkmekModel {
 }
 
 class VeresiyeModel {
-  int id;
+  // int id;
   String title;
   String content;
   DateTime date;
 
-  VeresiyeModel({this.id, this.title, this.content, this.date});
+  VeresiyeModel({this.title, this.content, this.date});
+  VeresiyeModel.withID(this.title, this.content,this.date);
 
   VeresiyeModel.fromMap(Map<String, dynamic> map) {
-    this.id = map['_id'];
+    // this.id = map['_id'];
     this.title = map['title'];
     this.content = map['content'];
     this.date = DateTime.parse(map['date']);
@@ -95,7 +96,6 @@ class VeresiyeModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      '_id': this.id,
       'title': this.title,
       'content': this.content,
       'date': this.date.toIso8601String()
