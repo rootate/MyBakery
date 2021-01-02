@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/models/Market.dart';
 import 'package:flutter_my_bakery/models/Worker.dart';
 import 'package:flutter_my_bakery/screens/setup/Markets.dart';
-import 'package:flutter_my_bakery/screens/setup/Setup.dart';
+import 'package:flutter_my_bakery/services/databaseService.dart';
 import '../../widgets/NewWorker.dart';
 
 class Workers extends StatefulWidget {
@@ -16,7 +16,7 @@ class Workers extends StatefulWidget {
 
 class _WorkersState extends State<Workers> {
   List<Worker> workerList = [];
-  SetupDatabaseService sv = SetupDatabaseService();
+  DatabaseService sv = DatabaseService();
   void _addNewWorker(String workerName, String workerMail, String gorevi) {
     final newWorker = Worker(name: workerName, mail: workerMail, job: gorevi);
     setState(() {
