@@ -266,14 +266,16 @@ class EkmekCardComponent extends StatelessWidget {
 }
 
 class VeresiyeCardComponent extends StatelessWidget {
-  const VeresiyeCardComponent({
+  TextEditingController controller = TextEditingController(); 
+  
+  VeresiyeCardComponent({
     this.veresiyeData,
     this.onTapAction,
     Key key,
   }) : super(key: key);
 
   final VeresiyeModel veresiyeData;
-  final Function(VeresiyeModel noteData) onTapAction;
+  final Function(BuildContext context, VeresiyeModel noteData,TextEditingController controller) onTapAction;
 
   @override
   Widget build(BuildContext context) {
@@ -295,7 +297,7 @@ class VeresiyeCardComponent extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(16),
             onTap: () {
-              onTapAction(veresiyeData);
+              onTapAction(context,veresiyeData,controller);
             },
             splashColor: color.withAlpha(20),
             highlightColor: color.withAlpha(10),

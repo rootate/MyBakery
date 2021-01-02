@@ -26,7 +26,7 @@ class ViewNotePage extends StatefulWidget {
 
 class _ViewNotePageState extends State<ViewNotePage> {
   DatabaseService service = DatabaseService();
-  
+
   @override
   void initState() {
     super.initState();
@@ -138,7 +138,8 @@ class _ViewNotePageState extends State<ViewNotePage> {
   }
 
   void handleSave() async {
-    await NotesDatabaseService.db.updateNoteInDB(widget.currentNote);
+    print("save state: " + widget.currentNote.toMap().toString());
+    service.updateNote(widget.currentNote.id,widget.currentNote.toMap());
     widget.triggerRefetch();
   }
 
@@ -186,7 +187,7 @@ class _ViewNotePageState extends State<ViewNotePage> {
                         fontWeight: FontWeight.w500,
                         letterSpacing: 1)),
                 onPressed: () async {
-                   service.deleteNote(widget.currentNote.id);
+                  service.deleteNote(widget.currentNote.id);
                   widget.triggerRefetch();
                   Navigator.pop(context);
                   Navigator.pop(context);
