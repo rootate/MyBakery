@@ -257,7 +257,7 @@ class _ViewExpensePageState extends State<ViewExpensePage> {
                 duration: Duration(milliseconds: 200),
                 curve: Curves.easeIn,
                 child: Text(
-                  widget.currentExpense.title,
+                  widget.currentExpense.title+" ₺",
                   style: TextStyle(
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w700,

@@ -210,8 +210,7 @@ class _EkmekState extends State<Ekmek> {
               new FlatButton(
                   child: new Text('Sil'),
                   onPressed: () {
-                    // NotesDatabaseService.db.deleteEkmekInDB(ekmek);
-                    // service.
+                    service.deleteEkmek(ekmek.id);
                     Navigator.of(context).pop();
                     setEkmekFromDB();
                   })

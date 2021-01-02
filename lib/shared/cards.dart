@@ -156,7 +156,7 @@ class ExpenseCardComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    '${expenseData.title.trim().length <= 20 ? expenseData.title : expenseData.title.trim().substring(0, 20) + '...'}',
+                    '${expenseData.title.trim().length <= 20 ? expenseData.title + " ₺" : expenseData.title.trim().substring(0, 20) + '...'}',
                     style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 20,
