@@ -414,7 +414,6 @@ class _EditExpensePageState extends State<EditExpensePage> {
 
   void handleSave() async {
     setState(() {
-      currentExpense.id = Uuid().v1();
       currentExpense.title = titleController.text;
       currentExpense.content = contentController.text;
       print('Hey there ${currentExpense.content}');
@@ -427,7 +426,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
         currentExpense = latestNote;
       });
     } else {
-      await NotesDatabaseService.db.updateExpenseInDB(currentExpense);
+      service.updateExpense(currentExpense.id, currentExpense.toMap());
     }
     setState(() {
       isExpenseNew = false;
@@ -470,8 +469,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
                           fontWeight: FontWeight.w500,
                           letterSpacing: 1)),
                   onPressed: () async {
-                    service.deleteExpense(
-                        currentExpense.id);
+                    service.deleteExpense(currentExpense.id);
                     // await NotesDatabaseService.db
                     // .deleteExpenseInDB(currentExpense);
                     widget.triggerRefetch();

@@ -18,7 +18,6 @@ class DatabaseService {
 
   void addEkmek(String uid, Map data) {
     var day = formatter.format(DateTime.now());
-
     dailyDataReference.child(day).child("producedBreads").child(uid).set(data);
   }
 
@@ -31,20 +30,23 @@ class DatabaseService {
     employeesReference.child(uid).update(data);
   }
 
+  void updateExpense(String uid, Map data){
+    var day = formatter.format(DateTime.now());
+    dailyDataReference.child(day).child("expenses").child(uid).update(data);
+  }
+
   void deleteEmployee(String uid) {
     employeesReference.child(uid).remove();
   }
 
+
   void deleteEkmek(String uid) {
     var day = formatter.format(DateTime.now());
-
     dailyDataReference.child(day).child("producedBreads").child(uid).remove();
   }
 
   void deleteExpense(String uid) {
-    print("inside delete--------------------------------------");
     var day = formatter.format(DateTime.now());
-    print("day: " + day);
     dailyDataReference.child(day).child("expenses").child(uid).remove();
   }
 }

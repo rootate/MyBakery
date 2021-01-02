@@ -48,19 +48,25 @@ class _ExpenseState extends State<Expense> {
         .once()
         .then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> map = snapshot.value;
-      map.forEach((key, values) {
-        print(values);
-        print("data: " +
-            values["title"] +
-            "--------------------------------------");
-        setState(() {
-          expensesList.add(ExpensesModel.withID(
-              values["title"],
-              values["content"],
-              DateTime.parse(values["date"]),
-              values["_id"]));
+      if (map != null) {
+        map.forEach((key, values) {
+          print(values);
+          print("data: " +
+              values["title"] +
+              "--------------------------------------");
+          setState(() {
+            expensesList.add(ExpensesModel.withID(
+                values["title"],
+                values["content"],
+                DateTime.parse(values["date"]),
+                values["_id"]));
+          });
         });
-      });
+      } else {
+        setState(() {
+          expensesList.clear();
+        });
+      }
     });
   }
 
@@ -142,7 +148,7 @@ class _ExpenseState extends State<Expense> {
                 triggerRefetch: refetchExpensesFromDB,
                 currentExpense: expenseData)));
     await Future.delayed(Duration(milliseconds: 300), () {});
-
+    await setExpensesFromDB();
     setState(() {
       headerShouldHide = false;
     });

@@ -44,16 +44,22 @@ class _EkmekState extends State<Ekmek> {
         .once()
         .then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> map = snapshot.value;
-      map.forEach((key, values) {
-        print(values);
-        print("data: " +
-            values["title"] +
-            "--------------------------------------");
-        setState(() {
-          ekmekList.add(EkmekModel.withID(
-              values["title"], values["content"], values["_id"]));
+      if (map != null) {
+        map.forEach((key, values) {
+          print(values);
+          print("data: " +
+              values["title"] +
+              "--------------------------------------");
+          setState(() {
+            ekmekList.add(EkmekModel.withID(
+                values["title"], values["content"], values["_id"]));
+          });
         });
-      });
+      } else {
+        setState(() {
+          ekmekList.clear();
+        });
+      }
     });
   }
 

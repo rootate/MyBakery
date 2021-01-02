@@ -257,7 +257,7 @@ class _ViewExpensePageState extends State<ViewExpensePage> {
                 duration: Duration(milliseconds: 200),
                 curve: Curves.easeIn,
                 child: Text(
-                  widget.currentExpense.title+" ₺",
+                  widget.currentExpense.title + " ₺",
                   style: TextStyle(
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w700,
@@ -326,7 +326,12 @@ class _ViewExpensePageState extends State<ViewExpensePage> {
   }
 
   void handleSave() async {
-    await NotesDatabaseService.db.updateExpenseInDB(widget.currentExpense);
+    print(
+        "handleSave : -----------------------------------------------------------------------------------");
+    var temp = widget.currentExpense.id;
+    print("uid: " + temp + "-----------------------");
+    service.updateExpense(
+        widget.currentExpense.id, widget.currentExpense.toMap());
     widget.triggerRefetch();
   }
 
