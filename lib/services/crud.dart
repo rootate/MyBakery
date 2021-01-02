@@ -28,7 +28,7 @@ class DatabaseService {
 
   void addNote(String uid, Map data) {
     print("inside addNote");
-    print("data: " + data.toString();
+    print("data: " + data.toString());
     print("uid: " + uid);
     var day = formatter.format(DateTime.now());
     dailyDataReference.child(day).child("notes").child(uid).set(data);

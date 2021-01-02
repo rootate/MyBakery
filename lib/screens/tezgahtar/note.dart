@@ -43,10 +43,9 @@ class _NoteState extends State<Note> {
   setNotesFromDB() async {
     print("Entered setNotes");
     notesList.clear();
-    print("Entered setEkmek");
     service.dailyDataReference
         .child(formatter.format(DateTime.now()))
-        .child("producedBreads")
+        .child("notes")
         .once()
         .then((DataSnapshot snapshot) {
       Map<dynamic, dynamic> map = snapshot.value;
@@ -57,8 +56,9 @@ class _NoteState extends State<Note> {
               values["title"] +
               "--------------------------------------");
           setState(() {
+            // boolVal = values["isImportant"] == 1 ? true : false;
             notesList.add(NotesModel.withID(values["title"], values["content"],
-                values["isImportant"], values["date"], values["_id"]));
+                 values["isImportant"] == 1 ? true : false, DateTime.parse(values["date"]), values["_id"]));
           });
         });
       } else {

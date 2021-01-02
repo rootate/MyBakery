@@ -37,8 +37,13 @@ class _EditNotePageState extends State<EditNotePage> {
     super.initState();
     if (widget.existingNote == null) {
       currentNote = NotesModel(
-          content: '', title: '', date: DateTime.now(), isImportant: false);
+          id: Uuid().v1(),
+          content: '',
+          title: '',
+          date: DateTime.now(),
+          isImportant: false);
       isNoteNew = true;
+      print(currentNote.id);
     } else {
       currentNote = widget.existingNote;
       isNoteNew = false;
@@ -177,10 +182,11 @@ class _EditNotePageState extends State<EditNotePage> {
       print('Hey there ${currentNote.content}');
     });
     if (isNoteNew) {
-      // var latestNote = await NotesDatabaseService.db.addNoteInDB(currentNote);
+      var latestNote = currentNote;
+      print("uid: " + currentNote.id);
       service.addNote(currentNote.id, currentNote.toMap());
       setState(() {
-        // currentNote;
+        currentNote = latestNote;
       });
     } else {
       await NotesDatabaseService.db.updateNoteInDB(currentNote);
