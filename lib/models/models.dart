@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:uuid/uuid.dart';
+
 class NotesModel {
   String id = Uuid().v1();
   String title;
@@ -8,7 +9,8 @@ class NotesModel {
   DateTime date;
 
   NotesModel({this.id, this.title, this.content, this.isImportant, this.date});
-  NotesModel.withID(this.title,this.content,this.isImportant,this.date,this.id);
+  NotesModel.withID(
+      this.title, this.content, this.isImportant, this.date, this.id);
   NotesModel.fromMap(Map<String, dynamic> map) {
     this.id = map['_id'];
     this.title = map['title'];
@@ -34,9 +36,9 @@ class ExpensesModel {
   String content;
   DateTime date;
 
-  ExpensesModel({this.title, this.content, this.date}); 
-  ExpensesModel.withID(this.title, this.content,this.date,this.id);
-  
+  ExpensesModel({this.title, this.content, this.date});
+  ExpensesModel.withID(this.title, this.content, this.date, this.id);
+
   ExpensesModel.fromMap(Map<String, dynamic> map) {
     this.id = map['_id'];
     this.title = map['title'];
@@ -58,22 +60,20 @@ class EkmekModel {
   String id = Uuid().v1();
   String amount;
   String time;
-
   EkmekModel({this.amount, this.time});
-  EkmekModel.withID(this.amount, this.time,this.id);
+  EkmekModel.withID(this.amount, this.time, this.id);
 
   EkmekModel.fromMap(Map<dynamic, dynamic> map) {
     this.id = map['_id'];
     this.amount = map['amount'];
     this.time = map['time'];
   }
-  
 
   Map<String, String> toMap() {
     return <String, String>{
       '_id': this.id,
       'title': this.amount,
-      'content': this.time,
+      'time': this.time,
     };
   }
 }
@@ -85,7 +85,7 @@ class VeresiyeModel {
   DateTime date;
 
   VeresiyeModel({this.title, this.content, this.date});
-  VeresiyeModel.withID(this.title, this.content,this.date);
+  VeresiyeModel.withID(this.title, this.content, this.date);
 
   VeresiyeModel.fromMap(Map<String, dynamic> map) {
     // this.id = map['_id'];

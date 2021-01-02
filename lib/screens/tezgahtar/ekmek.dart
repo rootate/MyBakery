@@ -6,6 +6,8 @@ import 'package:flutter_my_bakery/models/models.dart';
 import 'package:flutter_my_bakery/shared/cards.dart';
 import 'package:flutter_my_bakery/services/crud.dart';
 import 'package:intl/intl.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:flutter_my_bakery/shared/constants.dart';
 
 class Ekmek extends StatefulWidget {
   Ekmek({Key key, this.title}) : super(key: key);
@@ -21,7 +23,7 @@ class _EkmekState extends State<Ekmek> {
   final TextEditingController _textFieldController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
-
+  final DateFormat formatter2 = DateFormat('yyyy-MM-dd - kk:mm');
   List<EkmekModel> ekmekList = [];
 
   DatabaseService service = DatabaseService();
@@ -51,7 +53,7 @@ class _EkmekState extends State<Ekmek> {
               "--------------------------------------");
           setState(() {
             ekmekList.add(EkmekModel.withID(
-                values["title"], values["content"], values["_id"]));
+                values["title"], values["time"], values["_id"]));
           });
         });
       } else {
@@ -91,92 +93,13 @@ class _EkmekState extends State<Ekmek> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Theme.of(context).primaryColor,
-        label: Text('Ekmek Ekle'.toUpperCase()),
-        icon: Icon(Icons.add),
-        onPressed: () {
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  content: Stack(
-                    overflow: Overflow.visible,
-                    children: <Widget>[
-                      Positioned(
-                        right: -40.0,
-                        top: -40.0,
-                        child: InkResponse(
-                          onTap: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: CircleAvatar(
-                            child: Icon(Icons.close),
-                            backgroundColor: Colors.red,
-                          ),
-                        ),
-                      ),
-                      Form(
-                        key: _formKey,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: TextField(
-                                controller: _textFieldController,
-                                keyboardType: TextInputType.number,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: RaisedButton(
-                                child: Text("Kaydet"),
-                                onPressed: () {
-                                  if (!(_textFieldController.text.isEmpty ||
-                                      int.parse(_textFieldController.text) <=
-                                          0)) if (_formKey.currentState
-                                      .validate()) {
-                                    _formKey.currentState.save();
-                                    // NotesDatabaseService
-                                    //     .db
-                                    //     .addEkmekInDB(
-                                    //       EkmekModel(
-                                    //         amount: int.parse(
-                                    //                 _textFieldController.text)
-                                    //             .toString(),
-                                    //         time: DateTime.now()
-                                    //             .toIso8601String()));
-                                    var res = EkmekModel(
-                                        amount:
-                                            int.parse(_textFieldController.text)
-                                                .toString(),
-                                        time: DateFormat.yMMMd('tr')
-                                            .add_Hm()
-                                            .format(DateTime.now()));
-                                    service.addEkmek(
-                                        res.id.toString(), res.toMap());
-
-                                    _textFieldController.clear();
-                                    setState(() {
-                                      ekmekList.add(res);
-                                    });
-                                    // setEkmekFromDB();
-
-                                    Navigator.pop(
-                                        context); // Close the add todo screen
-                                  }
-                                },
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              });
-        },
-      ),
+          backgroundColor: Theme.of(context).primaryColor,
+          label: Text('Ekmek Ekle'.toUpperCase()),
+          icon: Icon(Icons.add),
+          onPressed: () {
+            ekmekPopup(context, EkmekModel(), _textFieldController);
+          }
+          ),
     );
   }
 
@@ -201,6 +124,66 @@ class _EkmekState extends State<Ekmek> {
         ),
       ],
     );
+  }
+
+  ekmekPopup(BuildContext dialogContext, EkmekModel ekmek,
+      TextEditingController controller) {
+    final contextW = MediaQuery.of(context).size.width;
+    final sizeW = contextW / 20;
+
+    var alertStyle = AlertStyle(
+      animationType: AnimationType.grow,
+      overlayColor: Colors.black87,
+      isOverlayTapDismiss: true,
+      titleStyle: TextStyle(
+          fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: sizeW),
+      animationDuration: Duration(milliseconds: 400),
+    );
+
+    Alert(
+        context: dialogContext,
+        style: alertStyle,
+        title: "Çıkan ekmek tutarını giriniz.",
+        content: Column(
+          children: [
+            SizedBox(
+              height: sizeW,
+            ),
+            SizedBox(
+              height: sizeW,
+            ),
+            TextFormField(
+              controller: controller,
+              keyboardType: TextInputType.number,
+              style: textStyle1,
+              decoration: textInputDecoration.copyWith(
+                  // labelText: ,
+                  ),
+              validator: (val) => val.isEmpty ? "Enter an email" : null,
+            ),
+          ],
+        ),
+        buttons: [
+          DialogButton(
+            child: Text(
+              "Kaydet",
+              style: TextStyle(color: Colors.white, fontSize: sizeW),
+            ),
+            onPressed: () {
+              setState(() {
+                if (int.parse(controller.value.text) > 0) {
+                  ekmek.amount = (int.parse(controller.value.text)).toString();
+                  ekmek.time = formatter2.format(DateTime.now());
+                  service.addEkmek(ekmek.id, ekmek.toMap());
+                }
+              });
+              Navigator.pop(context);
+              controller.clear();
+              setEkmekFromDB();
+            },
+            color: Colors.green,
+          ),
+        ]).show();
   }
 
   _showDialog(EkmekModel ekmek) {
