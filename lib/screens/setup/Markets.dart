@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/models/Market.dart';
 import 'package:flutter_my_bakery/models/Payer.dart';
 import 'package:flutter_my_bakery/widgets/NewMarket.dart';
-import 'package:flutter_my_bakery/screens/setup/Setup.dart';
+import 'package:flutter_my_bakery/services/databaseService.dart';
 import 'Payers.dart';
 
 class Markets extends StatefulWidget {
@@ -13,7 +13,7 @@ class Markets extends StatefulWidget {
 }
 
 class _MarketsState extends State<Markets> {
-  SetupDatabaseService sv = SetupDatabaseService();
+  DatabaseService sv = DatabaseService();
   List<Market> marketList = [];
   void _addNewMarket(String prName, double prAmount) {
     final newMarket = Market(name: prName, debt: prAmount);

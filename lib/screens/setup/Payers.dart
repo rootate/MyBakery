@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../models/Payer.dart';
 import '../../widgets/NewPayer.dart';
-import 'package:flutter_my_bakery/screens/setup/Setup.dart';
+import 'package:flutter_my_bakery/services/databaseService.dart';
 
 class Payers extends StatefulWidget {
   final List<Payer> list;
@@ -11,7 +11,7 @@ class Payers extends StatefulWidget {
 }
 
 class _PayersState extends State<Payers> {
-  SetupDatabaseService sv = SetupDatabaseService();
+  DatabaseService sv = DatabaseService();
   List<Payer> payerList = [];
   void _addNewPayer(String prName, double prAmount) {
     final newPayer = Payer(name: prName, debt: prAmount);

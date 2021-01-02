@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/models/Product.dart';
 import 'package:flutter_my_bakery/widgets/NewProduct.dart';
-import 'package:flutter_my_bakery/screens/setup/Setup.dart';
+import 'package:flutter_my_bakery/services/databaseService.dart';
 
 class Urunler extends StatefulWidget {
   final String category;
@@ -14,7 +14,7 @@ class Urunler extends StatefulWidget {
 
 class _UrunlerState extends State<Urunler> {
   final String categoryName;
-  SetupDatabaseService sv = SetupDatabaseService();
+  DatabaseService sv = DatabaseService();
   List<Product> productList = [];
   void _addNewProduct(String prName, double prAmount) {
     final newProduct =
