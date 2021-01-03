@@ -12,7 +12,7 @@ class DatabaseService {
   final workersReference =
       FirebaseDatabase.instance.reference().child('bakery').child('employees');
   final payersReference =
-      FirebaseDatabase.instance.reference().child('bakery').child('payers');
+      FirebaseDatabase.instance.reference().child('bakery').child('veresiyeler');
   final categoryReference =
       FirebaseDatabase.instance.reference().child('bakery').child('categories');
 
