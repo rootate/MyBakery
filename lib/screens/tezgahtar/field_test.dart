@@ -10,7 +10,21 @@ class fieldTest {
 
   static String veresiyeTitleValidator(String text) {
     if (text.isEmpty) return "Veresiye Sahibi bilgisi boş bırakılamaz!";
+  }
 
-    return "Content is empty";
+  static String expenseTitleValidator(String text) {
+    print("inside validator");
+    if (text.isEmpty) return "Gider kısmı boş bırakılamaz!";
+
+    Pattern pattern = r"^[1-9]?([1-9]\d*)";
+    RegExp regex = RegExp(pattern);
+    if (!regex.hasMatch(text)) {
+      print("not a number");
+      return "Gider bilgisi numerik olmalıdır!";
+    }
+  }
+
+  static String expenseContentValidator(String text) {
+    if (text.isEmpty) return "Not bilgisi boş bırakılamaz!";
   }
 }

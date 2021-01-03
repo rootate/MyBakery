@@ -280,7 +280,8 @@ class EditExpensePage extends StatefulWidget {
 }
 
 class _EditExpensePageState extends State<EditExpensePage> {
-  bool isDirty = false;
+  bool isDirtyTitle = false;
+  bool isDirtyContent = false;
   bool isExpenseNew = true;
   FocusNode titleFocus = FocusNode();
   FocusNode contentFocus = FocusNode();
@@ -393,7 +394,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
                       AnimatedContainer(
                         margin: EdgeInsets.only(left: 20),
                         duration: Duration(milliseconds: 200),
-                        width: isDirty ? 150 : 0,
+                        width: (isDirtyTitle && isDirtyContent) ? 150 : 0,
                         height: 42,
                         curve: Curves.decelerate,
                         child: RaisedButton.icon(
@@ -438,7 +439,8 @@ class _EditExpensePageState extends State<EditExpensePage> {
     }
     setState(() {
       isExpenseNew = false;
-      isDirty = false;
+      isDirtyTitle = false;
+      isDirtyContent = false;
     });
     widget.triggerRefetch();
     titleFocus.unfocus();
@@ -446,15 +448,25 @@ class _EditExpensePageState extends State<EditExpensePage> {
   }
 
   void markTitleAsDirty(String title) {
-    setState(() {
-      isDirty = true;
-    });
+    if (fieldTest.expenseTitleValidator(title) == null)
+      setState(() {
+        isDirtyTitle = true;
+      });
+    else
+      setState(() {
+        isDirtyTitle = false;
+      });
   }
 
   void markContentAsDirty(String content) {
-    setState(() {
-      isDirty = true;
-    });
+    if (fieldTest.expenseContentValidator(content) == null)
+      setState(() {
+        isDirtyContent = true;
+      });
+    else
+      setState(() {
+        isDirtyContent = false;
+      });
   }
 
   void handleDelete() async {
