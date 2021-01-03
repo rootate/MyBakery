@@ -27,4 +27,9 @@ class fieldTest {
   static String expenseContentValidator(String text) {
     if (text.isEmpty) return "Not bilgisi boş bırakılamaz!";
   }
+
+  static String noteValidator(String text) {
+    if (text.isEmpty) return "Not bilgisi boş bırakılamaz!";
+  }
+
 }

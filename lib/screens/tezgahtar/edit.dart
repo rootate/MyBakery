@@ -201,15 +201,25 @@ class _EditNotePageState extends State<EditNotePage> {
   }
 
   void markTitleAsDirty(String title) {
-    setState(() {
-      isDirty = true;
-    });
+    if (fieldTest.veresiyeContentValidator(title) == null)
+      setState(() {
+        isDirty = true;
+      });
+    else
+      setState(() {
+        isDirty = false;
+      });
   }
 
   void markContentAsDirty(String content) {
-    setState(() {
-      isDirty = true;
-    });
+    if (fieldTest.noteValidator(content) == null)
+      setState(() {
+        isDirty = true;
+      });
+    else
+      setState(() {
+        isDirty = false;
+      });
   }
 
   void markImportantAsDirty() {
