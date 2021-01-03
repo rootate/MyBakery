@@ -45,6 +45,7 @@ class Categories extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text("Kategoriler"),
         backgroundColor: Colors.orange[600],
       ),

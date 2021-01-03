@@ -122,11 +122,11 @@ class _OdemeKategoriState extends State<OdemeKategori> {
               ),
               validator: (val) => val.isEmpty ? "Enter an email" : null,
 
-              onChanged: (val) {
-                setState(() {
-                  piece.add(int.parse(controller.value.text));
-                });
-              },
+              // onChanged: (val) {
+              //   setState(() {
+              //     piece.add(int.parse(controller.value.text));
+              //   });
+              // },
             ),
           ],
         ),
@@ -148,9 +148,11 @@ class _OdemeKategoriState extends State<OdemeKategori> {
             ),
             onPressed: () {
               setState(() {
-                product.add(products[index]);
-                price.add(prices[index]);
-                piece.add(int.parse(controller.value.text));
+                if (int.parse(controller.value.text) > 0 ) {
+                  product.add(products[index]);
+                  price.add(prices[index]);
+                  piece.add(int.parse(controller.value.text));
+                }
               });
               Navigator.pop(context);
             },

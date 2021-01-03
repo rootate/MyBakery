@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/screens/administrator/products.dart';
 import 'package:flutter_my_bakery/screens/administrator/employees.dart';
@@ -13,52 +12,98 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   @override
   Widget build(BuildContext context) {
     double iconSize = MediaQuery.of(context).size.width / 6 - 5;
     double size1 = MediaQuery.of(context).size.height / 80;
 
-    return LayoutBuilder(builder: (context,constraints){
-          return SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minWidth: constraints.maxWidth, minHeight: constraints.maxHeight),
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(image: AssetImage("assets/images/background2.jpg"),fit: BoxFit.cover),
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(height: size1),
-                    myBox2(context),
-                    SizedBox(height: size1),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        myBox(context,Icon(Icons.local_shipping,size: iconSize,),"Şoför",Products()),
-                        SizedBox(width: size1),
-                        myBox(context,Icon(Icons.bubble_chart,size: iconSize,),"Tezgahtar",Tezgahtar()),
-                        SizedBox(width: size1),
-                        myBox(context,Icon(Icons.fastfood,size: iconSize,),"Ürünler",Products()),
-                      ],
-                    ),
-                    SizedBox(height: size1),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        myBox(context,Icon(Icons.file_copy,size: iconSize,),"Raporlar",Reports()),
-                        SizedBox(width: size1),
-                        myBox(context,Icon(Icons.people,size: iconSize,),"Çalışanlar",Employees()),
-                        SizedBox(width: size1),
-                        myBox(context,Icon(Icons.all_out,size: iconSize,),"Veresiyeler",Veresiye()),
-                      ],
-                    ),
-                  ],
-                ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+                minWidth: constraints.maxWidth,
+                minHeight: constraints.maxHeight),
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/images/background2.jpg"),
+                    fit: BoxFit.cover),
+              ),
+              child: Column(
+                children: [
+                  SizedBox(height: size1),
+                  myBox2(context),
+                  SizedBox(height: size1),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      myBox(
+                          context,
+                          Icon(
+                            Icons.local_shipping,
+                            size: iconSize,
+                          ),
+                          "Şoför",
+                          Products()),
+                      SizedBox(width: size1),
+                      myBox(
+                          context,
+                          Icon(
+                            Icons.bubble_chart,
+                            size: iconSize,
+                          ),
+                          "Tezgahtar",
+                          Tezgahtar()),
+                      SizedBox(width: size1),
+                      myBox(
+                          context,
+                          Icon(
+                            Icons.fastfood,
+                            size: iconSize,
+                          ),
+                          "Ürünler",
+                          Products()),
+                    ],
+                  ),
+                  SizedBox(height: size1),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      myBox(
+                          context,
+                          Icon(
+                            Icons.file_copy,
+                            size: iconSize,
+                          ),
+                          "Raporlar",
+                          Reports()),
+                      SizedBox(width: size1),
+                      myBox(
+                          context,
+                          Icon(
+                            Icons.people,
+                            size: iconSize,
+                          ),
+                          "Çalışanlar",
+                          Employees()),
+                      SizedBox(width: size1),
+                      myBox(
+                          context,
+                          Icon(
+                            Icons.all_out,
+                            size: iconSize,
+                          ),
+                          "Veresiyeler",
+                          Veresiye()),
+                    ],
+                  ),
+                ],
               ),
             ),
-          );
-        },
+          ),
+        );
+      },
     );
   }
 }
@@ -114,16 +159,26 @@ Widget myBox2(BuildContext context) {
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: size1 / 2,),
-            Text("\₺ 370,345",style: textStyle4,),
-            Text("Çarşamba",style: textStyle4,),
+            SizedBox(
+              height: size1 / 2,
+            ),
+            Text(
+              "\₺ 370,345",
+              style: textStyle4,
+            ),
+            Text(
+              "Çarşamba",
+              style: textStyle4,
+            ),
           ],
         ),
         Column(
           children: [
-            SizedBox(height: size2,),
+            SizedBox(
+              height: size2,
+            ),
             RaisedButton(
-              onPressed: (){
+              onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Reports()),
@@ -136,7 +191,13 @@ Widget myBox2(BuildContext context) {
               colorBrightness: Brightness.light,
               color: Colors.purple[200],
               splashColor: Colors.purple[600],
-              child: Text("Bugünün Raporu",style: TextStyle(fontFamily: "Poppins",color: Colors.black,fontWeight: FontWeight.w700),),
+              child: Text(
+                "Bugünün Raporu",
+                style: TextStyle(
+                    fontFamily: "Poppins",
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700),
+              ),
             )
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/odeme_kategori.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/tezgahtar.dart';
+import 'package:flutter_my_bakery/screens/tezgahtar/veresiye.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -24,26 +25,47 @@ class _SepetState extends State<Sepet> {
     }
     return sum;
   }
-  
+
   void goTezgahtar(BuildContext cx) {
-    setState((){
+    setState(() {
       product = [];
       piece = [];
       price = [];
     });
     Fluttertoast.showToast(
-        msg: "✓ Kaydedildi",
-        toastLength: Toast.LENGTH_SHORT,
-        fontSize: 28,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.green,
+      msg: "✓ Kaydedildi",
+      toastLength: Toast.LENGTH_SHORT,
+      fontSize: 28,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.green,
     );
-    Navigator.of(cx).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return Tezgahtar();
-        },
-      ),
+    Navigator.of(cx).pop(); // :)
+    Navigator.of(cx).pop(); // ;)
+    Navigator.of(cx).pop(); // :D
+    Navigator.of(cx).pop(); // xD
+  }
+
+  void goVeresiye(BuildContext cx) {
+    setState(() {
+      product = [];
+      piece = [];
+      price = [];
+    });
+    // Fluttertoast.showToast(
+    //   msg: "✓ Kaydedildi",
+    //   toastLength: Toast.LENGTH_SHORT,
+    //   fontSize: 28,
+    //   gravity: ToastGravity.BOTTOM,
+    //   backgroundColor: Colors.green,
+    // );
+    Navigator.of(cx).pop(); // :)
+    Navigator.of(cx).pop(); // ;)
+    Navigator.of(cx).pop(); // :D
+    Navigator.of(cx).pop(); // xD
+
+    Navigator.push(
+      cx,
+      MaterialPageRoute(builder: (context) => Veresiye()),
     );
   }
 
@@ -73,7 +95,7 @@ class _SepetState extends State<Sepet> {
           itemBuilder: (context, index) {
             return ListTile(
               onLongPress: () {
-                //confirmationPopup(context,image,1,index,controller);
+                deletePopup(context, image, index, controller);
               },
               onTap: () {
                 controller.text = widget.piece[index].toString();
@@ -113,11 +135,12 @@ class _SepetState extends State<Sepet> {
             children: [
               RawMaterialButton(
                 onPressed: () {
-                  setState(() {
-                    product = [];
-                    price = [];
-                    piece = [];
-                  });
+                  Navigator.pop(context);
+                  // setState(() {
+                  //   product = [];
+                  //   price = [];
+                  //   piece = [];
+                  // });
                 },
                 elevation: 2.0,
                 fillColor: Colors.red,
@@ -134,7 +157,7 @@ class _SepetState extends State<Sepet> {
               ),
               RawMaterialButton(
                 onPressed: () {
-                  confirmationPopup2(context);
+                  if (product.isNotEmpty) confirmationPopup2(context);
                 },
                 elevation: 2.0,
                 fillColor: Colors.green,
@@ -148,6 +171,69 @@ class _SepetState extends State<Sepet> {
             ],
           ),
         ));
+  }
+
+  deletePopup(BuildContext dialogContext, Widget image, int index,
+      TextEditingController controller) {
+    final contextW = MediaQuery.of(context).size.width;
+    final sizeW = contextW / 20;
+
+    var alertStyle = AlertStyle(
+      animationType: AnimationType.grow,
+      overlayColor: Colors.black87,
+      isOverlayTapDismiss: true,
+      titleStyle: TextStyle(
+          fontFamily: "Poppins", fontWeight: FontWeight.bold, fontSize: sizeW),
+      animationDuration: Duration(milliseconds: 400),
+    );
+
+    Alert(
+        context: dialogContext,
+        style: alertStyle,
+        title: "Ürün Sil!",
+        content: Column(
+          children: [
+            SizedBox(
+              height: sizeW,
+            ),
+            image,
+            SizedBox(
+              height: sizeW,
+            ),
+          ],
+        ),
+        buttons: [
+          DialogButton(
+            child: Text(
+              "Sil",
+              style: TextStyle(color: Colors.white, fontSize: sizeW * 0.6),
+            ),
+            onPressed: () {
+              // if (int.parse(controller.text) >= 0) {
+              setState(() {
+                widget.piece[index] = 0;
+                //remove from list
+                widget.product.removeAt(index);
+                widget.price.removeAt(index);
+                widget.piece.removeAt(index);
+              });
+              Navigator.pop(context);
+              // }
+              // Navigator.pop(context);
+            },
+            color: Colors.red,
+          ),
+          DialogButton(
+            child: Text(
+              "Vazgeç",
+              style: TextStyle(color: Colors.white, fontSize: sizeW * 0.6),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.blue,
+          ),
+        ]).show();
   }
 
   confirmationPopup(BuildContext dialogContext, Widget image, int index,
@@ -178,6 +264,7 @@ class _SepetState extends State<Sepet> {
               height: sizeW,
             ),
             TextFormField(
+              keyboardType: TextInputType.number,
               controller: controller,
               style: textStyle1,
               decoration: textInputDecoration.copyWith(
@@ -194,9 +281,20 @@ class _SepetState extends State<Sepet> {
           DialogButton(
             child: Text(
               "Güncelle",
-              style: TextStyle(color: Colors.white, fontSize: sizeW*0.6),
+              style: TextStyle(color: Colors.white, fontSize: sizeW * 0.6),
             ),
             onPressed: () {
+              if (int.parse(controller.text) >= 0) {
+                setState(() {
+                  widget.piece[index] = int.parse(controller.value.text);
+                  if (int.parse(controller.value.text) == 0) {
+                    //remove from list
+                    widget.product.removeAt(index);
+                    widget.price.removeAt(index);
+                    widget.piece.removeAt(index);
+                  }
+                });
+              }
               Navigator.pop(context);
             },
             color: Colors.green,
@@ -207,18 +305,19 @@ class _SepetState extends State<Sepet> {
               style: TextStyle(color: Colors.white, fontSize: sizeW),
             ),
             onPressed: () {
-              if (int.parse(controller.text) > 0 ) {
-              setState(() {
-                controller.text =
-                    (int.parse(controller.value.text) - 1).toString();
-                widget.piece[index] = int.parse(controller.value.text);
-                if (int.parse(controller.value.text) == 0) { //remove from list
-                  widget.product.removeAt(index);
-                  widget.price.removeAt(index);
-                  widget.piece.removeAt(index);
-                }
-              });
-            }
+              if (int.parse(controller.text) > 0) {
+                setState(() {
+                  controller.text =
+                      (int.parse(controller.value.text) - 1).toString();
+                  widget.piece[index] = int.parse(controller.value.text);
+                  if (int.parse(controller.value.text) == 0) {
+                    //remove from list
+                    widget.product.removeAt(index);
+                    widget.price.removeAt(index);
+                    widget.piece.removeAt(index);
+                  }
+                });
+              }
             },
             color: Colors.blue,
           ),
@@ -288,7 +387,7 @@ class _SepetState extends State<Sepet> {
               color: Colors.purple,
             ),
             RaisedButton(
-              onPressed: () { 
+              onPressed: () {
                 goTezgahtar(context);
               },
               child: Row(
@@ -315,7 +414,7 @@ class _SepetState extends State<Sepet> {
             ),
             RaisedButton(
               onPressed: () {
-                Navigator.pop(context);
+                goVeresiye(context);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

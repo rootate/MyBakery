@@ -7,9 +7,9 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_my_bakery/models/models.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/edit.dart';
-import 'package:flutter_my_bakery/services/database.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:share/share.dart';
+import 'package:flutter_my_bakery/services/crud.dart';
 
 class ViewNotePage extends StatefulWidget {
   Function() triggerRefetch;
@@ -22,7 +22,10 @@ class ViewNotePage extends StatefulWidget {
   @override
   _ViewNotePageState createState() => _ViewNotePageState();
 }
+
 class _ViewNotePageState extends State<ViewNotePage> {
+  DatabaseService service = DatabaseService();
+
   @override
   void initState() {
     super.initState();
@@ -134,7 +137,8 @@ class _ViewNotePageState extends State<ViewNotePage> {
   }
 
   void handleSave() async {
-    await NotesDatabaseService.db.updateNoteInDB(widget.currentNote);
+    print("save state: " + widget.currentNote.toMap().toString());
+    service.updateNote(widget.currentNote.id, widget.currentNote.toMap());
     widget.triggerRefetch();
   }
 
@@ -182,8 +186,7 @@ class _ViewNotePageState extends State<ViewNotePage> {
                         fontWeight: FontWeight.w500,
                         letterSpacing: 1)),
                 onPressed: () async {
-                  await NotesDatabaseService.db
-                      .deleteNoteInDB(widget.currentNote);
+                  service.deleteNote(widget.currentNote.id);
                   widget.triggerRefetch();
                   Navigator.pop(context);
                   Navigator.pop(context);
@@ -219,6 +222,8 @@ class ViewExpensePage extends StatefulWidget {
 }
 
 class _ViewExpensePageState extends State<ViewExpensePage> {
+  DatabaseService service = DatabaseService();
+
   @override
   void initState() {
     super.initState();
@@ -253,7 +258,7 @@ class _ViewExpensePageState extends State<ViewExpensePage> {
                 duration: Duration(milliseconds: 200),
                 curve: Curves.easeIn,
                 child: Text(
-                  widget.currentExpense.title,
+                  widget.currentExpense.title + " ₺",
                   style: TextStyle(
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w700,
@@ -322,7 +327,12 @@ class _ViewExpensePageState extends State<ViewExpensePage> {
   }
 
   void handleSave() async {
-    await NotesDatabaseService.db.updateExpenseInDB(widget.currentExpense);
+    print(
+        "handleSave : -----------------------------------------------------------------------------------");
+    var temp = widget.currentExpense.id;
+    print("uid: " + temp + "-----------------------");
+    service.updateExpense(
+        widget.currentExpense.id, widget.currentExpense.toMap());
     widget.triggerRefetch();
   }
 
@@ -363,8 +373,9 @@ class _ViewExpensePageState extends State<ViewExpensePage> {
                         fontWeight: FontWeight.w500,
                         letterSpacing: 1)),
                 onPressed: () async {
-                  await NotesDatabaseService.db
-                      .deleteExpenseInDB(widget.currentExpense);
+                  // await NotesDatabaseService.db
+                  //     .deleteExpenseInDB(widget.currentExpense);
+                  service.deleteExpense(widget.currentExpense.id);
                   widget.triggerRefetch();
                   Navigator.pop(context);
                   Navigator.pop(context);
@@ -389,7 +400,8 @@ class _ViewExpensePageState extends State<ViewExpensePage> {
 class ViewVeresiyePage extends StatefulWidget {
   Function() triggerRefetch;
   VeresiyeModel currentVeresiye;
-  ViewVeresiyePage({Key key, Function() triggerRefetch, VeresiyeModel currentVeresiye})
+  ViewVeresiyePage(
+      {Key key, Function() triggerRefetch, VeresiyeModel currentVeresiye})
       : super(key: key) {
     this.triggerRefetch = triggerRefetch;
     this.currentVeresiye = currentVeresiye;
@@ -399,6 +411,7 @@ class ViewVeresiyePage extends StatefulWidget {
 }
 
 class _ViewVeresiyePageState extends State<ViewVeresiyePage> {
+  DatabaseService service = DatabaseService();
   @override
   void initState() {
     super.initState();
@@ -502,7 +515,8 @@ class _ViewVeresiyePageState extends State<ViewVeresiyePage> {
   }
 
   void handleSave() async {
-    await NotesDatabaseService.db.updateVeresiyeInDB(widget.currentVeresiye);
+    // await NotesDatabaseService.db.updateVeresiyeInDB(widget.currentVeresiye);
+    service.updateVeresiye(widget.currentVeresiye.title, widget.currentVeresiye.toMap());
     widget.triggerRefetch();
   }
 
@@ -543,8 +557,9 @@ class _ViewVeresiyePageState extends State<ViewVeresiyePage> {
                         fontWeight: FontWeight.w500,
                         letterSpacing: 1)),
                 onPressed: () async {
-                  await NotesDatabaseService.db
-                      .deleteVeresiyeInDB(widget.currentVeresiye);
+                  // await NotesDatabaseService.db
+                  //     .deleteVeresiyeInDB(widget.currentVeresiye);
+                  service.deleteVeresiye(widget.currentVeresiye.title);
                   widget.triggerRefetch();
                   Navigator.pop(context);
                   Navigator.pop(context);
