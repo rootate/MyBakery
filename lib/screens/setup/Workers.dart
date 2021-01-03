@@ -16,12 +16,11 @@ class Workers extends StatefulWidget {
 
 class _WorkersState extends State<Workers> {
   List<Worker> workerList = [];
-  var passwd = 0;
   DatabaseService sv = DatabaseService();
   void _addNewWorker(String workerName, String workerMail, String gorevi) {
+    int passwd = 0;
     for (var i = 0; i < 6; i++) {
-      print(passwd);
-      passwd += Random().nextInt(9) * pow(10, i);
+      passwd = passwd + ((Random().nextInt(8) + 1) * pow(10, i));
     }
 
     final newWorker = Worker(

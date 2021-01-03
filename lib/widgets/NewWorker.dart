@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_my_bakery/models/Worker.dart';
 
 class NewWorker extends StatefulWidget {
   final Function addWr;
