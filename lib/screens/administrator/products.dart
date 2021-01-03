@@ -113,7 +113,7 @@ class _ProductsState extends State<Products> {
           );
         }
       },
-    );;
+    );
   }
 
   confirmationPopup(BuildContext dialogContext,Widget image,int val,int index,String categoryName,TextEditingController controller) {
