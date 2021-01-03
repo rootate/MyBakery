@@ -5,9 +5,9 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/painting.dart' as prefix0;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_my_bakery/models/models.dart';
-import 'package:flutter_my_bakery/services/database.dart';
 import 'package:flutter_my_bakery/services/crud.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter_my_bakery/screens/tezgahtar/field_test.dart';
 
 class EditNotePage extends StatefulWidget {
   Function() triggerRefetch;
@@ -201,15 +201,25 @@ class _EditNotePageState extends State<EditNotePage> {
   }
 
   void markTitleAsDirty(String title) {
-    setState(() {
-      isDirty = true;
-    });
+    if (fieldTest.veresiyeContentValidator(title) == null)
+      setState(() {
+        isDirty = true;
+      });
+    else
+      setState(() {
+        isDirty = false;
+      });
   }
 
   void markContentAsDirty(String content) {
-    setState(() {
-      isDirty = true;
-    });
+    if (fieldTest.noteValidator(content) == null)
+      setState(() {
+        isDirty = true;
+      });
+    else
+      setState(() {
+        isDirty = false;
+      });
   }
 
   void markImportantAsDirty() {
@@ -280,7 +290,8 @@ class EditExpensePage extends StatefulWidget {
 }
 
 class _EditExpensePageState extends State<EditExpensePage> {
-  bool isDirty = false;
+  bool isDirtyTitle = false;
+  bool isDirtyContent = false;
   bool isExpenseNew = true;
   FocusNode titleFocus = FocusNode();
   FocusNode contentFocus = FocusNode();
@@ -393,7 +404,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
                       AnimatedContainer(
                         margin: EdgeInsets.only(left: 20),
                         duration: Duration(milliseconds: 200),
-                        width: isDirty ? 150 : 0,
+                        width: (isDirtyTitle && isDirtyContent) ? 150 : 0,
                         height: 42,
                         curve: Curves.decelerate,
                         child: RaisedButton.icon(
@@ -438,7 +449,8 @@ class _EditExpensePageState extends State<EditExpensePage> {
     }
     setState(() {
       isExpenseNew = false;
-      isDirty = false;
+      isDirtyTitle = false;
+      isDirtyContent = false;
     });
     widget.triggerRefetch();
     titleFocus.unfocus();
@@ -446,15 +458,25 @@ class _EditExpensePageState extends State<EditExpensePage> {
   }
 
   void markTitleAsDirty(String title) {
-    setState(() {
-      isDirty = true;
-    });
+    if (fieldTest.expenseTitleValidator(title) == null)
+      setState(() {
+        isDirtyTitle = true;
+      });
+    else
+      setState(() {
+        isDirtyTitle = false;
+      });
   }
 
   void markContentAsDirty(String content) {
-    setState(() {
-      isDirty = true;
-    });
+    if (fieldTest.expenseContentValidator(content) == null)
+      setState(() {
+        isDirtyContent = true;
+      });
+    else
+      setState(() {
+        isDirtyContent = false;
+      });
   }
 
   void handleDelete() async {
@@ -529,6 +551,7 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
   DatabaseService service = DatabaseService();
+  GlobalKey<FormState> _key = new GlobalKey();
 
   @override
   void initState() {
@@ -647,7 +670,9 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
                             'Kaydet',
                             style: TextStyle(letterSpacing: 0),
                           ),
-                          onPressed: handleSave,
+                          onPressed: () {
+                            handleSave();
+                          },
                         ),
                       )
                     ],
@@ -687,15 +712,25 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
   }
 
   void markTitleAsDirty(String title) {
-    setState(() {
-      isDirty = true;
-    });
+    if (fieldTest.veresiyeTitleValidator(title) == null)
+      setState(() {
+        isDirty = true;
+      });
+    else
+      setState(() {
+        isDirty = false;
+      });
   }
 
   void markContentAsDirty(String content) {
-    setState(() {
-      isDirty = true;
-    });
+    if (fieldTest.veresiyeContentValidator(content) == null)
+      setState(() {
+        isDirty = true;
+      });
+    else
+      setState(() {
+        isDirty = false;
+      });
   }
 
   void handleDelete() async {

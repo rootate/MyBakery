@@ -8,6 +8,7 @@ import 'package:flutter_my_bakery/services/crud.dart';
 import 'package:intl/intl.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
+import 'package:flutter_my_bakery/screens/tezgahtar/field_test.dart';
 
 class Ekmek extends StatefulWidget {
   Ekmek({Key key, this.title}) : super(key: key);
@@ -25,6 +26,8 @@ class _EkmekState extends State<Ekmek> {
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
   final DateFormat formatter2 = DateFormat('yyyy-MM-dd - kk:mm');
   List<EkmekModel> ekmekList = [];
+  GlobalKey<FormState> _key = new GlobalKey();
+
 
   DatabaseService service = DatabaseService();
   bool isSearchEmpty = true;
@@ -144,7 +147,9 @@ class _EkmekState extends State<Ekmek> {
         context: dialogContext,
         style: alertStyle,
         title: "Çıkan ekmek tutarını giriniz.",
-        content: Column(
+        content: Form(
+          key : _key,
+          child: Column(
           children: [
             SizedBox(
               height: sizeW,
@@ -159,10 +164,10 @@ class _EkmekState extends State<Ekmek> {
               decoration: textInputDecoration.copyWith(
                   // labelText: ,
                   ),
-              validator: (val) => val.isEmpty ? "Enter an email" : null,
+              validator: fieldTest.veresiyeContentValidator
             ),
           ],
-        ),
+        ),),
         buttons: [
           DialogButton(
             child: Text(
@@ -170,16 +175,18 @@ class _EkmekState extends State<Ekmek> {
               style: TextStyle(color: Colors.white, fontSize: sizeW),
             ),
             onPressed: () {
-              setState(() {
-                if (int.parse(controller.value.text) > 0) {
-                  ekmek.amount = (int.parse(controller.value.text)).toString();
-                  ekmek.time = formatter2.format(DateTime.now());
-                  service.addEkmek(ekmek.id, ekmek.toMap());
-                }
-              });
+              if(_key.currentState.validate()){
+                setState(() {
+                  if (int.parse(controller.value.text) > 0) {
+                    ekmek.amount = (int.parse(controller.value.text)).toString();
+                    ekmek.time = formatter2.format(DateTime.now());
+                    service.addEkmek(ekmek.id, ekmek.toMap());
+                  }
+                });
               Navigator.pop(context);
               controller.clear();
               setEkmekFromDB();
+              }
             },
             color: Colors.green,
           ),
