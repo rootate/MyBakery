@@ -4,6 +4,7 @@ import 'package:flutter_my_bakery/models/Market.dart';
 import 'package:flutter_my_bakery/models/Payer.dart';
 import 'package:flutter_my_bakery/models/Worker.dart';
 import 'package:flutter_my_bakery/models/Product.dart';
+import 'package:flutter_my_bakery/services/auth.dart';
 
 class DatabaseService {
   final marketsReference =
@@ -11,9 +12,11 @@ class DatabaseService {
   final workersReference =
       FirebaseDatabase.instance.reference().child('bakery').child('employees');
   final payersReference =
-      FirebaseDatabase.instance.reference().child('bakery').child('payers');
+      FirebaseDatabase.instance.reference().child('bakery').child('veresiyeler');
   final categoryReference =
       FirebaseDatabase.instance.reference().child('bakery').child('categories');
+
+  final AuthService auth = AuthService();
 
   void addMarket(Market market) {
     marketsReference.child(market.name).set(market.toMap());
@@ -25,6 +28,15 @@ class DatabaseService {
 
   void addWorker(Worker worker) {
     workersReference.child(worker.name).set(worker.toMap());
+  }
+
+  void registerWorkers() {
+    workersReference.once().then((DataSnapshot snapshot) {
+      Map map = snapshot.value;
+      map.forEach((key, value) {
+        auth.registerWithEmailAndPassword(value['mail'], value['passwd']);
+      });
+    });
   }
 
   void deleteWorker(String workerName) {
@@ -39,7 +51,7 @@ class DatabaseService {
     payersReference.child(payer.name).set(payer.toMap());
   }
 
-  void addCategory(Category category){
+  void addCategory(Category category) {
     categoryReference.child(category.name).set(category.toMap());
   }
 
@@ -51,15 +63,15 @@ class DatabaseService {
     categoryReference.child(product.category).child(product.name).remove();
   }
 
-  void deleteProduct2(String categoryName,String productName) {
+  void deleteProduct2(String categoryName, String productName) {
     categoryReference.child(categoryName).child(productName).remove();
   }
 
-  void deleteCategory(String categoryName){
+  void deleteCategory(String categoryName) {
     categoryReference.child(categoryName).remove();
   }
 
-  void updateCategory(String categoryName,Category category) {
+  void updateCategory(String categoryName, Category category) {
     workersReference.child(categoryName).update(category.toMap());
   }
 
@@ -70,7 +82,7 @@ class DatabaseService {
         .set(product.toMap());
   }
 
-  void updateProduct(String uid,Product product) {
+  void updateProduct(String uid, Product product) {
     categoryReference
         .child(product.category)
         .child(uid)
