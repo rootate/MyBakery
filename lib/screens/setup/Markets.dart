@@ -61,6 +61,7 @@ class _MarketsState extends State<Markets> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
               icon: Icon(

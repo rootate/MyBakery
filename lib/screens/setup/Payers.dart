@@ -12,6 +12,7 @@ class Payers extends StatefulWidget {
 
 class _PayersState extends State<Payers> {
   DatabaseService sv = DatabaseService();
+
   List<Payer> payerList = [];
   void _addNewPayer(String prName, double prAmount) {
     final newPayer = Payer(name: prName, debt: prAmount);
@@ -57,6 +58,7 @@ class _PayersState extends State<Payers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
               icon: Icon(
@@ -115,7 +117,7 @@ class _PayersState extends State<Payers> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.green,
         child: Icon(Icons.done),
-        onPressed: () => nextPage(context),
+        onPressed: () => sv.registerWorkers(),
       ),
     );
   }
