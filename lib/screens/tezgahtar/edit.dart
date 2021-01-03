@@ -6,6 +6,8 @@ import 'package:flutter/painting.dart' as prefix0;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_my_bakery/models/models.dart';
 import 'package:flutter_my_bakery/services/database.dart';
+import 'package:flutter_my_bakery/services/crud.dart';
+import 'package:uuid/uuid.dart';
 
 class EditNotePage extends StatefulWidget {
   Function() triggerRefetch;
@@ -24,6 +26,7 @@ class _EditNotePageState extends State<EditNotePage> {
   bool isNoteNew = true;
   FocusNode titleFocus = FocusNode();
   FocusNode contentFocus = FocusNode();
+  DatabaseService service = DatabaseService();
 
   NotesModel currentNote;
   TextEditingController titleController = TextEditingController();
@@ -34,8 +37,13 @@ class _EditNotePageState extends State<EditNotePage> {
     super.initState();
     if (widget.existingNote == null) {
       currentNote = NotesModel(
-          content: '', title: '', date: DateTime.now(), isImportant: false);
+          id: Uuid().v1(),
+          content: '',
+          title: '',
+          date: DateTime.now(),
+          isImportant: false);
       isNoteNew = true;
+      print(currentNote.id);
     } else {
       currentNote = widget.existingNote;
       isNoteNew = false;
@@ -174,12 +182,14 @@ class _EditNotePageState extends State<EditNotePage> {
       print('Hey there ${currentNote.content}');
     });
     if (isNoteNew) {
-      var latestNote = await NotesDatabaseService.db.addNoteInDB(currentNote);
+      var latestNote = currentNote;
+      print("uid: " + currentNote.id);
+      service.addNote(currentNote.id, currentNote.toMap());
       setState(() {
         currentNote = latestNote;
       });
     } else {
-      await NotesDatabaseService.db.updateNoteInDB(currentNote);
+      service.updateNote(currentNote.id, currentNote.toMap());
     }
     setState(() {
       isNoteNew = false;
@@ -229,7 +239,7 @@ class _EditNotePageState extends State<EditNotePage> {
                           fontWeight: FontWeight.w500,
                           letterSpacing: 1)),
                   onPressed: () async {
-                    await NotesDatabaseService.db.deleteNoteInDB(currentNote);
+                    service.deleteNote(currentNote.id);
                     widget.triggerRefetch();
                     Navigator.pop(context);
                     Navigator.pop(context);
@@ -278,6 +288,8 @@ class _EditExpensePageState extends State<EditExpensePage> {
   ExpensesModel currentExpense;
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
+
+  DatabaseService service = DatabaseService();
 
   @override
   void initState() {
@@ -415,13 +427,14 @@ class _EditExpensePageState extends State<EditExpensePage> {
       print('Hey there ${currentExpense.content}');
     });
     if (isExpenseNew) {
-      var latestNote =
-          await NotesDatabaseService.db.addExpenseInDB(currentExpense);
+      var latestNote = currentExpense;
+      // await NotesDatabaseService.db.addExpenseInDB(currentExpense);
+      service.addExpense(currentExpense.id, currentExpense.toMap());
       setState(() {
         currentExpense = latestNote;
       });
     } else {
-      await NotesDatabaseService.db.updateExpenseInDB(currentExpense);
+      service.updateExpense(currentExpense.id, currentExpense.toMap());
     }
     setState(() {
       isExpenseNew = false;
@@ -464,8 +477,9 @@ class _EditExpensePageState extends State<EditExpensePage> {
                           fontWeight: FontWeight.w500,
                           letterSpacing: 1)),
                   onPressed: () async {
-                    await NotesDatabaseService.db
-                        .deleteExpenseInDB(currentExpense);
+                    service.deleteExpense(currentExpense.id);
+                    // await NotesDatabaseService.db
+                    // .deleteExpenseInDB(currentExpense);
                     widget.triggerRefetch();
                     Navigator.pop(context);
                     Navigator.pop(context);
@@ -514,6 +528,7 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
   VeresiyeModel currentVeresiye;
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
+  DatabaseService service = DatabaseService();
 
   @override
   void initState() {
@@ -651,13 +666,16 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
       print('Hey there ${currentVeresiye.content}');
     });
     if (isVeresiyeNew) {
-      var latestVeresiye =
-          await NotesDatabaseService.db.addVeresiyeInDB(currentVeresiye);
+      service.addVeresiye(currentVeresiye.title, currentVeresiye.toMap());
+      // var latestVeresiye =
+      // await NotesDatabaseService.db.addVeresiyeInDB(currentVeresiye);
+
       setState(() {
-        currentVeresiye = latestVeresiye;
+        // currentVeresiye ;
       });
     } else {
-      await NotesDatabaseService.db.updateVeresiyeInDB(currentVeresiye);
+      // await NotesDatabaseService.db.updateVeresiyeInDB(currentVeresiye);
+      service.updateVeresiye(currentVeresiye.title, currentVeresiye.toMap());
     }
     setState(() {
       isVeresiyeNew = false;
@@ -699,13 +717,6 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
                           color: Colors.red.shade300,
                           fontWeight: FontWeight.w500,
                           letterSpacing: 1)),
-                  onPressed: () async {
-                    await NotesDatabaseService.db
-                        .deleteVeresiyeInDB(currentVeresiye);
-                    widget.triggerRefetch();
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                  },
                 ),
                 FlatButton(
                   child: Text('İptal',
