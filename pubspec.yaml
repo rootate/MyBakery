@@ -45,6 +45,7 @@ dependencies:
   fluttertoast: ^7.1.6
   cloud_firestore: ^0.14.4
   uuid: ^2.2.2
+  faker: ^1.3.0
 
 dev_dependencies:
 

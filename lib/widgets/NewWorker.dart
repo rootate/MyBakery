@@ -16,16 +16,8 @@ class _NewWorkerState extends State<NewWorker> {
 
   void _submitData() {
     final enteredTitle = _nameController.text;
-    jobs enteredJobs;
-    if (_value == "Yönetici") {
-      enteredJobs = jobs.yonetici;
-    } else if (_value == "Tezgahtar") {
-      enteredJobs = jobs.tezgahtar;
-    } else {
-      enteredJobs = jobs.sofor;
-    }
     final enteredMail = _mailController.text;
-    final enteredJob = enteredJobs;
+    final enteredJob = _value;
 
     if (enteredTitle.isEmpty ||
         enteredMail.isEmpty ||

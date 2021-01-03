@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/models/Product.dart';
 import 'package:flutter_my_bakery/widgets/NewProduct.dart';
+import 'package:flutter_my_bakery/services/databaseService.dart';
 
 class Urunler extends StatefulWidget {
   final String category;
@@ -13,10 +14,13 @@ class Urunler extends StatefulWidget {
 
 class _UrunlerState extends State<Urunler> {
   final String categoryName;
+  DatabaseService sv = DatabaseService();
   List<Product> productList = [];
   void _addNewProduct(String prName, double prAmount) {
-    final newProduct = Product(name: prName, amount: prAmount);
+    final newProduct =
+        Product(name: prName, amount: prAmount, category: categoryName);
     setState(() {
+      sv.addProduct(newProduct);
       productList.add(newProduct);
     });
   }
@@ -38,7 +42,12 @@ class _UrunlerState extends State<Urunler> {
 
   void deleteProduct(String name) {
     setState(() {
-      productList.removeWhere((pr) => pr.name == name);
+      productList.removeWhere((pr) {
+        if (pr.name == name) {
+          sv.deleteProduct(pr);
+        }
+        return pr.name == name;
+      });
     });
   }
 

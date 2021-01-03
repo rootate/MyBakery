@@ -1,7 +1,9 @@
+import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_my_bakery/models/Worker.dart';
+import 'package:flutter_my_bakery/services/databaseService.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:flutter_my_bakery/services/crud.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 String uid;
@@ -33,7 +35,7 @@ class _EmployeesState extends State<Employees> {
     TextEditingController controller2 = TextEditingController();
 
     return StreamBuilder<Event>(
-      stream: service.employeesReference.onValue,
+      stream: service.workersReference.onValue,
       builder: (context,snapshot){
         Map data = {};
         List item = [];
@@ -48,7 +50,7 @@ class _EmployeesState extends State<Employees> {
               ),
               floatingActionButton: FloatingActionButton(
                 onPressed: (){
-                  confirmationPopup(context,image,0,0,controller,controller2);
+                  confirmationPopup(context,image,0,0,"",controller,controller2);
                 },
                 child: Icon(Icons.add),
               ),
@@ -81,15 +83,15 @@ class _EmployeesState extends State<Employees> {
                 return ListTile(
                   onLongPress: (){
                     controller.text = item[index]["name"];
-                    controller2.text = item[index]["role"];
+                    controller2.text = item[index]["job"];
                     uid = item[index]["key"];
-                    confirmationPopup(context,image,1,index,controller,controller2);
+                    confirmationPopup(context,image,1,index,item[index]["mail"],controller,controller2);
                   },
                   onTap: () {
                     controller.text = item[index]["name"];
-                    controller2.text = item[index]["role"];
+                    controller2.text = item[index]["job"];
                     uid = item[index]["key"];
-                    confirmationPopup(context,image,1,index,controller,controller2);
+                    confirmationPopup(context,image,1,index,item[index]["mail"],controller,controller2);
                   },
                   leading: ConstrainedBox(
                     constraints: BoxConstraints(
@@ -101,13 +103,13 @@ class _EmployeesState extends State<Employees> {
                     child: image,
                   ),
                   title: Text(item[index]["name"],style: TextStyle(fontFamily: "Poppins"),),
-                  trailing: Text(item[index]["role"],style: TextStyle(fontFamily: "Poppins"),),
+                  trailing: Text(item[index]["job"],style: TextStyle(fontFamily: "Poppins"),),
                 );
               },
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: (){
-                confirmationPopup(context,image,0,0,controller,controller2);
+                confirmationPopup(context,image,0,0,"",controller,controller2);
               },
               child: Icon(Icons.add),
             ),
@@ -117,7 +119,7 @@ class _EmployeesState extends State<Employees> {
     );
   }
 
-  confirmationPopup(BuildContext dialogContext,Widget image,int val,int index,TextEditingController controller,TextEditingController controller2) {
+  confirmationPopup(BuildContext dialogContext,Widget image,int val,int index,String mail,TextEditingController controller,TextEditingController controller2) {
     final contextW = MediaQuery.of(context).size.width;
     final sizeW = contextW / 20;
 
@@ -176,7 +178,7 @@ class _EmployeesState extends State<Employees> {
             ),
             onPressed: () {
               setState(() {
-                service.deleteEmployee(uid);
+                service.deleteWorker(uid);
               });
               Navigator.pop(context);
             },
@@ -199,15 +201,14 @@ class _EmployeesState extends State<Employees> {
             ),
             onPressed: () {
               if(controller.value.text != "" && controller2.value.text != ""){
-                final params = {
-                  'name' : controller.value.text,
-                  'role' : controller2.value.text
-                };
+                var faker = new Faker();
                 setState(() {
                   if(val == 0) {
-                    service.addEmployee(params);
+                    final newWorker = Worker(name: controller.value.text, mail: faker.internet.email(), job: controller2.value.text);
+                    service.addWorker(newWorker);
                   } else {
-                    service.updateEmployee(uid, params);
+                    final newWorker = Worker(name: controller.value.text, mail: mail, job: controller2.value.text);
+                    service.updateWorker(uid,newWorker);
                   }
                 });
               }

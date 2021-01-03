@@ -86,5 +86,4 @@ class DatabaseService {
   void deleteVeresiye(String title){
         veresiyelerDataReference.child(title).remove();
   }
-
 }
