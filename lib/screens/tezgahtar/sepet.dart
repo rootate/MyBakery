@@ -264,6 +264,7 @@ class _SepetState extends State<Sepet> {
               height: sizeW,
             ),
             TextFormField(
+              keyboardType: TextInputType.number,
               controller: controller,
               style: textStyle1,
               decoration: textInputDecoration.copyWith(
