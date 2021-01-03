@@ -7,13 +7,12 @@ import 'package:flutter_my_bakery/shared/faderoute.dart';
 import 'package:flutter_my_bakery/models/models.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/edit.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/view.dart';
-import 'package:flutter_my_bakery/services/database.dart';
 import 'package:flutter_my_bakery/shared/cards.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
 import 'package:flutter_my_bakery/services/crud.dart';
 import 'package:firebase_database/firebase_database.dart';
-
+import 'package:flutter_my_bakery/screens/tezgahtar/field_test.dart';
 class Veresiye extends StatefulWidget {
   Veresiye({Key key, this.title}) : super(key: key);
 
@@ -24,6 +23,7 @@ class Veresiye extends StatefulWidget {
 }
 
 class _VeresiyeState extends State<Veresiye> {
+  GlobalKey<FormState> _key = new GlobalKey();
   bool headerShouldHide = false;
   List<VeresiyeModel> veresiyeList = [];
   TextEditingController searchController = TextEditingController();
@@ -165,7 +165,7 @@ class _VeresiyeState extends State<Veresiye> {
   }
 
   veresiyePopup(BuildContext dialogContext, VeresiyeModel veresiye,
-      TextEditingController controller) {
+    TextEditingController controller) {
     final contextW = MediaQuery.of(context).size.width;
     final sizeW = contextW / 20;
 
@@ -182,7 +182,9 @@ class _VeresiyeState extends State<Veresiye> {
         context: dialogContext,
         style: alertStyle,
         title: veresiye.title,
-        content: Column(
+        content: Form(
+        key: _key,
+        child :Column(
           children: [
             SizedBox(
               height: sizeW,
@@ -194,18 +196,10 @@ class _VeresiyeState extends State<Veresiye> {
               controller: controller,
               keyboardType: TextInputType.number,
               style: textStyle1,
-              decoration: textInputDecoration.copyWith(
-                  // labelText: ,
-                  ),
-              validator: (val) => val.isEmpty ? "Enter an email" : null,
-
-              // onChanged: (val) {
-              //   setState(() {
-              //     piece.add(int.parse(controller.value.text));
-              //   });
-              // },
+              validator: fieldTest.veresiyeContentValidator ,
             ),
           ],
+        )
         ),
         buttons: [
           DialogButton(
@@ -214,7 +208,8 @@ class _VeresiyeState extends State<Veresiye> {
               style: TextStyle(color: Colors.white, fontSize: sizeW),
             ),
             onPressed: () {
-              setState(() {
+              if(_key.currentState.validate()){
+               setState(() {
                 if (int.parse(controller.value.text) > 0) {
                   veresiye.content = ((int.parse(veresiye.content)) -
                           (int.parse(controller.value.text)))
@@ -223,7 +218,8 @@ class _VeresiyeState extends State<Veresiye> {
                 }
               });
               Navigator.pop(context);
-              setVeresiyeFromDB();
+              setVeresiyeFromDB(); 
+              }
             },
             color: Colors.red,
           ),
@@ -233,7 +229,8 @@ class _VeresiyeState extends State<Veresiye> {
               style: TextStyle(color: Colors.white, fontSize: sizeW),
             ),
             onPressed: () {
-              print("inside ekle");
+              if(_key.currentState.validate()){
+                print("inside ekle");
               setState(() {
                 print("inside setstate");
                 if (int.parse(controller.value.text) > 0) {
@@ -246,6 +243,7 @@ class _VeresiyeState extends State<Veresiye> {
               });
               Navigator.pop(context);
               setVeresiyeFromDB();
+              }
             },
             color: Colors.blue,
           )

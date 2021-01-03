@@ -5,9 +5,9 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/painting.dart' as prefix0;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_my_bakery/models/models.dart';
-import 'package:flutter_my_bakery/services/database.dart';
 import 'package:flutter_my_bakery/services/crud.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter_my_bakery/screens/tezgahtar/field_test.dart';
 
 class EditNotePage extends StatefulWidget {
   Function() triggerRefetch;
@@ -529,6 +529,7 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
   DatabaseService service = DatabaseService();
+  GlobalKey<FormState> _key = new GlobalKey();
 
   @override
   void initState() {
@@ -647,7 +648,9 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
                             'Kaydet',
                             style: TextStyle(letterSpacing: 0),
                           ),
-                          onPressed: handleSave,
+                          onPressed: () {
+                            handleSave();
+                          },
                         ),
                       )
                     ],
@@ -687,15 +690,25 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
   }
 
   void markTitleAsDirty(String title) {
-    setState(() {
-      isDirty = true;
-    });
+    if (fieldTest.veresiyeTitleValidator(title) == null)
+      setState(() {
+        isDirty = true;
+      });
+    else
+      setState(() {
+        isDirty = false;
+      });
   }
 
   void markContentAsDirty(String content) {
-    setState(() {
-      isDirty = true;
-    });
+    if (fieldTest.veresiyeContentValidator(content) == null)
+      setState(() {
+        isDirty = true;
+      });
+    else
+      setState(() {
+        isDirty = false;
+      });
   }
 
   void handleDelete() async {
