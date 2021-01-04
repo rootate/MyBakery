@@ -127,7 +127,7 @@ class _UrunScreen extends State<UrunScreen> {
       },
       child: new Scaffold(
         appBar: new AppBar(
-          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+          backgroundColor: Colors.blueGrey,
           title: new Text('Urunler'),
           centerTitle: true,
           actions: (controller.isSelecting)

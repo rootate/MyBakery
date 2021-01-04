@@ -749,6 +749,7 @@ class _EditVeresiyePageState extends State<EditVeresiyePage> {
               content: Text('Bu veresiye hesabı kalıcı olarak silinecektir.'),
               actions: <Widget>[
                 FlatButton(
+                  onPressed: () {  },
                   child: Text('Sil',
                       style: prefix0.TextStyle(
                           color: Colors.red.shade300,

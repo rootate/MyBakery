@@ -34,7 +34,7 @@ class _MarketDetailState extends State<MarketDetail> {
       appBar: AppBar(
         title: Text(widget.marketName),
         centerTitle: true,
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        backgroundColor: Colors.blueGrey,
       ),
       body: SingleChildScrollView(
         child: Column(
