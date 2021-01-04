@@ -9,7 +9,7 @@ import 'package:flutter_my_bakery/screens/administrator/products_in.dart';
 String uid;
 
 List images = ['ekmekler.jpeg','kahvaltiliklar.jpeg','pastalar.jpeg','icecekler.jpeg',
-  'tatlilar.jpeg','kurabiyeler.jpeg','hazirGidalar.jpeg','diger.jpeg'];
+  'tatlilar.jpeg','kurabiyeler.jpeg','hazirGidalar.jpeg','diger.jpeg','diger.jpeg','diger.jpeg','diger.jpeg','diger.jpeg'];
 
 class Products extends StatefulWidget {
   @override
@@ -18,6 +18,11 @@ class Products extends StatefulWidget {
 
 class _ProductsState extends State<Products> {
   DatabaseService service = DatabaseService();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +46,7 @@ class _ProductsState extends State<Products> {
           if(data == null){
             return Scaffold(
               appBar: AppBar(
-                title: Text("Employees",style: TextStyle(fontFamily: "Poppins"),),
+                title: Text("Products",style: TextStyle(fontFamily: "Poppins"),),
                 centerTitle: true,
                 backgroundColor: Colors.blueGrey,
               ),
@@ -113,7 +118,7 @@ class _ProductsState extends State<Products> {
           );
         }
       },
-    );;
+    );
   }
 
   confirmationPopup(BuildContext dialogContext,Widget image,int val,int index,String categoryName,TextEditingController controller) {

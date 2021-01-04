@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/models/Worker.dart';
@@ -33,6 +35,7 @@ class _EmployeesState extends State<Employees> {
 
     TextEditingController controller = TextEditingController();
     TextEditingController controller2 = TextEditingController();
+    TextEditingController controller3 = TextEditingController();
 
     return StreamBuilder<Event>(
       stream: service.workersReference.onValue,
@@ -50,7 +53,7 @@ class _EmployeesState extends State<Employees> {
               ),
               floatingActionButton: FloatingActionButton(
                 onPressed: (){
-                  confirmationPopup(context,image,0,0,"",controller,controller2);
+                  confirmationPopup(context,image,0,0,"",controller,controller2,controller3);
                 },
                 child: Icon(Icons.add),
               ),
@@ -84,14 +87,16 @@ class _EmployeesState extends State<Employees> {
                   onLongPress: (){
                     controller.text = item[index]["name"];
                     controller2.text = item[index]["job"];
+                    controller3.text = item[index]["mail"];
                     uid = item[index]["key"];
-                    confirmationPopup(context,image,1,index,item[index]["mail"],controller,controller2);
+                    confirmationPopup(context,image,1,index,item[index]["mail"],controller,controller2,controller3);
                   },
                   onTap: () {
                     controller.text = item[index]["name"];
                     controller2.text = item[index]["job"];
+                    controller3.text = item[index]["mail"];
                     uid = item[index]["key"];
-                    confirmationPopup(context,image,1,index,item[index]["mail"],controller,controller2);
+                    confirmationPopup(context,image,1,index,item[index]["mail"],controller,controller2,controller3);
                   },
                   leading: ConstrainedBox(
                     constraints: BoxConstraints(
@@ -109,7 +114,7 @@ class _EmployeesState extends State<Employees> {
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: (){
-                confirmationPopup(context,image,0,0,"",controller,controller2);
+                confirmationPopup(context,image,0,0,"",controller,controller2,controller3);
               },
               child: Icon(Icons.add),
             ),
@@ -119,7 +124,7 @@ class _EmployeesState extends State<Employees> {
     );
   }
 
-  confirmationPopup(BuildContext dialogContext,Widget image,int val,int index,String mail,TextEditingController controller,TextEditingController controller2) {
+  confirmationPopup(BuildContext dialogContext,Widget image,int val,int index,String mail,TextEditingController controller,TextEditingController controller2,TextEditingController controller3) {
     final contextW = MediaQuery.of(context).size.width;
     final sizeW = contextW / 20;
 
@@ -168,6 +173,20 @@ class _EmployeesState extends State<Employees> {
                 });
               },
             ),
+            SizedBox(height: sizeW,),
+            TextFormField(
+              controller: controller3,
+              style: textStyle1,
+              decoration: textInputDecoration.copyWith(
+                labelText: "E-Mail",
+              ),
+              validator: (val) => val.isEmpty ? "Enter an email" : null,
+              onChanged: (val) {
+                setState(() {
+
+                });
+              },
+            ),
           ],
         ),
         buttons: [
@@ -202,12 +221,17 @@ class _EmployeesState extends State<Employees> {
             onPressed: () {
               if(controller.value.text != "" && controller2.value.text != ""){
                 var faker = new Faker();
+                int passwd = 0;
+                for (var i = 0; i < 6; i++) {
+                  passwd = passwd + ((Random().nextInt(8) + 1) * pow(10, i));
+                }
                 setState(() {
                   if(val == 0) {
-                    final newWorker = Worker(name: controller.value.text, mail: faker.internet.email(), job: controller2.value.text);
+                    final newWorker = Worker(name: controller.value.text, mail: controller3.value.text, job: controller2.value.text,password: passwd.toString());
                     service.addWorker(newWorker);
+                    service.registerWorkers();
                   } else {
-                    final newWorker = Worker(name: controller.value.text, mail: mail, job: controller2.value.text);
+                    final newWorker = Worker(name: controller.value.text, mail: controller3.value.text, job: controller2.value.text,password: passwd.toString());
                     service.updateWorker(uid,newWorker);
                   }
                 });

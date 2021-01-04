@@ -60,7 +60,7 @@ class _NewPayerState extends State<NewPayer> {
                 'Veresiye Ekle',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              textColor: Colors.green,
+              textColor: Colors.blueGrey,
               onPressed: () => _submitData(),
             ),
           ],

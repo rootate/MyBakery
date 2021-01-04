@@ -67,7 +67,7 @@ class _PayersState extends State<Payers> {
               ),
               onPressed: () => _startAddNewpayer(context))
         ],
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.blueGrey,
         title: Text("Veresiyeler"),
       ),
       body: SingleChildScrollView(
@@ -115,8 +115,9 @@ class _PayersState extends State<Payers> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.blueGrey,
         child: Icon(Icons.done),
+        // ignore: deprecated_member_use_from_same_package
         onPressed: () => sv.registerWorkers(),
       ),
     );

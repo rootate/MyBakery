@@ -47,11 +47,11 @@ class Categories extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text("Kategoriler"),
-        backgroundColor: Colors.orange[600],
+        backgroundColor: Colors.blueGrey,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.orange[600],
+        backgroundColor: Colors.blueGrey,
         child: Icon(Icons.done),
         onPressed: () => nextPage(context),
       ),

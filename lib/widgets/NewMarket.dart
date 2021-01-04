@@ -61,7 +61,7 @@ class _NewMarketState extends State<NewMarket> {
                 'Market Ekle',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              textColor: Colors.pink,
+              textColor: Colors.blueGrey,
               onPressed: () => _submitData(),
             ),
           ],

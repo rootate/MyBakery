@@ -1,14 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/models/Product.dart';
-import 'package:flutter_my_bakery/screens/tezgahtar/sepet.dart';
 import 'package:flutter_my_bakery/services/databaseService.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
-
-List products = ['Ürün 1', 'Ürün 2', 'Ürün 3', 'Ürün 4',
-  'Ürün 5', 'Ürün 6', 'Ürün 7', 'Ürün 8'];
-List prices = [10, 5, 2, 3, 6, 4, 1, 8];
 
 String uid;
 
