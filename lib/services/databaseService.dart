@@ -5,18 +5,24 @@ import 'package:flutter_my_bakery/models/Payer.dart';
 import 'package:flutter_my_bakery/models/Worker.dart';
 import 'package:flutter_my_bakery/models/Product.dart';
 import 'package:flutter_my_bakery/services/auth.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
 
 class DatabaseService {
   final marketsReference =
       FirebaseDatabase.instance.reference().child('bakery').child('markets');
   final workersReference =
       FirebaseDatabase.instance.reference().child('bakery').child('employees');
-  final payersReference =
-      FirebaseDatabase.instance.reference().child('bakery').child('veresiyeler');
+  final payersReference = FirebaseDatabase.instance
+      .reference()
+      .child('bakery')
+      .child('veresiyeler');
   final categoryReference =
       FirebaseDatabase.instance.reference().child('bakery').child('categories');
 
   final AuthService auth = AuthService();
+  String username = 'aloafofhappiness@gmail.com';
+  String password = 'Aloafofhappiness+';
 
   void addMarket(Market market) {
     marketsReference.child(market.name).set(market.toMap());
@@ -30,11 +36,29 @@ class DatabaseService {
     workersReference.child(worker.name).set(worker.toMap());
   }
 
+  @deprecated
   void registerWorkers() {
     workersReference.once().then((DataSnapshot snapshot) {
+      final smtpServer = gmail(username, password);
       Map map = snapshot.value;
-      map.forEach((key, value) {
+      map.forEach((key, value) async {
         auth.registerWithEmailAndPassword(value['mail'], value['passwd']);
+        final message = Message()
+          ..from = Address(username, 'a Loaf of Happiness')
+          ..recipients.add(value['mail'])
+          ..subject = 'Login'
+          ..html =
+              "<h1>Login</h1>\n<p>My Bakery giriş şifreniz: ${value['passwd']}</p>";
+
+        try {
+          final sendReport = await send(message, smtpServer);
+          print('Message sent: ' + sendReport.toString());
+        } on MailerException catch (e) {
+          print('Message not sent.');
+          for (var p in e.problems) {
+            print('Problem: ${p.code}: ${p.msg}');
+          }
+        }
       });
     });
   }
