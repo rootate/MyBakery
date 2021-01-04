@@ -1,11 +1,11 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/sepet.dart';
+import 'package:flutter_my_bakery/services/databaseService.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
 
-List products = ['Ürün 1', 'Ürün 2', 'Ürün 3', 'Ürün 4',
-  'Ürün 5', 'Ürün 6', 'Ürün 7', 'Ürün 8'];
-List prices = [10, 5, 2, 3, 6, 4, 1, 8];
+String uid;
 int indirim = 0;
 
 List product = List();
@@ -22,6 +22,8 @@ class OdemeKategori extends StatefulWidget {
 }
 
 class _OdemeKategoriState extends State<OdemeKategori> {
+  DatabaseService service = DatabaseService();
+
   int sumPrice(){
     int sum = 0;
     for(int i=0;i<price.length;++i){
@@ -44,55 +46,95 @@ class _OdemeKategoriState extends State<OdemeKategori> {
     TextEditingController controller2 = TextEditingController();
     TextEditingController controller3 = TextEditingController();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.category.toString(),style: TextStyle(fontFamily: "Poppins"),),
-        centerTitle: true,
-        backgroundColor: Colors.blueGrey,
-      ),
-      body: ListView.builder(
-        itemCount: products.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            onTap: () {
-              confirmationPopup(context,image,index,controller);
-            },
-            leading: ConstrainedBox(
-              constraints: BoxConstraints(
-                minWidth: sizeW,
-                minHeight: sizeH,
-                maxWidth: sizeW + 20,
-                maxHeight: sizeH + 20,
+    return StreamBuilder<Event>(
+      stream: service.categoryReference.child(widget.category).onValue,
+      builder: (context,snapshot){
+        Map data = {};
+        List item = [];
+        if(snapshot.hasData) {
+          data = snapshot.data.snapshot.value;
+          if(data == null){
+            return Scaffold(
+              appBar: AppBar(
+                title: Text("Employees",style: TextStyle(fontFamily: "Poppins"),),
+                centerTitle: true,
+                backgroundColor: Colors.blueGrey,
               ),
-              child: image,
+              floatingActionButton: FloatingActionButton(
+                onPressed: (){
+                  //confirmationPopup(context,image,0,0,controller);
+                },
+                child: Icon(Icons.add),
+              ),
+            );
+          }
+          data.forEach(
+                  (index, data) => item.add({"key": index, ...data}));
+        }
+
+        if (snapshot.hasError)
+          return new Text('Error: ${snapshot.error}');
+        switch (snapshot.connectionState){
+          case ConnectionState.waiting:
+            return  Container(
+              height: 200.0,
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black45),
+              ),
+            );
+          default: return Scaffold(
+            appBar: AppBar(
+              title: Text(widget.category.toString(),style: TextStyle(fontFamily: "Poppins"),),
+              centerTitle: true,
+              backgroundColor: Colors.blueGrey,
             ),
-            title: Text(products[index],style: TextStyle(fontFamily: "Poppins"),),
-            trailing: Text(prices[index].toString() + " ₺",style: TextStyle(fontFamily: "Poppins",fontSize: 20),),
-          );
-        },
+            body: ListView.builder(
+              itemCount: item.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  onTap: () {
+                    confirmationPopup(context,image,index,controller,item);
+                  },
+                  leading: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minWidth: sizeW,
+                      minHeight: sizeH,
+                      maxWidth: sizeW + 20,
+                      maxHeight: sizeH + 20,
+                    ),
+                    child: image,
+                  ),
+                  title: Text(item[index]["name"],style: TextStyle(fontFamily: "Poppins"),),
+                  trailing: Text(item[index]["price"].toString() + " ₺",style: TextStyle(fontFamily: "Poppins",fontSize: 20),),
+                );
+              },
 
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: (){
-          controller2.text = sumPrice().toString();
-          controller3.text = indirim.toString();
+            ),
+            floatingActionButton: FloatingActionButton.extended(
+              onPressed: (){
+                controller2.text = sumPrice().toString();
+                controller3.text = indirim.toString();
 
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Sepet(product: product,piece: piece,price: price,)),
-              ).then((_) {
-                setState((){}); 
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Sepet(product: product,piece: piece,price: price,)),
+                ).then((_) {
+                  setState((){});
                 });// sepetten geri donunce guncellmesi icin
 
-          // confirmationPopup2(context,image,controller2,controller3);
-        },
-        icon: Icon(Icons.shopping_cart_outlined),
-        label: Text(sumPrice().toString() + " ₺",style: TextStyle(fontFamily: "Poppins",fontSize: 20),),
-      ),
+                // confirmationPopup2(context,image,controller2,controller3);
+              },
+              icon: Icon(Icons.shopping_cart_outlined),
+              label: Text(sumPrice().toString() + " ₺",style: TextStyle(fontFamily: "Poppins",fontSize: 20),),
+            ),
+          );
+        }
+      },
     );
   }
 
-  confirmationPopup(BuildContext dialogContext,Widget image,int index,TextEditingController controller) {
+  confirmationPopup(BuildContext dialogContext,Widget image,int index,TextEditingController controller,List item) {
     final contextW = MediaQuery.of(context).size.width;
     final sizeW = contextW / 20;
 
@@ -149,8 +191,8 @@ class _OdemeKategoriState extends State<OdemeKategori> {
             onPressed: () {
               setState(() {
                 if (int.parse(controller.value.text) > 0 ) {
-                  product.add(products[index]);
-                  price.add(prices[index]);
+                  product.add(item[index]["name"]);
+                  price.add(item[index]["price"]);
                   piece.add(int.parse(controller.value.text));
                 }
               });
@@ -160,64 +202,6 @@ class _OdemeKategoriState extends State<OdemeKategori> {
           )
         ]).show();
   }
-
-  confirmationPopup2(BuildContext dialogContext,Widget image,TextEditingController controller2,TextEditingController controller3) {
-    double finalPrice = (int.parse(controller2.value.text) - indirim/100*int.parse(controller2.value.text) );
-    final contextW = MediaQuery.of(context).size.width;
-    final sizeW = contextW / 20;
-
-    var alertStyle = AlertStyle(
-      animationType: AnimationType.grow,
-      overlayColor: Colors.black87,
-      isOverlayTapDismiss: true,
-      titleStyle: TextStyle(fontFamily: "Poppins",fontWeight: FontWeight.bold, fontSize: sizeW),
-      animationDuration: Duration(milliseconds: 400),
-    );
-
-    // Alert(
-    //     context: dialogContext,
-    //     style: alertStyle,
-    //     title: "Sepet",
-    //     content: Column(
-    //       children: [
-    //         SizedBox(height: 20,),
-    //         Text("Fiyat : " + controller2.value.text + " ₺"),
-    //         SizedBox(height: 30,),
-    //         Text("İndirim oranı : " + indirim.toString() + " %"),
-    //         SizedBox(height: 30,),
-    //         Text("Son fiyat : " + finalPrice.toString() + " ₺"),
-    //       ],
-    //     ),
-    //     buttons: [
-    //       DialogButton(
-    //         child: Text(
-    //           "İptal",
-    //           style: TextStyle(color: Colors.white, fontSize: sizeW),
-    //         ),
-    //         onPressed: () {
-    //           Navigator.pop(context);
-    //         },
-    //         color: Colors.red,
-    //       ),
-    //       DialogButton(
-    //         child: Text(
-    //           "Ürünleri gör",
-    //           style: TextStyle(color: Colors.white, fontSize: sizeW),
-    //         ),
-    //         onPressed: () {
-    //           Navigator.pop(context); // pop-up'i kapat
-    //           Navigator.push(
-    //             context,
-    //             MaterialPageRoute(builder: (context) => Sepet(product: product,piece: piece,price: price,)),
-    //           ).then((_) {
-    //             setState((){}); 
-    //             });// sepetten geri donunce guncellmesi icin
-    //         },
-    //         color: Colors.blue,
-    //       )
-    //     ]).show();
-  }
-
 }
 
 
