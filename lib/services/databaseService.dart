@@ -47,8 +47,7 @@ class DatabaseService {
           ..from = Address(username, 'a Loaf of Happiness')
           ..recipients.add(value['mail'])
           ..subject = 'Login'
-          ..html =
-              "<h1>Login</h1>\n<p>My Bakery giriş şifreniz: ${value['passwd']}</p>";
+          ..html = "<p>My Bakery giriş şifreniz: ${value['passwd']}</p>";
 
         try {
           final sendReport = await send(message, smtpServer);

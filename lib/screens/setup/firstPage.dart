@@ -60,7 +60,7 @@ class FirstPage extends StatelessWidget {
                   child: RaisedButton(
                     onPressed: () => nextPage(context),
                     child: Text("BAŞLAYALIM"),
-                    color: Colors.orange[700],
+                    color: Colors.blueGrey,
                   ),
                 )
               ],

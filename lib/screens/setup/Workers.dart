@@ -74,6 +74,7 @@ class _WorkersState extends State<Workers> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        backgroundColor: Colors.blueGrey,
         actions: [
           IconButton(
               icon: Icon(
@@ -129,6 +130,7 @@ class _WorkersState extends State<Workers> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blueGrey,
         child: Icon(Icons.done),
         onPressed: () => nextPage(context),
       ),

@@ -75,7 +75,7 @@ class _NewWorkerState extends State<NewWorker> {
                 'Çalışan Ekle',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              textColor: Colors.blue,
+              textColor: Colors.blueGrey,
               onPressed: () => _submitData(),
             ),
           ],
