@@ -20,6 +20,13 @@ class _ProductsState extends State<Products> {
   DatabaseService service = DatabaseService();
 
   @override
+  void initState() {
+    var x = service.workersReference.orderByKey();
+    print(x);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final contextW = MediaQuery.of(context).size.width;
     final contextH = MediaQuery.of(context).size.height;

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/screens/authenticate/sign_in.dart';
 import 'package:flutter_my_bakery/screens/home/bottom_bar_state.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_my_bakery/services/databaseService.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,12 +26,15 @@ class MyApp extends StatelessWidget {
 }
 
 class MainScreen extends StatelessWidget {
+  DatabaseService service = DatabaseService();
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
+            var workersReference = service.workersReference;
             return BottomBarState();
           }
           return SignIn();
