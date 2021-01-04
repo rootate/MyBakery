@@ -41,7 +41,7 @@ class _ProductsState extends State<Products> {
           if(data == null){
             return Scaffold(
               appBar: AppBar(
-                title: Text("Employees",style: TextStyle(fontFamily: "Poppins"),),
+                title: Text("Products",style: TextStyle(fontFamily: "Poppins"),),
                 centerTitle: true,
                 backgroundColor: Colors.blueGrey,
               ),

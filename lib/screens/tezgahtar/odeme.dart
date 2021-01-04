@@ -1,10 +1,10 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/odeme_kategori.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:flutter_my_bakery/shared/constants.dart';
+import 'package:flutter_my_bakery/services/databaseService.dart';
 
-List categories = ['Ekmekler', 'Kahvaltılıklar', 'Pastalar', 'İçecekler',
-  'Tatlılar', 'Kurabiyeler', 'Hazır Gıdalar', 'Diğer'];
+List images = ['ekmekler.jpeg','kahvaltiliklar.jpeg','pastalar.jpeg','icecekler.jpeg',
+  'tatlilar.jpeg','kurabiyeler.jpeg','hazirGidalar.jpeg','diger.jpeg'];
 
 class Odeme extends StatefulWidget {
   @override
@@ -12,6 +12,8 @@ class Odeme extends StatefulWidget {
 }
 
 class _OdemeState extends State<Odeme> {
+  DatabaseService service = DatabaseService();
+
   @override
   Widget build(BuildContext context) {
     final contextW = MediaQuery.of(context).size.width;
@@ -20,133 +22,85 @@ class _OdemeState extends State<Odeme> {
     final sizeW = contextW / 20;
     final sizeH = contextH / 20;
 
-    final image = Image(image: AssetImage('assets/images/icons/bread2.png'));
+    var image = Image(image: AssetImage('assets/images/icons/'));
 
     TextEditingController controller = TextEditingController();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Ödeme",style: TextStyle(fontFamily: "Poppins"),),
-        centerTitle: true,
-        backgroundColor: Colors.blueGrey,
-      ),
-      body: ListView.builder(
-        itemCount: categories.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            // onLongPress: (){
-            //   controller.text = categories[index];
-            //   confirmationPopup(context,image,1,index,controller);
-            // },
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => OdemeKategori(category: categories[index])),
-              );
-            },
-            leading: ConstrainedBox(
-              constraints: BoxConstraints(
-                minWidth: sizeW,
-                minHeight: sizeH,
-                maxWidth: sizeW + 20,
-                maxHeight: sizeH + 20,
+    return StreamBuilder<Event>(
+      stream: service.categoryReference.onValue,
+      builder: (context,snapshot){
+        Map data = {};
+        List item = [];
+        if(snapshot.hasData) {
+          data = snapshot.data.snapshot.value;
+          if(data == null){
+            return Scaffold(
+              appBar: AppBar(
+                title: Text("Ödeme",style: TextStyle(fontFamily: "Poppins"),),
+                centerTitle: true,
+                backgroundColor: Colors.blueGrey,
               ),
-              child: image,
+            );
+          }
+          data.forEach(
+                  (index, data) => item.add({"key": index, ...data}));
+        }
+
+        if (snapshot.hasError)
+          return new Text('Error: ${snapshot.error}');
+        switch (snapshot.connectionState){
+          case ConnectionState.waiting:
+            return  Container(
+              height: 200.0,
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black45),
+              ),
+            );
+          default: return Scaffold(
+            appBar: AppBar(
+              title: Text("Ödeme",style: TextStyle(fontFamily: "Poppins"),),
+              centerTitle: true,
+              backgroundColor: Colors.blueGrey,
             ),
-            title: Text(categories[index],style: TextStyle(fontFamily: "Poppins"),),
-          );
-        },
-
-      ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: (){
-      //     confirmationPopup(context,image,0,0,controller);
-      //   },
-      //   // child: Icon(Icons.add),
-      // ),
-    );
-  }
-
-  confirmationPopup(BuildContext dialogContext,Widget image,int val,int index,TextEditingController controller) {
-    final contextW = MediaQuery.of(context).size.width;
-    final sizeW = contextW / 20;
-
-    var alertStyle = AlertStyle(
-      animationType: AnimationType.grow,
-      overlayColor: Colors.black87,
-      isOverlayTapDismiss: true,
-      titleStyle: TextStyle(fontFamily: "Poppins",fontWeight: FontWeight.bold, fontSize: sizeW),
-      animationDuration: Duration(milliseconds: 400),
-    );
-
-    Alert(
-        context: dialogContext,
-        style: alertStyle,
-        title: val == 0 ? "Kategori ekle" : "Kategoriyi düzenle",
-        content: Column(
-          children: [
-            SizedBox(height: sizeW,),
-            image,
-            SizedBox(height: sizeW,),
-            TextFormField(
-              controller: controller,
-              style: textStyle1,
-              decoration: textInputDecoration.copyWith(
-                labelText: "Kategorinin ismi",
-              ),
-              validator: (val) => val.isEmpty ? "Enter an email" : null,
-              onChanged: (val) {
-                setState(() {
-
-                });
+            body: ListView.builder(
+              itemCount: item.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  // onLongPress: (){
+                  //   controller.text = categories[index];
+                  //   confirmationPopup(context,image,1,index,controller);
+                  // },
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => OdemeKategori(category: item[index]["key"])),
+                    );
+                  },
+                  leading: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minWidth: sizeW,
+                      minHeight: sizeH,
+                      maxWidth: sizeW + 20,
+                      maxHeight: sizeH + 20,
+                    ),
+                    child: Image(image: AssetImage('assets/images/' + images[index])),
+                  ),
+                  title: Text(item[index]["key"],style: TextStyle(fontFamily: "Poppins"),),
+                );
               },
+
             ),
-          ],
-        ),
-        buttons: [
-          val == 1 ? DialogButton(
-            child: Text(
-              "Sil",
-              style: TextStyle(color: Colors.white, fontSize: sizeW),
-            ),
-            onPressed: () {
-              setState(() {
-                categories.remove(controller.value.text);
-              });
-              Navigator.pop(context);
-            },
-            color: Colors.red,
-          ) :
-          DialogButton(
-            child: Text(
-              "İptal",
-              style: TextStyle(color: Colors.white, fontSize: sizeW),
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            color: Colors.red,
-          ),
-          DialogButton(
-            child: Text(
-              val == 0 ? "Ekle" : "Düzenle",
-              style: TextStyle(color: Colors.white, fontSize: sizeW),
-            ),
-            onPressed: () {
-              setState(() {
-                setState(() {
-                  if(val == 0) {
-                    categories.add(controller.value.text);
-                  } else {
-                    categories[index] = controller.value.text;
-                  }
-                });
-              });
-              Navigator.pop(context);
-            },
-            color: Colors.blue,
-          )
-        ]).show();
+            // floatingActionButton: FloatingActionButton(
+            //   onPressed: (){
+            //     confirmationPopup(context,image,0,0,controller);
+            //   },
+            //   // child: Icon(Icons.add),
+            // ),
+          );
+        }
+      },
+    );
   }
 }
 
