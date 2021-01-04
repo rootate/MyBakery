@@ -117,6 +117,7 @@ class _PayersState extends State<Payers> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blueGrey,
         child: Icon(Icons.done),
+        // ignore: deprecated_member_use_from_same_package
         onPressed: () => sv.registerWorkers(),
       ),
     );
