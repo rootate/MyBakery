@@ -150,7 +150,7 @@ class _EditNotePageState extends State<EditNotePage> {
                       AnimatedContainer(
                         margin: EdgeInsets.only(left: 10),
                         duration: Duration(milliseconds: 200),
-                        width: (isNoteNew && isDirtyTitle && isDirtyContent) || (!isNoteNew && (isDirtyContent || isDirtyTitle)) ? 120 : 0,
+                        width: (isNoteNew && isDirtyTitle && isDirtyContent) || (!isNoteNew && (isDirtyContent || isDirtyTitle) && titleController.text.isNotEmpty) ? 120 : 0,
                         height: 42,
                         curve: Curves.decelerate,
                         child: RaisedButton.icon(
