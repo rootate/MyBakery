@@ -61,7 +61,7 @@ class _NewProductState extends State<NewProduct> {
                 'Ürün Ekle',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              textColor: Colors.orange,
+              textColor: Colors.blueGrey,
               onPressed: () => _submitData(),
             ),
           ],

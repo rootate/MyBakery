@@ -70,7 +70,7 @@ class _MarketsState extends State<Markets> {
               ),
               onPressed: () => _startAddNewMarket(context))
         ],
-        backgroundColor: Colors.pink,
+        backgroundColor: Colors.blueGrey,
         title: Text("Marketler"),
       ),
       body: SingleChildScrollView(
@@ -117,7 +117,7 @@ class _MarketsState extends State<Markets> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.pink,
+        backgroundColor: Colors.blueGrey,
         child: Icon(Icons.done),
         onPressed: () => nextPage(context),
       ),
