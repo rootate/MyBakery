@@ -6,8 +6,10 @@ import 'package:flutter_my_bakery/shared/faderoute.dart';
 import 'package:flutter_my_bakery/models/models.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/edit.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/view.dart';
-import 'package:flutter_my_bakery/services/database.dart';
 import 'package:flutter_my_bakery/shared/cards.dart';
+import 'package:flutter_my_bakery/services/crud.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart';
 
 class Expense extends StatefulWidget {
   Expense({Key key, this.title}) : super(key: key);
@@ -22,19 +24,47 @@ class _ExpenseState extends State<Expense> {
   bool headerShouldHide = false;
   List<ExpensesModel> expensesList = [];
   TextEditingController searchController = TextEditingController();
+  final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  DatabaseService service = DatabaseService();
 
   @override
   void initState() {
     super.initState();
-    NotesDatabaseService.db.init();
     setExpensesFromDB();
   }
 
   setExpensesFromDB() async {
+    expensesList.clear();
     print("Entered setExpenses");
-    var fetchedExpenses = await NotesDatabaseService.db.getExpensesFromDB();
-    setState(() {
-      expensesList = fetchedExpenses;
+    // var fetchedExpenses = await NotesDatabaseService.db.getExpensesFromDB();
+    // setState(() {
+    //   expensesList = fetchedExpenses;
+    // });
+    service.dailyDataReference
+        .child(formatter.format(DateTime.now()))
+        .child("expenses")
+        .once()
+        .then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> map = snapshot.value;
+      if (map != null) {
+        map.forEach((key, values) {
+          print(values);
+          print("data: " +
+              values["title"] +
+              "--------------------------------------");
+          setState(() {
+            expensesList.add(ExpensesModel.withID(
+                values["title"],
+                values["content"],
+                DateTime.parse(values["date"]),
+                values["_id"]));
+          });
+        });
+      } else {
+        setState(() {
+          expensesList.clear();
+        });
+      }
     });
   }
 
@@ -51,7 +81,7 @@ class _ExpenseState extends State<Expense> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Theme.of(context).primaryColor,
-        onPressed: () {
+        onPressed: () async {
           gotoEditExpense();
         },
         label: Text('Gider Ekle'.toUpperCase()),
@@ -116,7 +146,7 @@ class _ExpenseState extends State<Expense> {
                 triggerRefetch: refetchExpensesFromDB,
                 currentExpense: expenseData)));
     await Future.delayed(Duration(milliseconds: 300), () {});
-
+    await setExpensesFromDB();
     setState(() {
       headerShouldHide = false;
     });

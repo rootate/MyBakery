@@ -7,9 +7,11 @@ import 'package:flutter_my_bakery/shared/faderoute.dart';
 import 'package:flutter_my_bakery/models/models.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/edit.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/view.dart';
-import 'package:flutter_my_bakery/services/database.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:flutter_my_bakery/shared/cards.dart';
+import 'package:flutter_my_bakery/services/crud.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart';
 
 class Note extends StatefulWidget {
   Note({Key key, this.title}) : super(key: key);
@@ -25,21 +27,43 @@ class _NoteState extends State<Note> {
   bool headerShouldHide = false;
   List<NotesModel> notesList = [];
   TextEditingController searchController = TextEditingController();
+  final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  DatabaseService service = DatabaseService();
 
   bool isSearchEmpty = true;
 
   @override
   void initState() {
     super.initState();
-    NotesDatabaseService.db.init();
     setNotesFromDB();
   }
 
   setNotesFromDB() async {
     print("Entered setNotes");
-    var fetchedNotes = await NotesDatabaseService.db.getNotesFromDB();
-    setState(() {
-      notesList = fetchedNotes;
+    notesList.clear();
+    service.dailyDataReference
+        .child(formatter.format(DateTime.now()))
+        .child("notes")
+        .once()
+        .then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> map = snapshot.value;
+      if (map != null) {
+        map.forEach((key, values) {
+          print(values);
+          print("data: " +
+              values["title"] +
+              "--------------------------------------");
+          setState(() {
+            // boolVal = values["isImportant"] == 1 ? true : false;
+            notesList.add(NotesModel.withID(values["title"], values["content"],
+                 values["isImportant"] == 1 ? true : false, DateTime.parse(values["date"]), values["_id"]));
+          });
+        });
+      } else {
+        setState(() {
+          notesList.clear();
+        });
+      }
     });
   }
 
@@ -187,12 +211,6 @@ class _NoteState extends State<Note> {
     );
   }
 
-  Widget testListItem(Color color) {
-    return new NoteCardComponent(
-      noteData: NotesModel.random(),
-    );
-  }
-
   Widget buildImportantIndicatorText() {
     return AnimatedCrossFade(
       duration: Duration(milliseconds: 200),
@@ -230,6 +248,7 @@ class _NoteState extends State<Note> {
             onTapAction: openNoteToRead,
           ));
       });
+      print("is there any error---------");
       return noteComponentsList;
     }
     if (isFlagOn) {

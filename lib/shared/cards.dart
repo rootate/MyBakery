@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_my_bakery/models/models.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter/cupertino.dart';
 
 List<Color> colorList = [
   Colors.blue,
@@ -156,7 +157,7 @@ class ExpenseCardComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    '${expenseData.title.trim().length <= 20 ? expenseData.title : expenseData.title.trim().substring(0, 20) + '...'}',
+                    '${expenseData.title.trim().length <= 20 ? expenseData.title + " ₺" : expenseData.title.trim().substring(0, 20) + '...'}',
                     style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 20,
@@ -209,7 +210,8 @@ class EkmekCardComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting('tr'); //bu satırı ekliyoruz
-    String neatDate = DateFormat.yMMMd('tr').add_Hm().format(DateTime.now());
+    String neatDate = ekmekData.time;
+
     Color color =
         colorList.elementAt(ekmekData.amount.length % colorList.length);
     return Container(
@@ -265,14 +267,16 @@ class EkmekCardComponent extends StatelessWidget {
 }
 
 class VeresiyeCardComponent extends StatelessWidget {
-  const VeresiyeCardComponent({
+  TextEditingController controller = TextEditingController(); 
+  
+  VeresiyeCardComponent({
     this.veresiyeData,
     this.onTapAction,
     Key key,
   }) : super(key: key);
 
   final VeresiyeModel veresiyeData;
-  final Function(VeresiyeModel noteData) onTapAction;
+  final Function(BuildContext context, VeresiyeModel noteData,TextEditingController controller) onTapAction;
 
   @override
   Widget build(BuildContext context) {
@@ -294,7 +298,7 @@ class VeresiyeCardComponent extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(16),
             onTap: () {
-              onTapAction(veresiyeData);
+              onTapAction(context,veresiyeData,controller);
             },
             splashColor: color.withAlpha(20),
             highlightColor: color.withAlpha(10),
@@ -337,6 +341,9 @@ class VeresiyeCardComponent extends StatelessWidget {
                 ],
               ),
             ),
+            // onLongPress: () => CupertinoPageRoute(
+            // builder: (context) =>
+            //     EditVeresiyePage()),
           ),
         ));
   }

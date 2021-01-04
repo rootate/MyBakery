@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/models/Market.dart';
 import 'package:flutter_my_bakery/models/Worker.dart';
@@ -18,7 +18,17 @@ class _WorkersState extends State<Workers> {
   List<Worker> workerList = [];
   DatabaseService sv = DatabaseService();
   void _addNewWorker(String workerName, String workerMail, String gorevi) {
-    final newWorker = Worker(name: workerName, mail: workerMail, job: gorevi);
+    int passwd = 0;
+    for (var i = 0; i < 6; i++) {
+      passwd = passwd + ((Random().nextInt(8) + 1) * pow(10, i));
+    }
+
+    final newWorker = Worker(
+      name: workerName,
+      mail: workerMail,
+      job: gorevi,
+      password: passwd.toString(),
+    );
     setState(() {
       sv.addWorker(newWorker);
       workerList.add(newWorker);
@@ -63,6 +73,7 @@ class _WorkersState extends State<Workers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
               icon: Icon(

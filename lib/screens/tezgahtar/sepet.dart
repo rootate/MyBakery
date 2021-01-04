@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/odeme_kategori.dart';
-import 'package:flutter_my_bakery/screens/tezgahtar/tezgahtar.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/veresiye.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
@@ -264,6 +263,7 @@ class _SepetState extends State<Sepet> {
               height: sizeW,
             ),
             TextFormField(
+              keyboardType: TextInputType.number,
               controller: controller,
               style: textStyle1,
               decoration: textInputDecoration.copyWith(
