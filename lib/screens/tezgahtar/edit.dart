@@ -406,7 +406,7 @@ class _EditExpensePageState extends State<EditExpensePage> {
                       AnimatedContainer(
                         margin: EdgeInsets.only(left: 20),
                         duration: Duration(milliseconds: 200),
-                        width: (isDirtyTitle && isDirtyContent) ? 150 : 0,
+                        width: (isExpenseNew &&isDirtyTitle && isDirtyContent) || (!isExpenseNew && (isDirtyTitle || isDirtyContent)) ? 150 : 0,
                         height: 42,
                         curve: Curves.decelerate,
                         child: RaisedButton.icon(
