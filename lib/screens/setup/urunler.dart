@@ -55,7 +55,7 @@ class _UrunlerState extends State<Urunler> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange[700],
+        backgroundColor: Colors.blueGrey,
         title: Text(categoryName),
       ),
       body: SingleChildScrollView(
@@ -104,7 +104,7 @@ class _UrunlerState extends State<Urunler> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.orange[700],
+        backgroundColor: Colors.blueGrey,
         child: Icon(Icons.add),
         onPressed: () => _startAddNewProduct(context),
       ),
