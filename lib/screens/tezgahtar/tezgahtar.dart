@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/odeme.dart';
 import 'package:flutter_my_bakery/shared/loading.dart';
-import 'package:flutter_my_bakery/screens/administrator/products.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/note.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/expense.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/ekmek.dart';

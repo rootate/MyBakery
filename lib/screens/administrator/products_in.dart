@@ -1,7 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/models/Product.dart';
-import 'package:flutter_my_bakery/screens/tezgahtar/sepet.dart';
 import 'package:flutter_my_bakery/services/databaseService.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
