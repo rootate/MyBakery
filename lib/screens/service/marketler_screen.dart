@@ -27,7 +27,7 @@ class _MarketlerState extends State<Marketler> {
       appBar: AppBar(
         title: Text('Marketler'),
         centerTitle: true,
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        backgroundColor: Colors.blueGrey,
       ),
       body: SingleChildScrollView(
         child: Column(

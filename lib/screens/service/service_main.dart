@@ -49,7 +49,7 @@ class _ServiceState extends State<Service> {
           "Ana Menü",
           style: TextStyle(fontFamily: "Poppins"),
         ),
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        backgroundColor: Colors.blueGrey,
         centerTitle: true,
       ),
       body: Container(

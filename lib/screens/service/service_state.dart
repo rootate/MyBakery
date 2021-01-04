@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: "My Bakery",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        appBarTheme: AppBarTheme(backgroundColor: Colors.blueGrey),
+        backgroundColor: Colors.blueGrey,
         primarySwatch: Colors.amber,
       ),
       home: Service(),

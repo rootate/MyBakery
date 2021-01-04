@@ -39,7 +39,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        backgroundColor: Colors.blueGrey,
         title: new Text(widget.servicename),
       ),
       body: ListView.builder(
