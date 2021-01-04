@@ -22,7 +22,8 @@ class EditNotePage extends StatefulWidget {
 }
 
 class _EditNotePageState extends State<EditNotePage> {
-  bool isDirty = false;
+  bool isDirtyTitle = false;
+  bool isDirtyContent = false;
   bool isNoteNew = true;
   FocusNode titleFocus = FocusNode();
   FocusNode contentFocus = FocusNode();
@@ -149,7 +150,7 @@ class _EditNotePageState extends State<EditNotePage> {
                       AnimatedContainer(
                         margin: EdgeInsets.only(left: 10),
                         duration: Duration(milliseconds: 200),
-                        width: isDirty ? 120 : 0,
+                        width: (isNoteNew && isDirtyTitle && isDirtyContent) || (!isNoteNew && (isDirtyContent || isDirtyTitle)) ? 120 : 0,
                         height: 42,
                         curve: Curves.decelerate,
                         child: RaisedButton.icon(
@@ -193,7 +194,8 @@ class _EditNotePageState extends State<EditNotePage> {
     }
     setState(() {
       isNoteNew = false;
-      isDirty = false;
+      isDirtyTitle = false;
+      isDirtyContent = false;
     });
     widget.triggerRefetch();
     titleFocus.unfocus();
@@ -201,24 +203,24 @@ class _EditNotePageState extends State<EditNotePage> {
   }
 
   void markTitleAsDirty(String title) {
-    if (fieldTest.veresiyeContentValidator(title) == null)
+    if (fieldTest.noteValidator(title) == null)
       setState(() {
-        isDirty = true;
+        isDirtyTitle = true;
       });
     else
       setState(() {
-        isDirty = false;
+        isDirtyTitle = false;
       });
   }
 
   void markContentAsDirty(String content) {
     if (fieldTest.noteValidator(content) == null)
       setState(() {
-        isDirty = true;
+        isDirtyContent = true;
       });
     else
       setState(() {
-        isDirty = false;
+        isDirtyContent = false;
       });
   }
 
