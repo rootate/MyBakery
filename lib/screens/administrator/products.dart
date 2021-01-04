@@ -9,7 +9,7 @@ import 'package:flutter_my_bakery/screens/administrator/products_in.dart';
 String uid;
 
 List images = ['ekmekler.jpeg','kahvaltiliklar.jpeg','pastalar.jpeg','icecekler.jpeg',
-  'tatlilar.jpeg','kurabiyeler.jpeg','hazirGidalar.jpeg','diger.jpeg'];
+  'tatlilar.jpeg','kurabiyeler.jpeg','hazirGidalar.jpeg','diger.jpeg','diger.jpeg','diger.jpeg','diger.jpeg','diger.jpeg'];
 
 class Products extends StatefulWidget {
   @override
@@ -21,8 +21,6 @@ class _ProductsState extends State<Products> {
 
   @override
   void initState() {
-    var x = service.workersReference.orderByKey();
-    print(x);
     super.initState();
   }
 

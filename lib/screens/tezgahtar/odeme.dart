@@ -4,7 +4,7 @@ import 'package:flutter_my_bakery/screens/tezgahtar/odeme_kategori.dart';
 import 'package:flutter_my_bakery/services/databaseService.dart';
 
 List images = ['ekmekler.jpeg','kahvaltiliklar.jpeg','pastalar.jpeg','icecekler.jpeg',
-  'tatlilar.jpeg','kurabiyeler.jpeg','hazirGidalar.jpeg','diger.jpeg'];
+  'tatlilar.jpeg','kurabiyeler.jpeg','hazirGidalar.jpeg','diger.jpeg','diger.jpeg','diger.jpeg','diger.jpeg','diger.jpeg','diger.jpeg'];
 
 class Odeme extends StatefulWidget {
   @override

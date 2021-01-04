@@ -35,6 +35,8 @@ class MainScreen extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
             var workersReference = service.workersReference;
+            String email = snapshot.data.email;
+            //TODO
             return BottomBarState();
           }
           return SignIn();
