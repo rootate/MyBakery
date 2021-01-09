@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       title: "My Bakery",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'Poppins',
         primarySwatch: Colors.blue,
       ),
       home: MainScreen(),
