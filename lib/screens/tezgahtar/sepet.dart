@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_my_bakery/screens/administrator/products.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/odeme_kategori.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/veresiye.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -17,8 +18,8 @@ class Sepet extends StatefulWidget {
 }
 
 class _SepetState extends State<Sepet> {
-  int sumPrice() {
-    int sum = 0;
+  double sumPrice() {
+    double sum = 0;
     for (int i = 0; i < widget.price.length; ++i) {
       sum += price[i] * piece[i];
     }
@@ -135,11 +136,6 @@ class _SepetState extends State<Sepet> {
               RawMaterialButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  // setState(() {
-                  //   product = [];
-                  //   price = [];
-                  //   piece = [];
-                  // });
                 },
                 elevation: 2.0,
                 fillColor: Colors.red,
@@ -350,6 +346,14 @@ class _SepetState extends State<Sepet> {
       animationDuration: Duration(milliseconds: 400),
     );
 
+    //product - price - piece
+    // product
+    //    price
+    //    piece
+
+    Map<dynamic, dynamic> res = {};
+    Map<dynamic, dynamic> tx = {};
+
     Alert(
         context: dialogContext,
         style: alertStyle,
@@ -361,6 +365,20 @@ class _SepetState extends State<Sepet> {
             ),
             RaisedButton(
               onPressed: () {
+                for (int i = 0; i < product.length; i++) {
+                  print(product[i] + " : " + price[i]);
+                  ItemHolder ele = ItemHolder(product[i], price[i], piece[i]);
+                  tx.addAll(ele.toMap());
+                }
+                res.addAll({
+                  'Ürünler': tx,
+                  'Ödeme Yöntemi': 'Kredi Kartı',
+                  'Toplam Alınan Ücret': sumPrice()
+                });
+                print(
+                    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+                print(res);
+                print("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
                 goTezgahtar(context);
               },
               child: Row(
@@ -440,5 +458,21 @@ class _SepetState extends State<Sepet> {
           ],
         ),
         buttons: []).show();
+  }
+}
+
+class ItemHolder {
+  String product;
+  double price;
+  int piece;
+
+  ItemHolder(this.product, this.price, this.piece);
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'product': this.product,
+      'price': this.price,
+      'piece': this.piece
+    };
   }
 }

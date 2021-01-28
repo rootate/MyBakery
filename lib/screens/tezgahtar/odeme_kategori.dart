@@ -24,8 +24,8 @@ class OdemeKategori extends StatefulWidget {
 class _OdemeKategoriState extends State<OdemeKategori> {
   DatabaseService service = DatabaseService();
 
-  int sumPrice(){
-    int sum = 0;
+  double sumPrice(){
+    double sum = 0;
     for(int i=0;i<price.length;++i){
       sum += price[i] * piece[i];
     }
