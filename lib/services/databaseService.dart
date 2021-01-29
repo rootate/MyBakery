@@ -13,6 +13,7 @@ class DatabaseService {
   var workersReference;
   var payersReference;
   var categoryReference;
+  var bakeryReference;
 
   DatabaseService(String bakeryName) {
     marketsReference = FirebaseDatabase.instance
@@ -38,6 +39,10 @@ class DatabaseService {
         .child('bakeries')
         .child(bakeryName)
         .child('categories');
+
+    bakeryReference = FirebaseDatabase.instance
+        .reference()
+        .child("bakeries");
   }
 
   final AuthService auth = AuthService();
