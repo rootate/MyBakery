@@ -42,20 +42,22 @@ class DatabaseService {
       final smtpServer = gmail(username, password);
       Map map = snapshot.value;
       map.forEach((key, value) async {
-        auth.registerWithEmailAndPassword(value['mail'], value['passwd']);
-        final message = Message()
-          ..from = Address(username, 'a Loaf of Happiness')
-          ..recipients.add(value['mail'])
-          ..subject = 'Login'
-          ..html = "<p>My Bakery giriş şifreniz: ${value['passwd']}</p>";
+        if (auth.registerWithEmailAndPassword(value['mail'], value['passwd']) !=
+            null) {
+          final message = Message()
+            ..from = Address(username, 'a Loaf of Happiness')
+            ..recipients.add(value['mail'])
+            ..subject = 'Login'
+            ..html = "<p>My Bakery giriş şifreniz: ${value['passwd']}</p>";
 
-        try {
-          final sendReport = await send(message, smtpServer);
-          print('Message sent: ' + sendReport.toString());
-        } on MailerException catch (e) {
-          print('Message not sent.');
-          for (var p in e.problems) {
-            print('Problem: ${p.code}: ${p.msg}');
+          try {
+            final sendReport = await send(message, smtpServer);
+            print('Message sent: ' + sendReport.toString());
+          } on MailerException catch (e) {
+            print('Message not sent.');
+            for (var p in e.problems) {
+              print('Problem: ${p.code}: ${p.msg}');
+            }
           }
         }
       });
