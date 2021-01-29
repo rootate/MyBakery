@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 class DatabaseService {
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  final DateFormat formatter2 = DateFormat.Hms();
   var uuid = Uuid();
   final employeesReference =
       FirebaseDatabase.instance.reference().child('bakery').child('employees');
@@ -46,6 +47,13 @@ class DatabaseService {
     print("inside addVeresiye");
     print("data: " + data.toString());
     veresiyelerDataReference.child(title).set(data);
+  }
+
+  void addTx(Map data) {
+    var day = formatter.format(DateTime.now());
+    var time = formatter2.format(DateTime.now());
+    print(time);
+    dailyDataReference.child(day).child("tx").child(time).set(data);
   }
 
   void updateEmployee(String uid, Map data) {
