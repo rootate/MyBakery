@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       title: "My Bakery",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'Poppins',
         primarySwatch: Colors.blue,
       ),
       home: MainScreen(),
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MainScreen extends StatelessWidget {
-  DatabaseService service = DatabaseService();
+  DatabaseService service = DatabaseService('bakery');
 
   @override
   Widget build(BuildContext context) {
