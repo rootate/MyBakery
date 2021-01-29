@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_my_bakery/screens/administrator/products.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/odeme_kategori.dart';
-import 'package:flutter_my_bakery/screens/tezgahtar/veresiye.dart';
+import 'package:flutter_my_bakery/screens/tezgahtar/veresiye2.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_my_bakery/services/crud.dart';
+import 'package:flutter/services.dart';
 
 class Sepet extends StatefulWidget {
   List product;
   List price;
   List piece;
-
   Sepet({Key key, this.product, this.price, this.piece}) : super(key: key);
 
   @override
@@ -25,6 +26,8 @@ class _SepetState extends State<Sepet> {
     }
     return sum;
   }
+
+  DatabaseService service = DatabaseService();
 
   void goTezgahtar(BuildContext cx) {
     setState(() {
@@ -65,7 +68,7 @@ class _SepetState extends State<Sepet> {
 
     Navigator.push(
       cx,
-      MaterialPageRoute(builder: (context) => Veresiye()),
+      MaterialPageRoute(builder: (context) => Veresiye2()),
     );
   }
 
@@ -152,7 +155,7 @@ class _SepetState extends State<Sepet> {
               ),
               RawMaterialButton(
                 onPressed: () {
-                  if (product.isNotEmpty) confirmationPopup2(context);
+                  if (product.isNotEmpty) confirmationPopup2(context, service);
                 },
                 elevation: 2.0,
                 fillColor: Colors.green,
@@ -333,7 +336,7 @@ class _SepetState extends State<Sepet> {
         ]).show();
   }
 
-  confirmationPopup2(BuildContext dialogContext) {
+  confirmationPopup2(BuildContext dialogContext, DatabaseService service) {
     final contextW = MediaQuery.of(context).size.width;
     final sizeW = contextW / 20;
 
@@ -352,7 +355,15 @@ class _SepetState extends State<Sepet> {
     //    piece
 
     Map<dynamic, dynamic> res = {};
-    Map<dynamic, dynamic> tx = {};
+    List<Map<dynamic, dynamic>> tx = List();
+    for (int i = 0; i < product.length; i++) {
+      // print(product[i].toString());
+      // print(price[i] * 1.0 is double);
+      ItemHolder ele =
+          ItemHolder(product[i].toString(), price[i] * 1.0, piece[i]);
+      tx.insert(i, ele.toMap());
+      // print(tx);
+    }
 
     Alert(
         context: dialogContext,
@@ -365,20 +376,13 @@ class _SepetState extends State<Sepet> {
             ),
             RaisedButton(
               onPressed: () {
-                for (int i = 0; i < product.length; i++) {
-                  print(product[i] + " : " + price[i]);
-                  ItemHolder ele = ItemHolder(product[i], price[i], piece[i]);
-                  tx.addAll(ele.toMap());
-                }
+                // print(res);
                 res.addAll({
                   'Ürünler': tx,
                   'Ödeme Yöntemi': 'Kredi Kartı',
                   'Toplam Alınan Ücret': sumPrice()
                 });
-                print(
-                    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
-                print(res);
-                print("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
+                service.addTx(res);
                 goTezgahtar(context);
               },
               child: Row(
@@ -405,6 +409,12 @@ class _SepetState extends State<Sepet> {
             ),
             RaisedButton(
               onPressed: () {
+                res.addAll({
+                  'Ürünler': tx,
+                  'Ödeme Yöntemi': "Nakit Ödeme",
+                  'Toplam Alınan Ücret': sumPrice()
+                });
+                service.addTx(res);
                 goTezgahtar(context);
               },
               child: Row(
@@ -431,6 +441,7 @@ class _SepetState extends State<Sepet> {
             ),
             RaisedButton(
               onPressed: () {
+                Clipboard.setData(new ClipboardData(text: sumPrice().toString()));
                 goVeresiye(context);
               },
               child: Row(
