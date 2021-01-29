@@ -18,25 +18,25 @@ class DatabaseService {
   DatabaseService(String bakeryName) {
     marketsReference = FirebaseDatabase.instance
         .reference()
-        .child("bakeries")
+        .child('bakeries')
         .child(bakeryName)
         .child('markets');
 
     workersReference = FirebaseDatabase.instance
         .reference()
-        .child("bakeries")
+        .child('bakeries')
         .child(bakeryName)
         .child('employees');
 
     payersReference = FirebaseDatabase.instance
         .reference()
-        .child("bakeries")
+        .child('bakeries')
         .child(bakeryName)
         .child('veresiyeler');
 
     categoryReference = FirebaseDatabase.instance
         .reference()
-        .child("bakeries")
+        .child('bakeries')
         .child(bakeryName)
         .child('categories');
 
