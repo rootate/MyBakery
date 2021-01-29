@@ -22,7 +22,7 @@ class OdemeKategori extends StatefulWidget {
 }
 
 class _OdemeKategoriState extends State<OdemeKategori> {
-  DatabaseService service = DatabaseService();
+  DatabaseService service = DatabaseService('bakery');
 
   double sumPrice(){
     double sum = 0;

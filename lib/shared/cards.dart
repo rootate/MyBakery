@@ -32,7 +32,7 @@ class NoteCardComponent extends StatelessWidget {
     Color color = colorList.elementAt(noteData.title.length % colorList.length);
     return Container(
         margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
-        height: 116,
+        height: 123,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           boxShadow: [buildBoxShadow(color, context)],
@@ -216,7 +216,7 @@ class EkmekCardComponent extends StatelessWidget {
         colorList.elementAt(ekmekData.amount.length % colorList.length);
     return Container(
         margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
-        height: 80,
+        height: 90,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           // boxShadow: [buildBoxShadow(color, context)],
@@ -267,16 +267,19 @@ class EkmekCardComponent extends StatelessWidget {
 }
 
 class VeresiyeCardComponent extends StatelessWidget {
-  TextEditingController controller = TextEditingController(); 
-  
+  TextEditingController controller = TextEditingController();
+
   VeresiyeCardComponent({
     this.veresiyeData,
     this.onTapAction,
+    this.onlongPressAction,
     Key key,
   }) : super(key: key);
 
   final VeresiyeModel veresiyeData;
-  final Function(BuildContext context, VeresiyeModel noteData,TextEditingController controller) onTapAction;
+  final Function(BuildContext context, VeresiyeModel noteData,
+      TextEditingController controller) onTapAction;
+  final Function(VeresiyeModel) onlongPressAction;
 
   @override
   Widget build(BuildContext context) {
@@ -286,7 +289,7 @@ class VeresiyeCardComponent extends StatelessWidget {
         colorList.elementAt(veresiyeData.title.length % colorList.length);
     return Container(
         margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
-        height: 110,
+        height: 121,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           boxShadow: [buildBoxShadow(color, context)],
@@ -298,7 +301,10 @@ class VeresiyeCardComponent extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(16),
             onTap: () {
-              onTapAction(context,veresiyeData,controller);
+              onTapAction(context, veresiyeData, controller);
+            },
+            onLongPress: () {
+              onlongPressAction(veresiyeData);
             },
             splashColor: color.withAlpha(20),
             highlightColor: color.withAlpha(10),
@@ -317,7 +323,7 @@ class VeresiyeCardComponent extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(top: 6),
                     child: Text(
-                      '${veresiyeData.content.trim().split('\n').first.length <= 30 ? veresiyeData.content.trim().split('\n').first : veresiyeData.content.trim().split('\n').first.substring(0, 30) + '...'}',
+                      '${veresiyeData.content.trim().split('\n').first.length <= 30 ? veresiyeData.content.trim().split('\n').first + " ₺" : veresiyeData.content.trim().split('\n').first.substring(0, 30) + '...'}',
                       style: TextStyle(fontSize: 18),
                     ),
                   ),

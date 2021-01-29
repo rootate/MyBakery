@@ -17,7 +17,7 @@ class Products extends StatefulWidget {
 }
 
 class _ProductsState extends State<Products> {
-  DatabaseService service = DatabaseService();
+  DatabaseService service = DatabaseService('bakery');
 
   @override
   void initState() {
