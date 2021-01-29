@@ -442,6 +442,12 @@ class _SepetState extends State<Sepet> {
             RaisedButton(
               onPressed: () {
                 Clipboard.setData(new ClipboardData(text: sumPrice().toString()));
+                res.addAll({
+                  'Ürünler': tx,
+                  'Ödeme Yöntemi': "Veresiye",
+                  'Toplam Alınan Ücret': sumPrice()
+                });
+                service.addTx(res);
                 goVeresiye(context);
               },
               child: Row(
