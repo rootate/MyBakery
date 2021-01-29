@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_my_bakery/models/models.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
 List<Color> colorList = [
   Colors.blue,
@@ -306,6 +307,106 @@ class VeresiyeCardComponent extends StatelessWidget {
             onLongPress: () {
               onlongPressAction(veresiyeData);
             },
+            splashColor: color.withAlpha(20),
+            highlightColor: color.withAlpha(10),
+            child: Container(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    '${veresiyeData.title.trim().length <= 20 ? veresiyeData.title.trim() : veresiyeData.title.trim().substring(0, 20) + '...'}',
+                    style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 20,
+                        fontWeight: FontWeight.normal),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 6),
+                    child: Text(
+                      '${veresiyeData.content.trim().split('\n').first.length <= 30 ? veresiyeData.content.trim().split('\n').first + " ₺" : veresiyeData.content.trim().split('\n').first.substring(0, 30) + '...'}',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 3),
+                    alignment: Alignment.centerRight,
+                    child: Row(
+                      children: <Widget>[
+                        Spacer(),
+                        Text(
+                          '$neatDate',
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.grey.shade300,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+            // onLongPress: () => CupertinoPageRoute(
+            // builder: (context) =>
+            //     EditVeresiyePage()),
+          ),
+        ));
+  }
+
+  BoxShadow buildBoxShadow(Color color, BuildContext context) {
+    if (Theme.of(context).brightness == Brightness.dark) {
+      return BoxShadow(
+          color: Colors.black.withAlpha(10),
+          blurRadius: 8,
+          offset: Offset(0, 8));
+    }
+    return BoxShadow(
+        color: color.withAlpha(25), blurRadius: 8, offset: Offset(0, 8));
+  }
+}
+
+class VeresiyeCardComponent2 extends StatelessWidget {
+  TextEditingController controller = TextEditingController();
+
+  VeresiyeCardComponent2({
+    this.veresiyeData,
+    this.onTapAction,
+    Key key,
+  }) : super(key: key);
+
+  final VeresiyeModel veresiyeData;
+  final Function(BuildContext context, VeresiyeModel noteData, double payment)
+      onTapAction;
+
+  @override
+  Widget build(BuildContext context) {
+    initializeDateFormatting('tr'); //bu satırı ekliyoruz
+    String neatDate = DateFormat.yMMMd('tr').add_Hm().format(veresiyeData.date);
+    Color color =
+        colorList.elementAt(veresiyeData.title.length % colorList.length);
+    return Container(
+        margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
+        height: 121,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [buildBoxShadow(color, context)],
+        ),
+        child: Material(
+          borderRadius: BorderRadius.circular(16),
+          clipBehavior: Clip.antiAlias,
+          color: Theme.of(context).dialogBackgroundColor,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(16),
+            onTap: () async {
+              ClipboardData data = await Clipboard.getData('text/plain');
+              print("burada mı : ");
+              print(double.parse(data.text));
+              print("değil mi");
+              onTapAction(context, veresiyeData, double.parse(data.text));
+            },
+
             splashColor: color.withAlpha(20),
             highlightColor: color.withAlpha(10),
             child: Container(
