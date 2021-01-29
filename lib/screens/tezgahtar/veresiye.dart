@@ -13,6 +13,7 @@ import 'package:flutter_my_bakery/shared/constants.dart';
 import 'package:flutter_my_bakery/services/crud.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_my_bakery/screens/tezgahtar/field_test.dart';
+
 class Veresiye extends StatefulWidget {
   Veresiye({Key key, this.title}) : super(key: key);
 
@@ -165,7 +166,7 @@ class _VeresiyeState extends State<Veresiye> {
   }
 
   veresiyePopup(BuildContext dialogContext, VeresiyeModel veresiye,
-    TextEditingController controller) {
+      TextEditingController controller) {
     final contextW = MediaQuery.of(context).size.width;
     final sizeW = contextW / 20;
 
@@ -183,24 +184,23 @@ class _VeresiyeState extends State<Veresiye> {
         style: alertStyle,
         title: veresiye.title,
         content: Form(
-        key: _key,
-        child :Column(
-          children: [
-            SizedBox(
-              height: sizeW,
-            ),
-            SizedBox(
-              height: sizeW,
-            ),
-            TextFormField(
-              controller: controller,
-              keyboardType: TextInputType.number,
-              style: textStyle1,
-              validator: fieldTest.veresiyeContentValidator ,
-            ),
-          ],
-        )
-        ),
+            key: _key,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: sizeW,
+                ),
+                SizedBox(
+                  height: sizeW,
+                ),
+                TextFormField(
+                  controller: controller,
+                  keyboardType: TextInputType.number,
+                  style: textStyle1,
+                  validator: fieldTest.veresiyeContentValidator,
+                ),
+              ],
+            )),
         buttons: [
           DialogButton(
             child: Text(
@@ -208,17 +208,17 @@ class _VeresiyeState extends State<Veresiye> {
               style: TextStyle(color: Colors.white, fontSize: sizeW),
             ),
             onPressed: () {
-              if(_key.currentState.validate()){
-               setState(() {
-                if (int.parse(controller.value.text) > 0) {
-                  veresiye.content = ((int.parse(veresiye.content)) -
-                          (int.parse(controller.value.text)))
-                      .toString();
-                  service.updateVeresiye(veresiye.title, veresiye.toMap());
-                }
-              });
-              Navigator.pop(context);
-              setVeresiyeFromDB(); 
+              if (_key.currentState.validate()) {
+                setState(() {
+                  if (double.parse(controller.value.text) > 0) {
+                    veresiye.content = ((double.parse(veresiye.content)) -
+                            (double.parse(controller.value.text)))
+                        .toString();
+                    service.updateVeresiye(veresiye.title, veresiye.toMap());
+                  }
+                });
+                Navigator.pop(context);
+                setVeresiyeFromDB();
               }
             },
             color: Colors.red,
@@ -229,20 +229,20 @@ class _VeresiyeState extends State<Veresiye> {
               style: TextStyle(color: Colors.white, fontSize: sizeW),
             ),
             onPressed: () {
-              if(_key.currentState.validate()){
+              if (_key.currentState.validate()) {
                 print("inside ekle");
-              setState(() {
-                print("inside setstate");
-                if (int.parse(controller.value.text) > 0) {
-                  veresiye.content = ((int.parse(veresiye.content)) +
-                          (int.parse(controller.value.text)))
-                      .toString();
-                  service.updateVeresiye(veresiye.title, veresiye.toMap());
-                  ;
-                }
-              });
-              Navigator.pop(context);
-              setVeresiyeFromDB();
+                setState(() {
+                  print("inside setstate");
+                  if (double.parse(controller.value.text) > 0) {
+                    veresiye.content = ((double.parse(veresiye.content)) +
+                            (double.parse(controller.value.text)))
+                        .toString();
+                    service.updateVeresiye(veresiye.title, veresiye.toMap());
+                    ;
+                  }
+                });
+                Navigator.pop(context);
+                setVeresiyeFromDB();
               }
             },
             color: Colors.blue,
@@ -272,12 +272,33 @@ class _VeresiyeState extends State<Veresiye> {
     } else {
       veresiyeList.forEach((note) {
         veresiyeComponentsList.add(VeresiyeCardComponent(
-          veresiyeData: note,
-          onTapAction: veresiyePopup,
-        ));
+            veresiyeData: note,
+            onTapAction: veresiyePopup,
+            onlongPressAction: _showDialog));
       });
     }
     return veresiyeComponentsList;
+  }
+
+  _showDialog(VeresiyeModel veresiye) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return new AlertDialog(actions: <Widget>[
+              new FlatButton(
+                  child: new Text('Vazgeç'),
+                  onPressed: () => Navigator.of(context).pop()),
+              new FlatButton(
+                  child: new Text('Sil'),
+                  onPressed: () {
+                    service.deleteVeresiye(veresiye.title);
+                    Navigator.of(context).pop();
+                    setVeresiyeFromDB();
+                  })
+            ]);
+          });
+    });
   }
 
   void handleSearch(String value) {
