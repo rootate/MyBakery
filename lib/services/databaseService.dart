@@ -42,8 +42,9 @@ class DatabaseService {
       final smtpServer = gmail(username, password);
       Map map = snapshot.value;
       map.forEach((key, value) async {
-        if (auth.registerWithEmailAndPassword(value['mail'], value['passwd']) !=
-            null) {
+        var check = await auth.registerWithEmailAndPassword(
+            value['mail'], value['passwd']);
+        if (check != null) {
           final message = Message()
             ..from = Address(username, 'a Loaf of Happiness')
             ..recipients.add(value['mail'])
