@@ -9,16 +9,32 @@ import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 
 class DatabaseService {
-  final marketsReference =
-      FirebaseDatabase.instance.reference().child('bakery').child('markets');
-  final workersReference =
-      FirebaseDatabase.instance.reference().child('bakery').child('employees');
-  final payersReference = FirebaseDatabase.instance
-      .reference()
-      .child('bakery')
-      .child('veresiyeler');
-  final categoryReference =
-      FirebaseDatabase.instance.reference().child('bakery').child('categories');
+  var marketsReference;
+  var workersReference;
+  var payersReference;
+  var categoryReference;
+
+  DatabaseService(String bakeryName) {
+    marketsReference = FirebaseDatabase.instance
+        .reference()
+        .child(bakeryName)
+        .child('markets');
+
+    workersReference = FirebaseDatabase.instance
+        .reference()
+        .child(bakeryName)
+        .child('employees');
+
+    payersReference = FirebaseDatabase.instance
+        .reference()
+        .child(bakeryName)
+        .child('veresiyeler');
+
+    categoryReference = FirebaseDatabase.instance
+        .reference()
+        .child(bakeryName)
+        .child('categories');
+  }
 
   final AuthService auth = AuthService();
   String username = 'aloafofhappiness@gmail.com';

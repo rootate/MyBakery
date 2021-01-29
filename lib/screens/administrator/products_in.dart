@@ -17,7 +17,7 @@ class ProductsIn extends StatefulWidget {
 }
 
 class _ProductsInState extends State<ProductsIn> {
-  DatabaseService service = DatabaseService();
+  DatabaseService service = DatabaseService('bakery');
 
   @override
   Widget build(BuildContext context) {

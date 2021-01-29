@@ -9,7 +9,7 @@ class FirstPage extends StatelessWidget {
       Navigator.of(cx).push(
         MaterialPageRoute(
           builder: (_) {
-            return Categories();
+            return Categories(bakeryName: _nameController.text);
           },
         ),
       );

@@ -12,7 +12,7 @@ class Odeme extends StatefulWidget {
 }
 
 class _OdemeState extends State<Odeme> {
-  DatabaseService service = DatabaseService();
+  DatabaseService service = DatabaseService('bakery');
 
   @override
   Widget build(BuildContext context) {

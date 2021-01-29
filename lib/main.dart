@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MainScreen extends StatelessWidget {
-  DatabaseService service = DatabaseService();
+  DatabaseService service = DatabaseService('bakery');
 
   @override
   Widget build(BuildContext context) {
