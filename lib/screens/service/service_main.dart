@@ -11,7 +11,6 @@ import 'package:flutter_my_bakery/screens/service/service_models/service_model.d
 import 'package:flutter_my_bakery/services/databaseService.dart';
 
 import 'package:flutter_my_bakery/services/auth.dart';
-import 'package:intl/intl.dart';
 import 'info_card.dart';
 
 class Service extends StatefulWidget {
@@ -46,7 +45,7 @@ class _ServiceState extends State<Service> {
   @override
   initState() {
     _dayRef = _service.dayReference.limitToLast(50);
-    var _debtRef = DatabaseService.bakeryRef.child('child');
+    var _debtRef = DatabaseService('bakery').bakeryRef.child('child');
     log(DateData.date);
     updates = _dayRef.onChildChanged.listen((data) {
       if (data != null) {

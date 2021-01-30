@@ -12,7 +12,8 @@ class ServiceModel {
   double taken = 0;
   var dayReference;
   ServiceModel() {
-    dayReference = DatabaseService.dailyDataReference.child(DateData.date);
+    dayReference =
+        DatabaseService('bakery').dailyDataReference.child(DateData.date);
   }
   void updateByKey(String key, String value) {
     switch (key) {
@@ -35,7 +36,7 @@ class ServiceModel {
   Future<String> local() async {
     String d;
 
-    DataSnapshot snapshot = await DatabaseService.bakeryRef.once();
+    DataSnapshot snapshot = await DatabaseService('bakery').bakeryRef.once();
     var day = snapshot.value['dailyData'][DateData.date];
     if (day != null) {
       bayat = day['bayat'] != null ? int.parse(day['bayat']) : 0;
@@ -75,8 +76,8 @@ class ServiceModel {
 
   Future<void> updateDb() async {
     final dayReference =
-        DatabaseService.dailyDataReference.child(DateData.date);
-    DatabaseService.bakeryRef.set({'debt': debt.toString()});
+        DatabaseService('bakery').dailyDataReference.child(DateData.date);
+    DatabaseService('bakery').bakeryRef.set({'debt': debt.toString()});
     dayReference.set({
       'delivered': delivered.toString(),
       'bayat': bayat.toString(),
