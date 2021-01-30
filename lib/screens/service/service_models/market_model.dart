@@ -31,7 +31,7 @@ class Market {
       bayat = 0;
     }
     service = ServiceModel();
-    marketReference = DatabaseService.marketsReference.child(name);
+    marketReference = DatabaseService('bakery').marketsReference.child(name);
   }
 
   void pay(double amount) {

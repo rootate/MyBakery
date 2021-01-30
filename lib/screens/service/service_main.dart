@@ -19,7 +19,6 @@ class Service extends StatefulWidget {
 }
 
 class _ServiceState extends State<Service> {
-  final AuthService _auth = AuthService();
   bool loading = false;
 
   ServiceModel _service = ServiceModel();
