@@ -84,7 +84,7 @@ class _OdemeState extends State<Odeme> {
                       maxWidth: sizeW + 20,
                       maxHeight: sizeH + 20,
                     ),
-                    child: Image(image: AssetImage('assets/images/' + images[index])),
+                    child: Icon(Icons.category),
                   ),
                   title: Text(item[index]["key"],style: TextStyle(fontFamily: "Poppins"),),
                 );

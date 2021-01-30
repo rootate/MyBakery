@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_my_bakery/screens/service/marketler_screen.dart';
 import 'package:flutter_my_bakery/screens/service/service_models/service_model.dart';
+import 'package:flutter_my_bakery/services/auth.dart';
 import 'package:intl/intl.dart';
 
 import 'info_card.dart';
@@ -14,6 +15,9 @@ class Service extends StatefulWidget {
 }
 
 class _ServiceState extends State<Service> {
+  final AuthService _auth = AuthService();
+  bool loading = false;
+
   ServiceModel _service = ServiceModel();
 
   DateFormat dateFormat = DateFormat("dd-MM-yyyy");
@@ -50,6 +54,28 @@ class _ServiceState extends State<Service> {
           style: TextStyle(fontFamily: "Poppins"),
         ),
         backgroundColor: Colors.blueGrey,
+        actions: <Widget>[
+          FlatButton.icon(
+            icon: Icon(
+              Icons.exit_to_app,
+              color: Colors.blueGrey[100],
+            ),
+            label: Text(
+              "Exit",
+              style: TextStyle(
+                  color: Colors.blueGrey[100], fontFamily: "Poppins"),
+            ),
+            onPressed: () async {
+              setState(() => loading = true);
+              dynamic result = await _auth.signOut();
+              if (result == null) {
+                setState(() {
+                  loading = false;
+                });
+              }
+            },
+          )
+        ],
         centerTitle: true,
       ),
       body: Container(
