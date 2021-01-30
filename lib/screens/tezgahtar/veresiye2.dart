@@ -170,6 +170,7 @@ class _Veresiye2State extends State<Veresiye2> {
     veresiye.content = (double.parse(veresiye.content) + payment).toString();
     service.updateVeresiye(veresiye.title, veresiye.toMap());
     setVeresiyeFromDB();
+    Navigator.of(dialogContext).pop(); // xD
   }
 
   List<Widget> buildveresiyeComponentsList() {

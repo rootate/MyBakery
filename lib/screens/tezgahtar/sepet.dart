@@ -20,6 +20,11 @@ class Sepet extends StatefulWidget {
 
 class _SepetState extends State<Sepet> {
   double sumPrice() {
+    print("QQQQQQQQQQQQQQQQQQQQQQQQQQQQ: " + widget.price.length.toString());
+    if (widget.price.length == 0) {
+      // print("0 dönmüş olmalı\nwwwwwwwwwwwwwwwwwwwwwwwwwwww: " + (price == null).toString());
+      return 0;
+    }
     double sum = 0;
     for (int i = 0; i < widget.price.length; ++i) {
       sum += price[i] * piece[i];
@@ -31,9 +36,9 @@ class _SepetState extends State<Sepet> {
 
   void goTezgahtar(BuildContext cx) {
     setState(() {
-      product = [];
-      piece = [];
-      price = [];
+      product.clear();
+      piece.clear();
+      price.clear();
     });
     Fluttertoast.showToast(
       msg: "✓ Kaydedildi",
@@ -50,9 +55,9 @@ class _SepetState extends State<Sepet> {
 
   void goVeresiye(BuildContext cx) {
     setState(() {
-      product = [];
-      piece = [];
-      price = [];
+      product.clear();
+      piece.clear();
+      price.clear();
     });
     // Fluttertoast.showToast(
     //   msg: "✓ Kaydedildi",
@@ -441,7 +446,8 @@ class _SepetState extends State<Sepet> {
             ),
             RaisedButton(
               onPressed: () {
-                Clipboard.setData(new ClipboardData(text: sumPrice().toString()));
+                Clipboard.setData(
+                    new ClipboardData(text: sumPrice().toString()));
                 res.addAll({
                   'Ürünler': tx,
                   'Ödeme Yöntemi': "Veresiye",
