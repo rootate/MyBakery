@@ -7,15 +7,16 @@ class DatabaseService {
   final DateFormat formatter2 = DateFormat.Hms();
   var uuid = Uuid();
   final employeesReference =
-      FirebaseDatabase.instance.reference().child('bakery').child('employees');
+      FirebaseDatabase.instance.reference().child("bakeries").child('bakery').child('employees');
 
   final dailyDataReference =
-      FirebaseDatabase.instance.reference().child('bakery').child('dailyData');
+      FirebaseDatabase.instance.reference().child("bakeries").child('bakery').child('dailyData');
   final marketsReference =
-      FirebaseDatabase.instance.reference().child('bakery').child('markets');
+      FirebaseDatabase.instance.reference().child("bakeries").child('bakery').child('markets');
 
   final veresiyelerDataReference = FirebaseDatabase.instance
       .reference()
+      .child("bakeries")
       .child('bakery')
       .child('veresiyeler');
 
