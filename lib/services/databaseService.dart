@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_my_bakery/models/Category.dart';
 import 'package:flutter_my_bakery/models/Market.dart';
@@ -69,6 +70,15 @@ class DatabaseService {
       map.forEach((key, value) async {
         var check = await auth.registerWithEmailAndPassword(
             value['mail'], value['passwd']);
+
+        print(check);
+
+        if(check != null) {
+          await Firestore.instance.collection('users').document(check).setData(
+              { 'userid': check, 'role': value['job']});
+
+        }
+
         if (check != null) {
           final message = Message()
             ..from = Address(username, 'a Loaf of Happiness')
