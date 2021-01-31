@@ -10,13 +10,23 @@ import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 
 class DatabaseService {
+  var bakeryRef;
   var marketsReference;
   var workersReference;
   var payersReference;
   var categoryReference;
   var bakeryReference;
-
+  var dailyDataReference;
   DatabaseService(String bakeryName) {
+    bakeryRef = FirebaseDatabase.instance
+        .reference()
+        .child('bakeries')
+        .child(bakeryName);
+    dailyDataReference = FirebaseDatabase.instance
+        .reference()
+        .child('bakeries')
+        .child(bakeryName)
+        .child('dailyData');
     marketsReference = FirebaseDatabase.instance
         .reference()
         .child('bakeries')
@@ -41,12 +51,10 @@ class DatabaseService {
         .child(bakeryName)
         .child('categories');
 
-    bakeryReference = FirebaseDatabase.instance
-        .reference()
-        .child("bakeries");
+    bakeryReference = FirebaseDatabase.instance.reference().child("bakeries");
   }
 
-  final AuthService auth = AuthService();
+  static final AuthService auth = AuthService();
   String username = 'aloafofhappiness@gmail.com';
   String password = 'Aloafofhappiness+';
 
@@ -73,10 +81,11 @@ class DatabaseService {
 
         print(check);
 
-        if(check != null) {
-          await Firestore.instance.collection('users').document(check).setData(
-              { 'userid': check, 'role': value['job']});
-
+        if (check != null) {
+          await Firestore.instance
+              .collection('users')
+              .document(check)
+              .setData({'userid': check, 'role': value['job']});
         }
 
         if (check != null) {
