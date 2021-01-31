@@ -2,7 +2,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'categories.dart';
 
-class FirstPage extends StatelessWidget {
+class FirstPage extends StatefulWidget {
+  @override
+  _FirstPageState createState() => _FirstPageState();
+}
+
+class _FirstPageState extends State<FirstPage> {
   final _nameController = TextEditingController();
   void nextPage(BuildContext cx) {
     if (_nameController.text.isNotEmpty) {
@@ -108,3 +113,5 @@ class FirstPage extends StatelessWidget {
     );
   }
 }
+
+
