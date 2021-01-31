@@ -33,9 +33,7 @@ class ServiceModel {
     }
   }
 
-  Future<String> local() async {
-    String d;
-
+  Future<double> local() async {
     DataSnapshot snapshot = await DatabaseService('bakery').bakeryRef.once();
     var day = snapshot.value['dailyData'][DateData.date];
     if (day != null) {
@@ -45,13 +43,15 @@ class ServiceModel {
           snapshot.value['taken'] != null ? double.parse(day['taken']) : 0.0;
     }
     if (snapshot.value != null) {
-      debt = double.parse(snapshot.value['debt']);
+      debt = snapshot.value['debt'] != null
+          ? double.parse(snapshot.value['debt'])
+          : 0.0;
       log(debt.toString());
-
-      d = 'd';
+    } else {
+      log('error');
     }
-
-    return d;
+    log("olmadi");
+    return debt;
   }
 
   addBayat(int amount) {

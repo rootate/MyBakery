@@ -57,21 +57,25 @@ class _ServiceState extends State<Service> {
         _service.updateByKey('debt', data.snapshot.value);
       }
     });
-
+    log('test');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<String>(
+    return FutureBuilder<double>(
       future: _service.local(), // async work
-      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return Center(child: CircularProgressIndicator());
           default:
             if (snapshot.hasError)
-              return Text('Error: ${snapshot.error}');
+              return Center(
+                  child: Text(
+                'Error: ${snapshot.error}',
+                style: TextStyle(fontSize: 14),
+              ));
             else
               return Scaffold(
                 backgroundColor: Colors.deepPurpleAccent[10],
