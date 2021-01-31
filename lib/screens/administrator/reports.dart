@@ -7,6 +7,15 @@ import 'package:flutter_my_bakery/shared/constants.dart';
 import 'package:intl/intl.dart';
 
 class Reports extends StatefulWidget {
+  int toplamCikanEkmek;
+  int dagitimdaSatilanEkmek;
+  int toplamKalanEkmek;
+  int vitrindenToplamSatisTutari;
+  int krediKartiSatisTutari;
+  int kasadaOlmasiGerekenTutar;
+
+  Reports({Key key, this.toplamCikanEkmek, this.dagitimdaSatilanEkmek, this.toplamKalanEkmek, this.vitrindenToplamSatisTutari, this.krediKartiSatisTutari, this.kasadaOlmasiGerekenTutar}) : super(key: key);
+
   @override
   _ReportsState createState() => _ReportsState();
 }
@@ -14,68 +23,12 @@ class Reports extends StatefulWidget {
 class _ReportsState extends State<Reports> {
   DatabaseService service = DatabaseService("bakery");
   DateFormat dateFormat1 = DateFormat("yyyy-MM-dd");
-  int toplamCikanEkmek = 0;
-  int dagitimdaSatilanEkmek = 0;
-  int toplamKalanEkmek = 0;
-  int vitrindenToplamSatisTutari = 0;
-  int krediKartiSatisTutari = 0;
-  int kasadaOlmasiGerekenTutar = 0;
-
   int _kalan = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
-      getBreadData();
-    });
-  }
-
-  void getBreadData(){
-    String currentTime = dateFormat1.format(DateTime.now());
-    int sum = 0;
-    service.bakeryRef.child("dailyData").child(currentTime).child("producedBreads").once().then((DataSnapshot snapshot){
-      Map x = snapshot.value;
-      x.forEach((key,value){
-        sum += int.parse(value["title"].toString());
-      });
-      setState(() {
-        toplamCikanEkmek = sum;
-      });
-    });
-
-    service.bakeryRef.child("dailyData").child(currentTime).once().then((DataSnapshot snapshot){
-      Map x = snapshot.value;
-
-      setState(() {
-        dagitimdaSatilanEkmek = int.parse(x["delivered"]);
-        _kalan = toplamCikanEkmek - dagitimdaSatilanEkmek;
-        kasadaOlmasiGerekenTutar += (_kalan * 1.75).toInt();
-      });
-    });
-
-    service.bakeryRef.child("dailyData").child(currentTime).child("tx").once().then((DataSnapshot snapshot){
-      int sumNakit = 0;
-      int sumKrediKarti = 0;
-      Map x = snapshot.value;
-
-      x.forEach((key,value){
-        print(value["Toplam Alınan Ücret"]);
-        print(value["Ödeme Yöntemi"]);
-
-        if(value["Ödeme Yöntemi"] == "Nakit Ödeme"){
-          sumNakit += value["Toplam Alınan Ücret"];
-        } else if(value["Ödeme Yöntemi"] == "Kredi Kartı"){
-          sumKrediKarti += value["Toplam Alınan Ücret"];
-        }
-      });
-      setState(() {
-        vitrindenToplamSatisTutari = sumNakit;
-        krediKartiSatisTutari = sumKrediKarti;
-        kasadaOlmasiGerekenTutar += sumNakit;
-      });
-    });
   }
 
 
@@ -140,21 +93,21 @@ class _ReportsState extends State<Reports> {
                               Column(
                                 children: [
                                   Text("Vitrinden toplam satış tutarı",style: textStyle(Colors.green),),
-                                  Text("₺ " + vitrindenToplamSatisTutari.toString(), style: textStyle(Colors.green),),
+                                  Text("₺ " + widget.vitrindenToplamSatisTutari.toString(), style: textStyle(Colors.green),),
                                 ],
                               ),
                               SizedBox(height: size1,),
                               Column(
                                 children: [
                                   Text("Kredi kartı ile yapılan satış tutarı",style: textStyle(Colors.purple),),
-                                  Text("₺ " + krediKartiSatisTutari.toString(), style: textStyle(Colors.purple),),
+                                  Text("₺ " + widget.krediKartiSatisTutari.toString(), style: textStyle(Colors.purple),),
                                 ],
                               ),
                               SizedBox(height: size1,),
                               Column(
                                 children: [
                                   Text("Kasada olması gereken tutar",style: textStyle(Colors.blue),),
-                                  Text("₺ " + kasadaOlmasiGerekenTutar.toString(), style: textStyle(Colors.blue),),
+                                  Text("₺ " + widget.kasadaOlmasiGerekenTutar.toString(), style: textStyle(Colors.blue),),
                                 ],
                               ),
                             ],
@@ -178,7 +131,7 @@ class _ReportsState extends State<Reports> {
                                   SizedBox(height: size1,),
                                   Text("Toplam Çıkan Ekmek",style: textStyle2,textAlign: TextAlign.center,),
                                   SizedBox(height: size1,),
-                                  Text(toplamCikanEkmek.toString() ,style: textStyle3,textAlign: TextAlign.center,)
+                                  Text(widget.toplamCikanEkmek.toString() ,style: textStyle3,textAlign: TextAlign.center,)
                                 ],
                               ),
                             ),
@@ -195,7 +148,7 @@ class _ReportsState extends State<Reports> {
                                   SizedBox(height: size1,),
                                   Text("Dağıtımda Satılan Ekmek",style: textStyle2,textAlign: TextAlign.center,),
                                   SizedBox(height: size1,),
-                                  Text(dagitimdaSatilanEkmek.toString() ,style: textStyle3,textAlign: TextAlign.center,)
+                                  Text(widget.dagitimdaSatilanEkmek.toString() ,style: textStyle3,textAlign: TextAlign.center,)
                                 ],
                               ),
                             ),
@@ -212,7 +165,7 @@ class _ReportsState extends State<Reports> {
                                   SizedBox(height: size1,),
                                   Text("Toplam Kalan Ekmek",style:  textStyle2,textAlign: TextAlign.center,),
                                   SizedBox(height: size1,),
-                                  Text(toplamKalanEkmek.toString() ,style: textStyle3,textAlign: TextAlign.center,)
+                                  Text(widget.toplamKalanEkmek.toString() ,style: textStyle3,textAlign: TextAlign.center,)
                                 ],
                               ),
                             ),
