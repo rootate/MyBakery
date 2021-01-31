@@ -75,7 +75,7 @@ class _OdemeState extends State<Odeme> {
             return Scaffold(
               appBar: AppBar(
                 title: Text(
-                  "Ödeme",
+                  "Kategoriler",
                   style: TextStyle(fontFamily: "Poppins"),
                 ),
                 centerTitle: true,
