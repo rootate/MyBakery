@@ -1,6 +1,8 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_my_bakery/services/databaseService.dart';
 import 'package:flutter_my_bakery/shared/constants.dart';
 import 'package:intl/intl.dart';
 
@@ -10,20 +12,78 @@ class Reports extends StatefulWidget {
 }
 
 class _ReportsState extends State<Reports> {
+  DatabaseService service = DatabaseService("bakery");
+  DateFormat dateFormat1 = DateFormat("yyyy-MM-dd");
+  int toplamCikanEkmek = 0;
+  int dagitimdaSatilanEkmek = 0;
+  int toplamKalanEkmek = 0;
+  int vitrindenToplamSatisTutari = 0;
+  int krediKartiSatisTutari = 0;
+  int kasadaOlmasiGerekenTutar = 0;
+
+  int _kalan = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      getBreadData();
+    });
+  }
+
+  void getBreadData(){
+    String currentTime = dateFormat1.format(DateTime.now());
+    int sum = 0;
+    service.bakeryRef.child("dailyData").child(currentTime).child("producedBreads").once().then((DataSnapshot snapshot){
+      Map x = snapshot.value;
+      x.forEach((key,value){
+        sum += int.parse(value["title"].toString());
+      });
+      setState(() {
+        toplamCikanEkmek = sum;
+      });
+    });
+
+    service.bakeryRef.child("dailyData").child(currentTime).once().then((DataSnapshot snapshot){
+      Map x = snapshot.value;
+
+      setState(() {
+        dagitimdaSatilanEkmek = int.parse(x["delivered"]);
+        _kalan = toplamCikanEkmek - dagitimdaSatilanEkmek;
+        kasadaOlmasiGerekenTutar += (_kalan * 1.75).toInt();
+      });
+    });
+
+    service.bakeryRef.child("dailyData").child(currentTime).child("tx").once().then((DataSnapshot snapshot){
+      int sumNakit = 0;
+      int sumKrediKarti = 0;
+      Map x = snapshot.value;
+
+      x.forEach((key,value){
+        print(value["Toplam Alınan Ücret"]);
+        print(value["Ödeme Yöntemi"]);
+
+        if(value["Ödeme Yöntemi"] == "Nakit Ödeme"){
+          sumNakit += value["Toplam Alınan Ücret"];
+        } else if(value["Ödeme Yöntemi"] == "Kredi Kartı"){
+          sumKrediKarti += value["Toplam Alınan Ücret"];
+        }
+      });
+      setState(() {
+        vitrindenToplamSatisTutari = sumNakit;
+        krediKartiSatisTutari = sumKrediKarti;
+        kasadaOlmasiGerekenTutar += sumNakit;
+      });
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     double size1 = MediaQuery.of(context).size.height / 50;
     double size2 = MediaQuery.of(context).size.height / 10;
     double size3 = MediaQuery.of(context).size.height / 20;
-
-    int toplamCikanEkmek = 1200;
-    int dagitimdaSatilanEkmek = 100;
-    int toplamKalanEkmek = 1000;
-    int veresiyeSatilanEkmek = 100;
-
-    int vitrindenToplamSatisTutari = 300;
-    int krediKartiSatisTutari = 400;
-    int kasadaOlmasiGerekenTutar = 500;
 
     DateFormat dateFormat = DateFormat("dd.MM.yyyy");
     String currentTime = dateFormat.format(DateTime.now());
@@ -51,7 +111,7 @@ class _ReportsState extends State<Reports> {
                     Center(
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width - 20,
-                        height: MediaQuery.of(context).size.height / 3 + 10,
+                        height: MediaQuery.of(context).size.height / 3 + 40,
                         child: Container(
                           decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.all(Radius.circular(30.0))),
                           child: Column(
@@ -109,7 +169,7 @@ class _ReportsState extends State<Reports> {
                         children: [
                           SizedBox(
                             width: MediaQuery.of(context).size.width / 3 - 20,
-                            height: MediaQuery.of(context).size.height / 4 - 20,
+                            height: MediaQuery.of(context).size.height / 4 - 10,
                             child: Container(
                               decoration: BoxDecoration(color: Color(0xff633333),borderRadius: BorderRadius.all(Radius.circular(30.0))),
                               child: Column(
@@ -143,7 +203,7 @@ class _ReportsState extends State<Reports> {
                           SizedBox(width: size1,),
                           SizedBox(
                             width: MediaQuery.of(context).size.width / 3 - 20,
-                            height: MediaQuery.of(context).size.height / 4 - 20,
+                            height: MediaQuery.of(context).size.height / 4 - 15,
                             child: Container(
                               decoration: BoxDecoration(color: Color(0xff773774),borderRadius: BorderRadius.all(Radius.circular(30.0))),
                               child: Column(
@@ -158,23 +218,6 @@ class _ReportsState extends State<Reports> {
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                    SizedBox(height: size1,),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width - 20,
-                      height: MediaQuery.of(context).size.height / 10,
-                      child: Container(
-                        decoration: BoxDecoration(color: Color(0xff31402c),borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                        child: Row(
-                          children: [
-                            Image(image: AssetImage('assets/images/bread.png'),width: size2,),
-                            SizedBox(width: size3 - 10,),
-                            Text("Veresiye Satılan Ekmek",style: textStyle2,textAlign: TextAlign.center,),
-                            SizedBox(width: size3,),
-                            Text(veresiyeSatilanEkmek.toString() ,style: textStyle3,textAlign: TextAlign.center,)
-                          ],
-                        ),
                       ),
                     ),
                   ],
