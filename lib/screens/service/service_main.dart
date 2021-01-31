@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:firebase_database/firebase_database.dart';
@@ -44,10 +43,8 @@ class _ServiceState extends State<Service> {
   initState() {
     _dayRef = _service.dayReference.limitToLast(50);
     var _debtRef = DatabaseService('bakery').bakeryRef.child('child');
-    log(DateData.date);
     updates = _dayRef.onChildChanged.listen((data) {
       if (data != null) {
-        log(data.snapshot.key);
         _service.updateByKey(data.snapshot.key, data.snapshot.value);
       }
       setState(() {});
@@ -57,7 +54,6 @@ class _ServiceState extends State<Service> {
         _service.updateByKey('debt', data.snapshot.value);
       }
     });
-    log('test');
     super.initState();
   }
 

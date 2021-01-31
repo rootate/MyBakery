@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_my_bakery/services/databaseService.dart';
 
@@ -46,11 +44,8 @@ class ServiceModel {
       debt = snapshot.value['debt'] != null
           ? double.parse(snapshot.value['debt'])
           : 0.0;
-      log(debt.toString());
-    } else {
-      log('error');
-    }
-    log("olmadi");
+    } else {}
+
     return debt;
   }
 
