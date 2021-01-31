@@ -9,6 +9,7 @@ import 'package:flutter_my_bakery/screens/service/service_models/date_data.dart'
 import 'package:flutter_my_bakery/screens/service/service_models/service_model.dart';
 import 'package:flutter_my_bakery/services/databaseService.dart';
 
+
 import 'info_card.dart';
 
 class Service extends StatefulWidget {
@@ -17,6 +18,7 @@ class Service extends StatefulWidget {
 }
 
 class _ServiceState extends State<Service> {
+
   bool loading = false;
 
   ServiceModel _service = ServiceModel();
@@ -92,6 +94,33 @@ class _ServiceState extends State<Service> {
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
                     child: Column(
+
+  @override
+  Widget build(BuildContext context) {
+    DateFormat dateFormat = DateFormat("dd.MM.yyyy");
+
+    String currentTime = dateFormat.format(DateTime.now());
+
+    DateTime minTime = DateTime(2018, 12, 5);
+
+    DateTime maxTime = DateTime.now();
+    return Scaffold(
+      backgroundColor: Colors.deepPurpleAccent[10],
+      appBar: AppBar(
+        title: Text(
+          "Ana Menü",
+          style: TextStyle(fontFamily: "Poppins"),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.blueGrey,
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/images/background2.jpg"),
+              fit: BoxFit.cover),
+        ),
+        child: Backdr
                       children: [
                         Container(
                           margin: EdgeInsets.all(10),
